@@ -35,3 +35,5 @@ yarn-error.log*
 
 .eslintrc.json
 commitlint.config.js
+tailwind.config.js
+postcss.config.js
