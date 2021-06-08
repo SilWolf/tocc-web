@@ -16,5 +16,6 @@ module.exports = {
 	variants: {
 		extend: {},
 	},
+	darkMode: 'class',
 	plugins: [require('@tailwindcss/forms')],
 }

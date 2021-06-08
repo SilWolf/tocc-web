@@ -18,10 +18,7 @@
 	[multiple],
 	textarea,
 	select {
-		@apply p-2;
-		@apply rounded;
-		@apply bg-yellow-50;
-		@apply border-gray-300;
+		@apply p-2 rounded bg-yellow-50 border-gray-300;
 	}
 
 	[type='text']:focus,
@@ -39,25 +36,15 @@
 	[multiple]:focus,
 	textarea:focus,
 	select:focus {
-		@apply ring-yellow-300;
-		@apply border-yellow-400;
+		@apply ring-yellow-300 border-yellow-400;
 	}
 
 	a[href] {
-		@apply text-yellow-900;
-	}
-
-	a[href]:hover,
-	a[href]:active {
-		@apply underline;
-		@apply text-yellow-800;
+		@apply text-yellow-900 dark:text-white hover:underline hover:text-yellow-800 dark:hover:text-yellow-50;
 	}
 
 	.button {
-		@apply h-12;
-		@apply rounded-md;
-		@apply bg-white;
-		@apply text-black;
+		@apply h-12 rounded-md bg-white text-black;
 	}
 
 	.button:hover {
@@ -71,8 +58,7 @@
 	}
 
 	.button-primary {
-		@apply bg-yellow-400;
-		@apply text-yellow-900;
+		@apply bg-yellow-400 text-yellow-900;
 	}
 
 	.button-primary:hover {
