@@ -8,6 +8,14 @@
 		@apply bg-scroll;
 	}
 
+	h3 {
+		@apply text-xl font-semibold;
+	}
+
+	h4 {
+		@apply text-lg font-semibold;
+	}
+
 	[type='text'],
 	[type='email'],
 	[type='url'],
@@ -49,7 +57,7 @@
 	}
 
 	.button {
-		@apply h-12 rounded-md bg-white text-black;
+		@apply p-2 rounded-md bg-white text-black;
 	}
 
 	.button:hover {
