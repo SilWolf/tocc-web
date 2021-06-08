@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import NextLink from 'next/link'
 
 const HomePage: NextPage = () => {
 	return (
@@ -17,7 +18,9 @@ const HomePage: NextPage = () => {
 						</div>
 						<div className='flex-auto'></div>
 						<div className='pl-2 flex-none'>
-							<a href='#'>登入</a>
+							<NextLink href='/auth/login' passHref>
+								<a>登入</a>
+							</NextLink>
 						</div>
 					</div>
 				</div>

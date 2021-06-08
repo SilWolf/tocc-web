@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		background-image: url('/images/body-bg.jpg');
+		@apply bg-scroll;
+	}
+
 	[type='text'],
 	[type='email'],
 	[type='url'],
