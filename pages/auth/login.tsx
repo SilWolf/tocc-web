@@ -61,7 +61,10 @@ const LoginPage: NextPage = () => {
 					</div>
 
 					<div className='space-y-4 text-center'>
-						<button className='button button-primary h-12 w-full mx-auto active:ring-yellow-300'>
+						<button
+							data-ripplet
+							className='button button-primary h-12 w-full mx-auto active:ring-yellow-300'
+						>
 							登入
 						</button>
 						<div className='w-full space-x-4 text-right'>
@@ -81,7 +84,9 @@ const LoginPage: NextPage = () => {
 					<hr />
 
 					<div>
-						<button className='button h-12 w-full mx-auto'>用Google登入</button>
+						<button data-ripplet className='button h-12 w-full mx-auto'>
+							用Google登入
+						</button>
 					</div>
 				</div>
 			</div>

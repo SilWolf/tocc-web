@@ -24,7 +24,12 @@ const Dialog = (props: Props): JSX.Element => {
 
 					<div className='text-center space-x-1'>
 						{actions?.map((action, i) => (
-							<button key={i} className='button button-primary' {...action} />
+							<button
+								key={i}
+								data-ripplet
+								className='button button-primary'
+								{...action}
+							/>
 						))}
 					</div>
 				</div>
