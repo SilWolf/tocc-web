@@ -68,9 +68,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 				</div>
 
 				<div className='min-h-screen flex flex-col'>
-					<Component {...pageProps} />
+					<div className='flex-1'>
+						<Component {...pageProps} />
+					</div>
 
-					<div className='bg-yellow-900 dark text-white py-4'>
+					<div className='flex-none bg-yellow-900 dark text-white py-4'>
 						<div className='container space-y-1'>
 							<div className='flex gap-x-2 justify-between items-center'>
 								<div className='flex-none'>
