@@ -1,0 +1,4 @@
+toccWebNextJs:
+  component: '@sls-next/serverless-component'
+  inputs:
+    bucketRegion: 'ap-southeast-1'
