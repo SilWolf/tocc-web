@@ -6,8 +6,9 @@
 
 @layer base {
 	body {
-		background-image: url('/images/body-bg.jpg');
+		/* background-image: url('/images/body-bg.jpg'); */
 		@apply bg-scroll;
+		background-color: #212121;
 	}
 
 	h3 {
