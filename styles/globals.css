@@ -11,6 +11,14 @@
 		background-color: #212121;
 	}
 
+	h1 {
+		@apply text-3xl font-semibold;
+	}
+
+	h2 {
+		@apply text-2xl font-semibold;
+	}
+
 	h3 {
 		@apply text-xl font-semibold;
 	}
@@ -60,11 +68,11 @@
 	}
 
 	.button {
-		@apply p-2 rounded-md bg-white text-black;
+		@apply py-2 px-6 bg-white text-black dark:text-black;
 	}
 
-	.button:hover {
-		@apply bg-gray-50;
+	.button.button-outline {
+		@apply bg-transparent border-2 border-black dark:border-white dark:text-white;
 	}
 
 	.button:active,
@@ -82,6 +90,16 @@
 	}
 }
 
+.border-medieval {
+	border-image: url('/images/border.png') 48;
+	border-width: 18px;
+	border-image-repeat: repeat;
+}
+
+ul li {
+	@apply ml-2 my-2;
+}
+
 * {
-	@apply ring-yellow-300;
+	@apply ring-yellow-300 dark:text-white;
 }

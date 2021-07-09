@@ -2,6 +2,8 @@ import NextLink from 'next/link'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
 import Dialog, { DialogProps } from '../components/Dialog'
+
+import 'rpg-awesome/css/rpg-awesome.min.css'
 import '../styles/globals.css'
 
 type AppContextProps = {
