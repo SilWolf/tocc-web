@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 							</div>
 							<div className='flex-auto'></div>
 							<div className='px-2 flex-none'>
-								<NextLink href='/characters/1' passHref>
+								<NextLink href='/characters/1/profile' passHref>
 									<a>我的角色</a>
 								</NextLink>
 							</div>
