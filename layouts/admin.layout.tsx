@@ -1,7 +1,39 @@
 import React from 'react'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+
+import cns from 'classnames'
+
+const routes = [
+	{
+		label: '玩家',
+		path: 'player',
+	},
+	{
+		label: '玩家角色',
+		path: 'character',
+	},
+	{
+		label: '劇本',
+		path: 'game',
+	},
+	{
+		label: '城市',
+		path: 'city',
+	},
+	{
+		label: 'NPC',
+		path: 'npc',
+	},
+	{
+		label: '組織',
+		path: 'organization',
+	},
+]
 
 const AdminLayout: React.FC = ({ children }) => {
+	const { pathname } = useRouter()
+
 	return (
 		<>
 			<div className='h-screen flex items-stretch bg-gray-200'>
@@ -9,24 +41,21 @@ const AdminLayout: React.FC = ({ children }) => {
 					<div className='py-4'>TOCC Admin Panel</div>
 
 					<div className='py-2 space-y-2'>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							玩家
-						</button>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							玩家角色
-						</button>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							劇本
-						</button>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							城市
-						</button>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							NPC
-						</button>
-						<button data-ripplet className='button block w-full py-4 text-left'>
-							組織
-						</button>
+						{routes.map((route) => (
+							<NextLink key={route.path} href={`/admin/${route.path}`} passHref>
+								<a
+									data-ripplet
+									className={cns(
+										'block w-full py-3 px-4 text-left text-white rounded',
+										pathname.startsWith(`/admin/${route.path}`)
+											? 'bg-blue-300'
+											: ''
+									)}
+								>
+									{route.label}
+								</a>
+							</NextLink>
+						))}
 					</div>
 				</div>
 
