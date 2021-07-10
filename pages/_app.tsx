@@ -1,4 +1,3 @@
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
@@ -6,6 +5,8 @@ import Dialog, { DialogProps } from '../components/Dialog'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import '../styles/globals.css'
+import AdminLayout from '../layouts/admin.layout'
+import GeneralLayout from '../layouts/general.layout'
 
 type AppContextProps = {
 	isDialogOpened: boolean
@@ -23,19 +24,9 @@ export const AppContext = createContext<AppContextProps>({
 	},
 })
 
-type AllProviderProps = {
-	appContextValue: AppContextProps
-}
-
-const AllProvider: React.FC<AllProviderProps> = ({
-	appContextValue,
-	children,
-}) => (
-	<AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>
-)
-
 const App = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter()
+
 	const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 	const [dialogOptions, setDialogOptions] = useState<DialogProps>({})
 
@@ -53,75 +44,17 @@ const App = ({ Component, pageProps }: AppProps) => {
 		[isDialogOpened]
 	)
 
+	const Layout = useMemo(
+		() => (router.pathname.startsWith('/admin') ? AdminLayout : GeneralLayout),
+		[router]
+	)
+
 	return (
 		<>
-			<AllProvider appContextValue={appContextValue}>
-				<div className='dark bg-yellow-900 py-1 fixed top-0 left-0 right-0'>
-					<div className='container'>
-						<div className='flex'>
-							<div className='pr-2 flex-none'>
-								<NextLink href='/' passHref>
-									<a>TOCC Web</a>
-								</NextLink>
-							</div>
-							<div className='px-2 flex-none'>
-								<a href='#'>世界</a>
-							</div>
-							<div className='flex-auto'></div>
-							<div className='px-2 flex-none'>
-								<NextLink href='/character/1/profile' passHref>
-									<a>我的角色</a>
-								</NextLink>
-							</div>
-							<div className='pl-2 flex-none'>
-								<NextLink href='/auth/login' passHref>
-									<a>登入</a>
-								</NextLink>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div className='min-h-screen flex flex-col'>
-					<div className='flex-1'>
-						<Component {...pageProps} />
-					</div>
-
-					<div className='flex-none bg-yellow-900 dark text-white py-4'>
-						<div className='container space-y-1'>
-							<div className='flex gap-x-2 justify-between items-center'>
-								<div className='flex-none'>
-									<div>Copyright</div>
-									<div className='divide-x-2'>
-										<a href='#' className='pr-2'>
-											Link
-										</a>
-										<a href='#' className='px-2'>
-											Link
-										</a>
-										<a href='#' className='px-2'>
-											Link
-										</a>
-										<a href='#' className='px-2'>
-											Link
-										</a>
-									</div>
-								</div>
-								<div className='flex-none space-x-6 text-3xl'>
-									<a href='#'>
-										<i className='bi-telegram'></i>
-									</a>
-									<a href='#'>
-										<i className='bi-facebook'></i>
-									</a>
-									<a href='#'>
-										<i className='bi-discord'></i>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<AppContext.Provider value={appContextValue}>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
 
 				<div
 					className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
@@ -130,7 +63,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 				>
 					<Dialog {...dialogOptions} />
 				</div>
-			</AllProvider>
+			</AppContext.Provider>
 		</>
 	)
 }
