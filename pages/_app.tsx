@@ -1,4 +1,5 @@
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
 import Dialog, { DialogProps } from '../components/Dialog'
@@ -22,7 +23,19 @@ export const AppContext = createContext<AppContextProps>({
 	},
 })
 
+type AllProviderProps = {
+	appContextValue: AppContextProps
+}
+
+const AllProvider: React.FC<AllProviderProps> = ({
+	appContextValue,
+	children,
+}) => (
+	<AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>
+)
+
 const App = ({ Component, pageProps }: AppProps) => {
+	const router = useRouter()
 	const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 	const [dialogOptions, setDialogOptions] = useState<DialogProps>({})
 
@@ -37,12 +50,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 				setIsDialogOpened(false)
 			},
 		}),
-		[]
+		[isDialogOpened]
 	)
 
 	return (
 		<>
-			<AppContext.Provider value={appContextValue}>
+			<AllProvider appContextValue={appContextValue}>
 				<div className='dark bg-yellow-900 py-1 fixed top-0 left-0 right-0'>
 					<div className='container'>
 						<div className='flex'>
@@ -117,7 +130,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 				>
 					<Dialog {...dialogOptions} />
 				</div>
-			</AppContext.Provider>
+			</AllProvider>
 		</>
 	)
 }
