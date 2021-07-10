@@ -29,6 +29,14 @@ const routes = [
 		label: '組織',
 		path: 'organization',
 	},
+	{
+		label: '知識',
+		path: 'knowledge',
+	},
+	{
+		label: '物品',
+		path: 'item',
+	},
 ]
 
 const AdminLayout: React.FC = ({ children }) => {

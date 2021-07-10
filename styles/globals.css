@@ -96,6 +96,34 @@
 	.button-primary:hover {
 		@apply bg-yellow-300;
 	}
+
+	table.table-default {
+		@apply min-w-max w-full table-auto text-center;
+	}
+
+	table.table-default thead tr {
+		@apply bg-gray-200 text-gray-600 text-sm leading-normal;
+	}
+
+	table.table-default thead tr th {
+		@apply px-6 py-3;
+	}
+
+	table.table-default tbody {
+		@apply text-gray-600 text-sm font-light;
+	}
+
+	table.table-default tbody tr {
+		@apply border-b border-gray-200 hover:bg-gray-100;
+	}
+
+	table.table-default tbody tr:nth-child(even) {
+		@apply bg-gray-50 hover:bg-gray-100;
+	}
+
+	table.table-default tbody tr td {
+		@apply py-3 px-6 whitespace-nowrap;
+	}
 }
 
 .border-medieval {
