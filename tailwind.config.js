@@ -18,7 +18,11 @@ module.exports = {
 		ripple: (theme) => ({
 			colors: theme('colors'),
 		}),
-		extend: {},
+		extend: {
+			flex: {
+				2: '2 2 0%',
+			},
+		},
 	},
 	variants: {
 		extend: {},

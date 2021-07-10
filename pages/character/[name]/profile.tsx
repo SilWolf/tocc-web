@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 
-const CharacterDetailPage: NextPage = () => {
+const CharacterProfilePage: NextPage = () => {
 	return (
 		<div className='container py-24'>
 			<div className='grid grid-cols-3 gap-4'>
@@ -271,4 +271,4 @@ const CharacterDetailPage: NextPage = () => {
 		</div>
 	)
 }
-export default CharacterDetailPage
+export default CharacterProfilePage
