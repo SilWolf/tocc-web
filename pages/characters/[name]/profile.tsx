@@ -4,7 +4,7 @@ const CharacterDetailPage: NextPage = () => {
 	return (
 		<div className='container py-24'>
 			<div className='grid grid-cols-3 gap-4'>
-				<div className='dark'>
+				<div className='text-white'>
 					<div className='space-y-4'>
 						<div className='w-2/3 mx-auto'>
 							<div className='aspect-w-1 aspect-h-1'>
@@ -16,9 +16,7 @@ const CharacterDetailPage: NextPage = () => {
 						</div>
 						<div className='text-center'>
 							<h2>卡洛特</h2>
-							<h5 className='text-gray-400 dark:text-gray-400 text-sm'>
-								Lv 9. 傳奇狼人戰士
-							</h5>
+							<h5 className='text-gray-400 text-sm'>Lv 9. 傳奇狼人戰士</h5>
 						</div>
 
 						<div className='text-center text-sm italic'>
@@ -34,13 +32,13 @@ const CharacterDetailPage: NextPage = () => {
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-key-basic'></i>
 								</td>
-								<td className='text-sm'>00013-GO02</td>
+								<td className='text-sm'>編號: 00013-GO02</td>
 							</tr>
 							<tr>
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-player'></i>
 								</td>
-								<td className='text-sm'>銀狼</td>
+								<td className='text-sm'>玩家: 銀狼</td>
 							</tr>
 						</table>
 						<table>
@@ -48,13 +46,13 @@ const CharacterDetailPage: NextPage = () => {
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-bridge'></i>
 								</td>
-								<td className='text-sm'>錫安城</td>
+								<td className='text-sm'>所屬城市: 錫安城</td>
 							</tr>
 							<tr>
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-seagull'></i>
 								</td>
-								<td className='text-sm'>隱士</td>
+								<td className='text-sm'>背景: 士兵</td>
 							</tr>
 						</table>
 						<table>
@@ -62,21 +60,66 @@ const CharacterDetailPage: NextPage = () => {
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-crown'></i>
 								</td>
-								<td className='text-sm'>未有稱號</td>
+								<td className='text-sm'>稱號: --</td>
 							</tr>
 							<tr>
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-pawn'></i>
 								</td>
-								<td className='text-sm'>未有身分</td>
+								<td className='text-sm'>組織: --</td>
+							</tr>
+							<tr>
+								<td className='w-10'>
+									<i className='ra ra-fw ra-lg ra-pawn'></i>
+								</td>
+								<td className='text-sm'>身分: --</td>
 							</tr>
 							<tr>
 								<td className='w-10'>
 									<i className='ra ra-fw ra-lg ra-pisces'></i>
 								</td>
-								<td className='text-sm'>未有信仰</td>
+								<td className='text-sm'>信仰: --</td>
 							</tr>
 						</table>
+
+						<div className='py-4'>
+							<div className='h-px w-3/4 bg-gray-400 mx-auto'></div>
+						</div>
+
+						<div>
+							<h5 className='text-gray-400'>個性</h5>
+							<p>冷靜、顧全大局</p>
+						</div>
+
+						<div>
+							<h5 className='text-gray-400'>理想</h5>
+							<p>建立一個能與家人一同幸福生活的環境</p>
+						</div>
+
+						<div>
+							<h5 className='text-gray-400'>羈絆</h5>
+							<p>能為了家人付出一切努力</p>
+						</div>
+
+						<div>
+							<h5 className='text-gray-400'>缺憾</h5>
+							<p>容易自我犧牲</p>
+						</div>
+
+						<div className='py-4'>
+							<div className='h-px w-3/4 bg-gray-400 mx-auto'></div>
+						</div>
+
+						<div className='space-y-2'>
+							<h5 className='text-gray-400'>短記</h5>
+
+							<div>
+								<div>
+									<a href='#'>討伐哥布林紀錄書</a>
+									<p className='text-xs text-gray-400'>2021.05.29</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div className='col-span-2'>
