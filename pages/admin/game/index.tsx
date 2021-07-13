@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import NextLink from 'next/link'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
@@ -9,7 +10,7 @@ import * as api from '../../../apis/api.helper'
 
 import { DateSpan } from '../../../components/Datetime'
 
-const AdminIndexPage: NextPage = () => {
+const AdminGamePage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(
 		() => [
 			{
@@ -43,7 +44,32 @@ const AdminIndexPage: NextPage = () => {
 			},
 			{
 				Header: '狀態',
-				accessor: 'status',
+				accessor: ({ status }) => {
+					switch (status) {
+						case 'published':
+							return (
+								<p className='py-1 text-xs text-green-700 border border-green-400 bg-green-100'>
+									已發佈
+								</p>
+							)
+					}
+
+					return <></>
+				},
+			},
+			{
+				Header: '動作',
+				accessor: ({ id }) => {
+					return (
+						<>
+							<NextLink href={`/admin/game/${id}`} passHref>
+								<a>
+									<i className='bi bi-pencil-fill'></i>
+								</a>
+							</NextLink>
+						</>
+					)
+				},
 			},
 		],
 		[]
@@ -57,6 +83,11 @@ const AdminIndexPage: NextPage = () => {
 	return (
 		<>
 			<div className='space-y-4'>
+				<div className='text-right space-x-2'>
+					<NextLink href='/admin/game/new' passHref>
+						<a className='button button-primary'>新增劇本</a>
+					</NextLink>
+				</div>
 				<table {...getTableProps} className='table-default'>
 					<thead>
 						{headerGroups.map((headerGroup) => (
@@ -95,4 +126,4 @@ const AdminIndexPage: NextPage = () => {
 		</>
 	)
 }
-export default AdminIndexPage
+export default AdminGamePage

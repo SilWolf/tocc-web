@@ -23,3 +23,6 @@ export const getMe = async (): Promise<User> => {
 }
 
 export const getGames = async (): Promise<Game[]> => api.get<Game[]>('/games')
+
+export const getGameById = async (id: string): Promise<Game> =>
+	api.get<Game>(`/games/${id}`)

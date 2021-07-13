@@ -27,5 +27,6 @@ module.exports = {
 		semi: ['error', 'never'],
 		'react/react-in-jsx-scope': 'off',
 		'react/display-name': 'off',
+		indent: 'off',
 	},
 }

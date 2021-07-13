@@ -9,7 +9,13 @@ import '../styles/globals.css'
 import AdminLayout from '../layouts/admin.layout'
 import GeneralLayout from '../layouts/general.layout'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 5 * 60 * 1000,
+		},
+	},
+})
 
 type AppContextProps = {
 	isDialogOpened: boolean

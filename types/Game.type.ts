@@ -3,7 +3,7 @@ import { City } from './City.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
-export type Game = Entity & {
+export type GameRaw = {
 	title: string
 	code: string
 	description?: string
@@ -23,9 +23,9 @@ export type Game = Entity & {
 
 	characterAndRewards?: GameReward[]
 	journals?: string[]
-	city: City
+	city?: City
 
-	publishedAt: string
+	publishedAt?: string
 }
 
 export type GameReward = Entity & {
@@ -34,4 +34,23 @@ export type GameReward = Entity & {
 	remark: string
 	items: string[]
 	character: Character
+}
+
+export type Game = GameRaw & Entity
+
+export const gameDefaultValue: GameRaw = {
+	title: '',
+	code: '',
+	description: '',
+	startAt: '',
+	endAt: '',
+	worldStartAt: '',
+	worldEndAt: '',
+	lvMin: 1,
+	lvMax: 1,
+	capacityMin: 3,
+	capacityMax: 6,
+	tags: '',
+	remark: '',
+	status: 'draft',
 }
