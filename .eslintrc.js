@@ -26,5 +26,6 @@ module.exports = {
 		quotes: ['error', 'single'],
 		semi: ['error', 'never'],
 		'react/react-in-jsx-scope': 'off',
+		'react/display-name': 'off',
 	},
 }

@@ -1,10 +1,13 @@
 import { NextPage } from 'next'
 import { useMemo } from 'react'
+import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
+
 import { Game } from '../../../types/Game.type'
 
 import * as api from '../../../apis/api.helper'
-import { useQuery } from 'react-query'
+
+import { DateSpan } from '../../../components/Datetime'
 
 const AdminIndexPage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(
@@ -15,23 +18,28 @@ const AdminIndexPage: NextPage = () => {
 			},
 			{
 				Header: 'DM',
-				accessor: 'dm',
+				accessor: ({ dm }) => dm?.name,
 			},
 			{
 				Header: '現實時間',
-				accessor: 'startAt',
+				accessor: ({ startAt }) => <DateSpan>{startAt}</DateSpan>,
 			},
 			{
 				Header: '世界觀時間',
-				accessor: 'worldStartAt',
+				accessor: ({ worldStartAt }) => (
+					<span>
+						第三紀元<DateSpan>{worldStartAt}</DateSpan>
+					</span>
+				),
 			},
 			{
 				Header: '人數',
-				accessor: 'capacityMin',
+				accessor: ({ capacityMin, capacityMax }) =>
+					`${capacityMin}-${capacityMax} 人`,
 			},
 			{
 				Header: '等級',
-				accessor: 'lvMin',
+				accessor: ({ lvMin, lvMax }) => `Lv. ${lvMin}-${lvMax}`,
 			},
 			{
 				Header: '狀態',
@@ -72,16 +80,7 @@ const AdminIndexPage: NextPage = () => {
 									{row.cells.map((cell) => {
 										return (
 											// eslint-disable-next-line react/jsx-key
-											<td
-												{...cell.getCellProps()}
-												style={{
-													padding: '10px',
-													border: 'solid 1px gray',
-													background: 'papayawhip',
-												}}
-											>
-												{cell.render('Cell')}
-											</td>
+											<td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 										)
 									})}
 								</tr>
@@ -89,6 +88,9 @@ const AdminIndexPage: NextPage = () => {
 						})}
 					</tbody>
 				</table>
+				<div className='text-center text-xs text-gray-400'>
+					如要修改資料或進行更複雜的搜索，請登入 CMS 系統。
+				</div>
 			</div>
 		</>
 	)
