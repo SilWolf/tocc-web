@@ -16,7 +16,7 @@ export const mock = (instance: AxiosInstance): void => {
 			gameJson,
 			{ ...gameJson, status: 'draft' },
 			{ ...gameJson, status: 'confirmed' },
-			{ ...gameJson, status: 'gameCompleted' },
+			{ ...gameJson, status: 'completed' },
 			{ ...gameJson, status: 'closed' },
 			{ ...gameJson, status: 'done' },
 		])

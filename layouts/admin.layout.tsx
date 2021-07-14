@@ -44,7 +44,7 @@ const AdminLayout: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<div className='h-screen flex items-stretch bg-gray-200'>
+			<div className='h-screen flex items-stretch bg-gray-200 min-w-0'>
 				<div className='flex-none contianer w-64 px-4 bg-gray-800'>
 					<div className='py-4'>TOCC Admin Panel</div>
 
@@ -67,7 +67,7 @@ const AdminLayout: React.FC = ({ children }) => {
 					</div>
 				</div>
 
-				<div className='flex-1 flex flex-col min-h-0'>
+				<div className='flex-1 flex flex-col min-h-0 min-w-0'>
 					<div className='flex-none bg-gray-800 shadow z-10'>
 						<div className='px-8 py-5'>
 							<div className='flex'>
@@ -91,7 +91,7 @@ const AdminLayout: React.FC = ({ children }) => {
 						</div>
 					</div>
 
-					<div className='flex-1 flex flex-col overflow-y-auto'>
+					<div className='flex-1 flex flex-col overflow-y-auto min-w-0'>
 						<div className='flex-1'>
 							<div className='h-full p-8'>{children}</div>
 						</div>

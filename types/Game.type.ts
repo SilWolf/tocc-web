@@ -9,7 +9,7 @@ export type GameStatus =
 	| 'draft'
 	| 'published'
 	| 'confirmed'
-	| 'gameCompleted'
+	| 'completed'
 	| 'done'
 	| 'closed'
 

@@ -64,7 +64,7 @@ const AdminGamePage: NextPage = () => {
 									已確認報名, 等待開團
 								</span>
 							)
-						case 'gameCompleted':
+						case 'completed':
 							return (
 								<span className='p-1 text-xs text-blue-700 border border-blue-400 bg-blue-100'>
 									跑團完成, 等待派發獎勵
@@ -118,37 +118,39 @@ const AdminGamePage: NextPage = () => {
 						<a className='button button-primary'>新增劇本</a>
 					</NextLink>
 				</div>
-				<table {...getTableProps} className='table-default'>
-					<thead>
-						{headerGroups.map((headerGroup) => (
-							// eslint-disable-next-line react/jsx-key
-							<tr {...headerGroup.getHeaderGroupProps()}>
-								{headerGroup.headers.map((column) => (
-									// eslint-disable-next-line react/jsx-key
-									<th {...column.getHeaderProps()}>
-										{column.render('Header')}
-									</th>
-								))}
-							</tr>
-						))}
-					</thead>
-					<tbody {...getTableBodyProps()}>
-						{rows.map((row) => {
-							prepareRow(row)
-							return (
+				<div className='w-full overflow-x-scroll'>
+					<table {...getTableProps} className='table-default'>
+						<thead>
+							{headerGroups.map((headerGroup) => (
 								// eslint-disable-next-line react/jsx-key
-								<tr {...row.getRowProps()}>
-									{row.cells.map((cell) => {
-										return (
-											// eslint-disable-next-line react/jsx-key
-											<td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-										)
-									})}
+								<tr {...headerGroup.getHeaderGroupProps()}>
+									{headerGroup.headers.map((column) => (
+										// eslint-disable-next-line react/jsx-key
+										<th {...column.getHeaderProps()}>
+											{column.render('Header')}
+										</th>
+									))}
 								</tr>
-							)
-						})}
-					</tbody>
-				</table>
+							))}
+						</thead>
+						<tbody {...getTableBodyProps()}>
+							{rows.map((row) => {
+								prepareRow(row)
+								return (
+									// eslint-disable-next-line react/jsx-key
+									<tr {...row.getRowProps()}>
+										{row.cells.map((cell) => {
+											return (
+												// eslint-disable-next-line react/jsx-key
+												<td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+											)
+										})}
+									</tr>
+								)
+							})}
+						</tbody>
+					</table>
+				</div>
 				<div className='text-center text-xs text-gray-400'>
 					如要修改資料或進行更複雜的搜索，請登入 CMS 系統。
 				</div>

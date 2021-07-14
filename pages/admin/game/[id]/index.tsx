@@ -13,6 +13,7 @@ import { Input } from '../../../../components/Form'
 import Stepper from '../../../../components/Stepper'
 
 import lightFormat from 'date-fns/lightFormat'
+import Breadcrumb from '../../../../components/Breadcrumb'
 
 type FormProps = Game_Req
 
@@ -123,6 +124,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	const _formStatus = useWatch({ control, name: 'status' })
 
 	useEffect(() => {
+		console.log(game)
 		if (game && reset) {
 			reset({
 				...game,
@@ -157,7 +159,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			case 'published':
 				return ['確認玩家的報名', 2]
 			case 'confirmed':
-			case 'gameCompleted':
+			case 'completed':
 				return ['派發獎勵', 3]
 			case 'done':
 			case 'closed':
@@ -175,6 +177,14 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		<>
 			<form className='form' onSubmit={rhfHandleSubmit(handleSubmit)}>
 				<div className='space-y-4'>
+					<Breadcrumb>
+						<span>DM後台</span>
+						<NextLink href='/admin/game' passHref>
+							<a>劇本</a>
+						</NextLink>
+						<span>{game?.title || '新劇本'}</span>
+					</Breadcrumb>
+
 					<div className='flex gap-x-4 justify-between items-center'>
 						<div className='flex-1'>
 							<div className='form-group form-group-transparent'>
