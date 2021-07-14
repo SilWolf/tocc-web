@@ -1,0 +1,10 @@
+.formGroup :global() {
+}
+
+.formGroup :global(.form-group-helper-text) {
+  @apply text-xs text-gray-500;
+}
+
+.formGroup :global(.form-group-error-text) {
+  @apply text-xs text-red-400;
+}

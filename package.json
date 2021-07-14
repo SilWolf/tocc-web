@@ -4,16 +4,27 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"dev:mock": "NEXT_PUBLIC_USE_MOCK=1 next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "tsc && eslint ./ --ext .js,.jsx,.ts,.tsx --fix"
+		"lint": "tsc && next lint --fix"
 	},
 	"dependencies": {
 		"@tailwindcss/aspect-ratio": "^0.2.1",
 		"@tailwindcss/forms": "^0.3.3",
-		"next": "10.2.3",
+		"@types/react-table": "^7.7.2",
+		"axios": "^0.21.1",
+		"axios-cache-adapter": "^2.7.3",
+		"axios-mock-adapter": "^1.19.0",
+		"classnames": "^2.3.1",
+		"date-fns": "^2.22.1",
+		"next": "11.0.1",
+		"next-iron-session": "^4.2.0",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
+		"react-hook-form": "^7.11.0",
+		"react-query": "^3.18.1",
+		"react-table": "^7.7.0",
 		"ripplet.js": "^1.1.0",
 		"rpg-awesome": "^0.2.0",
 		"tailwindcss-ripple": "^0.7.1"
@@ -21,18 +32,20 @@
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-conventional": "^12.1.4",
-		"@types/react": "17.0.9",
-		"@typescript-eslint/eslint-plugin": "^4.26.0",
-		"@typescript-eslint/parser": "^4.26.0",
-		"autoprefixer": "^10.2.6",
-		"eslint": "^7.27.0",
+		"@types/classnames": "^2.3.1",
+		"@types/react": "17.0.14",
+		"@typescript-eslint/eslint-plugin": "^4.28.2",
+		"@typescript-eslint/parser": "^4.28.2",
+		"autoprefixer": "^10.3.0",
+		"eslint": "^7.30.0",
+		"eslint-config-next": "^11.0.1",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-import": "^2.23.4",
 		"eslint-plugin-react": "^7.24.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
-		"husky": "^6.0.0",
-		"postcss": "^8.3.0",
-		"tailwindcss": "^2.1.4",
-		"typescript": "^4.3.2"
+		"husky": "^7.0.1",
+		"postcss": "^8.3.5",
+		"tailwindcss": "^2.2.4",
+		"typescript": "^4.3.5"
 	}
 }
