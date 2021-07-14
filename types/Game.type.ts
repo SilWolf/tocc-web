@@ -3,7 +3,24 @@ import { City } from './City.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
-export type GameRaw = {
+export type GameStatus =
+	| 'draft'
+	| 'published'
+	| 'confirmed'
+	| 'gameCompleted'
+	| 'done'
+	| 'closed'
+
+export const gameStatusNumber: Record<GameStatus, number> = {
+	draft: 0,
+	published: 1,
+	confirmed: 2,
+	gameCompleted: 3,
+	done: 4,
+	closed: 5,
+}
+
+export type Game = Entity & {
 	title: string
 	code: string
 	description?: string
@@ -19,13 +36,23 @@ export type GameRaw = {
 	remark?: string
 	dm?: User
 	characters?: Character[]
-	status?: string
+	status?: GameStatus
 
 	characterAndRewards?: GameReward[]
 	journals?: string[]
 	city?: City
 
 	publishedAt?: string
+}
+
+export type Game_Req = Omit<
+	Game,
+	'id' | 'dm' | 'characters' | 'characterAndRewards' | 'city'
+> & {
+	dm?: string
+	characters?: string[]
+	characterAndRewards?: GameReward_Req[]
+	city?: string
 }
 
 export type GameReward = Entity & {
@@ -36,9 +63,11 @@ export type GameReward = Entity & {
 	character: Character
 }
 
-export type Game = GameRaw & Entity
+export type GameReward_Req = Omit<GameReward, 'character'> & {
+	character: string
+}
 
-export const gameDefaultValue: GameRaw = {
+export const gameDefaultValue: Game_Req = {
 	title: '',
 	code: '',
 	description: '',
@@ -53,4 +82,6 @@ export const gameDefaultValue: GameRaw = {
 	tags: '',
 	remark: '',
 	status: 'draft',
+	dm: '',
+	characters: [],
 }
