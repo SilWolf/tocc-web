@@ -8,6 +8,7 @@ import { Game, gameDefaultValue, GameRaw } from '../../../../types/Game.type'
 
 import * as api from '../../../../apis/api.helper'
 import { Input } from '../../../../components/Form'
+import Stepper from '../../../../components/Stepper'
 
 type FormProps = GameRaw
 
@@ -53,7 +54,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 
 					<div className='grid grid-cols-3 gap-x-4'>
 						<div className='col-span-2 space-y-6'>
-							<div className='flex justify-start gap-4'>
+							<div className='grid grid-cols-2 gap-x-4 gap-y-6'>
 								<Input
 									type='select'
 									label='城市 (店舖)'
@@ -66,9 +67,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('dm')}
 								/>
-							</div>
-
-							<div className='flex justify-start gap-4'>
 								<Input
 									type='date'
 									label='開始時間'
@@ -81,9 +79,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('endAt')}
 								/>
-							</div>
-
-							<div className='flex justify-start gap-4'>
 								<Input
 									type='date'
 									label='世界觀開始時間'
@@ -96,34 +91,34 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('worldEndAt')}
 								/>
-							</div>
-
-							<div className='flex justify-start gap-4'>
-								<Input
-									label='人數下限'
-									type='number'
-									wrapperProps={{ className: 'w-24' }}
-									{...register('capacityMin')}
-								/>
-								<Input
-									label='人數上限'
-									type='number'
-									wrapperProps={{ className: 'w-24' }}
-									{...register('capacityMax')}
-								/>
-								<div className='w-8'></div>
-								<Input
-									label='等級下限'
-									type='number'
-									wrapperProps={{ className: 'w-24' }}
-									{...register('lvMin')}
-								/>
-								<Input
-									label='等級上限'
-									type='number'
-									wrapperProps={{ className: 'w-24' }}
-									{...register('lvMax')}
-								/>
+								<div className='space-x-4'>
+									<Input
+										label='人數下限'
+										type='number'
+										wrapperProps={{ className: 'w-24 inline-block' }}
+										{...register('capacityMin')}
+									/>
+									<Input
+										label='人數上限'
+										type='number'
+										wrapperProps={{ className: 'w-24 inline-block' }}
+										{...register('capacityMax')}
+									/>
+								</div>
+								<div className='space-x-4'>
+									<Input
+										label='等級下限'
+										type='number'
+										wrapperProps={{ className: 'w-24 inline-block' }}
+										{...register('lvMin')}
+									/>
+									<Input
+										label='等級上限'
+										type='number'
+										wrapperProps={{ className: 'w-24 inline-block' }}
+										{...register('lvMax')}
+									/>
+								</div>
 							</div>
 
 							<Input
@@ -141,7 +136,32 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 
 							<div className='h-px bg-gray-400'></div>
 						</div>
-						<div>123</div>
+						<div>
+							<Stepper activeStep={0}>
+								<div>
+									<p className='font-semibold'>劇本草稿</p>
+									<p className='text-sm'>
+										填寫城市、DM、開始/結束時間、人數、等級、簡介
+									</p>
+								</div>
+								<div>
+									<p className='font-semibold'>發佈劇本</p>
+									<p className='text-sm'>發佈劇本至城市聊天群中</p>
+								</div>
+								<div>
+									<p className='font-semibold'>等待及確認玩家的報名</p>
+									<p className='text-sm'></p>
+								</div>
+								<div>
+									<p className='font-semibold'>跑團！</p>
+									<p className='text-sm'></p>
+								</div>
+								<div>
+									<p className='font-semibold'>跑團後續</p>
+									<p className='text-sm'>派發獎勵、後記、記錄玩家角色變化</p>
+								</div>
+							</Stepper>
+						</div>
 					</div>
 				</div>
 			</form>

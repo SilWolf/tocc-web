@@ -99,18 +99,18 @@ const Input = ({
 	let input
 
 	if (type === 'select') {
-		input = <select ref={innerRef} {...others} />
+		input = <select ref={innerRef} autoComplete='off' {...others} />
 	} else if (type === 'textarea') {
-		input = <textarea ref={innerRef} {...others} />
+		input = <textarea ref={innerRef} autoComplete='off' {...others} />
 	} else if (type === 'static') {
 		input = (
 			<>
-				<input type='hidden' ref={innerRef} {...others} />
+				<input type='hidden' ref={innerRef} autoComplete='off' {...others} />
 				<p className='input-static'>{others.placeholder}</p>
 			</>
 		)
 	} else {
-		input = <input type={type} ref={innerRef} {...others} />
+		input = <input type={type} ref={innerRef} autoComplete='off' {...others} />
 	}
 
 	return (
