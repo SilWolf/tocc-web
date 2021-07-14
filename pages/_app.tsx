@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import Dialog, { DialogProps } from '../components/Dialog'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
@@ -15,6 +16,11 @@ const queryClient = new QueryClient({
 			staleTime: 5 * 60 * 1000,
 		},
 	},
+})
+
+const apolloClient = new ApolloClient({
+	uri: process.env.NEXT_PUBLIC_API_ENDPOINT,
+	cache: new InMemoryCache(),
 })
 
 type AppContextProps = {
@@ -61,19 +67,21 @@ const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<>
 			<AppContext.Provider value={appContextValue}>
-				<QueryClientProvider client={queryClient}>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
+				<ApolloProvider client={apolloClient}>
+					<QueryClientProvider client={queryClient}>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
 
-					<div
-						className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
-							isDialogOpened ? 'block' : 'hidden'
-						}`}
-					>
-						<Dialog {...dialogOptions} />
-					</div>
-				</QueryClientProvider>
+						<div
+							className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
+								isDialogOpened ? 'block' : 'hidden'
+							}`}
+						>
+							<Dialog {...dialogOptions} />
+						</div>
+					</QueryClientProvider>
+				</ApolloProvider>
 			</AppContext.Provider>
 		</>
 	)
