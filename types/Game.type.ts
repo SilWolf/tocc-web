@@ -4,6 +4,7 @@ import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
 export type GameStatus =
+	| string
 	| 'new'
 	| 'draft'
 	| 'published'

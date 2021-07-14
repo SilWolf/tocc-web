@@ -5,16 +5,21 @@ import { useQuery } from 'react-query'
 import { useForm, useWatch } from 'react-hook-form'
 import cns from 'classnames'
 
-import { Game_Req, Game } from '../../../../types/Game.type'
+import { Game, City, User } from '../../../../types'
+import { Game_Req } from '../../../../types/Game.type'
 
 import * as api from '../../../../apis/api.helper'
 import { Input } from '../../../../components/Form'
 import Stepper from '../../../../components/Stepper'
 
+import lightFormat from 'date-fns/lightFormat'
+
 type FormProps = Game_Req
 
 type PageProps = {
 	game?: Game | undefined
+	cities: City[]
+	dms: User[]
 	isNew?: boolean
 }
 
@@ -81,7 +86,12 @@ const AdminGameDetailCharacterBox = ({
 	)
 }
 
-const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
+const AdminGameDetailPage: NextPage<PageProps> = ({
+	isNew,
+	game,
+	cities = [],
+	dms = [],
+}) => {
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
@@ -124,8 +134,14 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 						character: reward.character?.id,
 					})) || [],
 				characters: game.characters?.map((character) => character?.id) || [],
-				startAt: game.startAt?.substring(0, 10) || '',
-				endAt: game.endAt?.substring(0, 10) || '',
+				startAt: lightFormat(
+					game.startAt ? new Date(game.startAt) : new Date(),
+					"yyyy-MM-dd'T'HH:mm"
+				),
+				endAt: lightFormat(
+					game.endAt ? new Date(game.endAt) : new Date(),
+					"yyyy-MM-dd'T'HH:mm"
+				),
 				worldStartAt: game.worldStartAt?.substring(0, 10) || '',
 				worldEndAt: game.worldEndAt?.substring(0, 10) || '',
 			})
@@ -203,21 +219,33 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 									label='城市 (店舖)'
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('city')}
-								/>
+								>
+									{cities.map((city) => (
+										<option key={city.id} value={city.id}>
+											{city.name} ({city.code}) ({city.shopName})
+										</option>
+									))}
+								</Input>
 								<Input
 									type='select'
 									label='DM'
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('dm')}
-								/>
+								>
+									{dms.map((dm) => (
+										<option key={dm.id} value={dm.id}>
+											{dm.name} ({dm.code})
+										</option>
+									))}
+								</Input>
 								<Input
-									type='date'
+									type='datetime-local'
 									label='開始時間'
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('startAt')}
 								/>
 								<Input
-									type='date'
+									type='datetime-local'
 									label='結束時間'
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('endAt')}
@@ -423,11 +451,17 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 		}
 	}
 
-	const [game] = await Promise.all([api.getGameById(params.id as string)])
+	const [game, cities, dms] = await Promise.all([
+		api.getGameById(params.id as string),
+		api.getCities(),
+		api.getDMs(),
+	])
 
 	return {
 		props: {
 			game,
+			cities,
+			dms,
 		},
 	}
 }

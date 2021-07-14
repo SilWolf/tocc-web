@@ -6,12 +6,18 @@ export type User = Entity & {
 	name: string
 	email?: string
 	provider?: string
-	role?: string
+	role?: string | UserRole
 	confirmed?: boolean
 	blocked?: boolean
 	phone?: string
 	portraitImage?: Media
 	code?: string
+}
+
+export type UserRole = Entity & {
+	name: string
+	type: string
+	description: string
 }
 
 export type SessionUser = {
