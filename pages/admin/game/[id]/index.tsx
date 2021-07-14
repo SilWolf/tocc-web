@@ -1,16 +1,11 @@
 import { NextPage, GetServerSideProps } from 'next'
 import NextLink from 'next/link'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import cns from 'classnames'
 
-import {
-	Game,
-	Game_Req,
-	gameDefaultValue,
-	gameStatusNumber,
-} from '../../../../types/Game.type'
+import { Game_Req, Game } from '../../../../types/Game.type'
 
 import * as api from '../../../../apis/api.helper'
 import { Input } from '../../../../components/Form'
@@ -19,7 +14,7 @@ import Stepper from '../../../../components/Stepper'
 type FormProps = Game_Req
 
 type PageProps = {
-	game?: Game
+	game?: Game | undefined
 	isNew?: boolean
 }
 
@@ -87,42 +82,78 @@ const AdminGameDetailCharacterBox = ({
 }
 
 const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
-	const [activeStep, setActiveStep] = useState(() => {
-		if (isNew) {
-			return 0
-		}
-
-		return game?.status ? gameStatusNumber[game.status] : 0
+	const {
+		register,
+		handleSubmit: rhfHandleSubmit,
+		reset,
+		control,
+	} = useForm<FormProps>({
+		defaultValues: {
+			id: '',
+			title: '',
+			code: '',
+			description: '',
+			startAt: '',
+			endAt: '',
+			worldStartAt: '',
+			worldEndAt: '',
+			lvMin: 1,
+			lvMax: 1,
+			capacityMin: 3,
+			capacityMax: 6,
+			tags: '',
+			remark: '',
+			status: 'new',
+			city: undefined,
+			dm: undefined,
+			characters: [],
+			characterAndRewards: [],
+		},
 	})
+	const _formStatus = useWatch({ control, name: 'status' })
 
-	const submitButtonText = useMemo(() => {
-		switch (game?.status) {
+	useEffect(() => {
+		if (game && reset) {
+			reset({
+				...game,
+				dm: game.dm?.id,
+				city: game.city?.id,
+				characterAndRewards:
+					game.characterAndRewards?.map((reward) => ({
+						...reward,
+						character: reward.character?.id,
+					})) || [],
+				characters: game.characters?.map((character) => character?.id) || [],
+				startAt: game.startAt?.substring(0, 10) || '',
+				endAt: game.endAt?.substring(0, 10) || '',
+				worldStartAt: game.worldStartAt?.substring(0, 10) || '',
+				worldEndAt: game.worldEndAt?.substring(0, 10) || '',
+			})
+		}
+	}, [game, reset])
+
+	const [submitButtonText, flowStepIndex] = useMemo<[string, number]>(() => {
+		switch (_formStatus) {
+			case 'new':
+				return ['儲存', 0]
 			case 'draft':
-				return '發布劇本'
+				return ['發佈劇本', 1]
 			case 'published':
-				return '確認玩家的報名'
+				return ['確認玩家的報名', 2]
 			case 'confirmed':
 			case 'gameCompleted':
-				return '派發獎勵'
+				return ['派發獎勵', 3]
 			case 'done':
 			case 'closed':
-				return '已鎖定'
+				return ['已鎖定', 4]
 		}
 
-		return '儲存'
-	}, [game])
+		return ['儲存', 0]
+	}, [_formStatus])
 
-	const { register, handleSubmit: rhfHandleSubmit } = useForm<FormProps>({
-		defaultValues: gameDefaultValue,
-	})
-
-	const handleSubmit = useCallback(
-		(data) => {
-			console.log(data)
-			setActiveStep((prev) => prev++)
-		},
-		[setActiveStep]
-	)
+	const handleSubmit = useCallback((data) => {
+		console.log(data)
+	}, [])
 
 	return (
 		<>
@@ -151,10 +182,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 							{!isNew && (
 								<button
 									type='submit'
-									className={cns(
-										'button button-primary',
-										activeStep !== gameStatusNumber.draft && 'button-outline'
-									)}
+									className={cns('button button-primary button-outline')}
 								>
 									儲存
 								</button>
@@ -347,7 +375,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({ isNew, game }) => {
 									</div>
 								</div>
 
-								<Stepper activeStep={activeStep}>
+								<Stepper activeStep={flowStepIndex}>
 									<div>
 										<p className='font-semibold'>劇本草稿</p>
 										<p className='text-sm'>

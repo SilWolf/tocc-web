@@ -4,21 +4,13 @@ import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
 export type GameStatus =
+	| 'new'
 	| 'draft'
 	| 'published'
 	| 'confirmed'
 	| 'gameCompleted'
 	| 'done'
 	| 'closed'
-
-export const gameStatusNumber: Record<GameStatus, number> = {
-	draft: 0,
-	published: 1,
-	confirmed: 2,
-	gameCompleted: 3,
-	done: 4,
-	closed: 5,
-}
 
 export type Game = Entity & {
 	title: string
@@ -47,7 +39,7 @@ export type Game = Entity & {
 
 export type Game_Req = Omit<
 	Game,
-	'id' | 'dm' | 'characters' | 'characterAndRewards' | 'city'
+	'dm' | 'characters' | 'characterAndRewards' | 'city'
 > & {
 	dm?: string
 	characters?: string[]
@@ -67,7 +59,8 @@ export type GameReward_Req = Omit<GameReward, 'character'> & {
 	character: string
 }
 
-export const gameDefaultValue: Game_Req = {
+export const gameDefaultValue: Game = {
+	id: '',
 	title: '',
 	code: '',
 	description: '',
@@ -81,7 +74,17 @@ export const gameDefaultValue: Game_Req = {
 	capacityMax: 6,
 	tags: '',
 	remark: '',
-	status: 'draft',
+	status: 'new',
+	city: undefined,
+	dm: undefined,
+	characters: [],
+	characterAndRewards: [],
+}
+
+export const gameDefaultValue_Req: Game_Req = {
+	...gameDefaultValue,
+	city: '',
 	dm: '',
 	characters: [],
+	characterAndRewards: [],
 }

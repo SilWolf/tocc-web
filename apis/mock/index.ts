@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { AxiosInstance } from 'axios'
 import { GameStatus } from '../../types/Game.type'
 
-const gameSample = {
+const gameSample: Game = {
 	lvMin: 2,
 	capacityMin: 3,
 	capacityMax: 6,

@@ -15,7 +15,7 @@ const Stepper = ({ activeStep = 0, children }: Props): JSX.Element => {
 							className={cns(
 								'flex-none w-5 h-5 rounded-full text-xs text-center leading-5 text-white',
 								i < activeStep
-									? 'bg-green-400'
+									? 'bg-green-500'
 									: i === activeStep
 									? 'bg-yellow-600'
 									: 'bg-gray-400'
@@ -36,7 +36,7 @@ const Stepper = ({ activeStep = 0, children }: Props): JSX.Element => {
 						className={cns(
 							'flex-1 text-sm pb-4',
 							i < activeStep
-								? 'text-green-400'
+								? 'text-green-500'
 								: i === activeStep
 								? 'text-yellow-600'
 								: 'text-gray-400'
