@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
 
-import { City } from '../../../types/City.type'
+import { City } from 'types/City.type'
 
-import * as api from '../../../apis/api.helper'
+import * as api from 'helpers/api/api.helper'
 
 const AdminCityPage: NextPage = () => {
 	const columns = useMemo<Column<City>[]>(

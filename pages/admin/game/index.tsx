@@ -4,11 +4,11 @@ import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
 
-import { Game } from '../../../types/Game.type'
+import { Game } from 'types/Game.type'
 
-import { DateSpan } from '../../../components/Datetime'
+import { DateSpan } from 'components/Datetime'
 
-import * as api from '../../../apis/api.helper'
+import * as api from 'helpers/api/api.helper'
 
 const AdminGamePage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(

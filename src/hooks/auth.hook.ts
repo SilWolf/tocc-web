@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { default as Router } from 'next/router'
-import { SessionUser } from '../types/User.type'
+import { SessionUser } from 'types/User.type'
 
-import * as api from '../apis/api.helper'
+import * as api from 'helpers/api/api.helper'
 
 export const useSessionUser = ({
 	redirectTo = undefined,

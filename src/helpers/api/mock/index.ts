@@ -1,4 +1,4 @@
-import { Game, User, City } from '../../types'
+import { Game, User, City } from 'types'
 
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosInstance } from 'axios'
