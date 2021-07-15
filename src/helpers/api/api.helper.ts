@@ -2,6 +2,7 @@ import { City } from 'types/City.type'
 import { Game } from 'types/Game.type'
 import { User } from 'types/User.type'
 
+import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
 
 import api, { ExtendedAxiosRequestConfig } from './api.service'
@@ -27,6 +28,17 @@ export const getMe = async (): Promise<User> => {
 }
 
 export const getGames = async (): Promise<Game[]> => api.get<Game[]>('/games')
+
+export const dmGetGames = async (
+	config: ExtendedAxiosRequestConfig
+): Promise<Game[]> =>
+	api.get<Game[]>('/games', {
+		cache: { maxAge: 5 * 60 * 1000 },
+		...config,
+	})
+
+export const getGamesCount = async (): Promise<number> =>
+	api.get<number>('games/count', { cache: { maxAge: 5 * 60 * 1000 } })
 
 export const getGameById = async (id: string): Promise<Game> =>
 	api.get<Game>(`/games/${id}`)
@@ -58,4 +70,26 @@ export type ApiGetParams = {
 	_sort?: string
 	_start?: string | number
 	_limit?: string | number
+}
+
+export const convertDataTableStateToApiParams = (
+	state: DataTableState<Record<string, unknown>>
+): ApiGetParams => {
+	const newApiParams: ApiGetParams = {}
+
+	if (state.sortBy?.length > 0) {
+		newApiParams._sort = state.sortBy
+			.map((sortBy) => `${sortBy.id}:${sortBy.desc ? 'DESC' : 'ASC'}`)
+			.join(',')
+	}
+
+	if (state.pageSize) {
+		newApiParams._limit = state.pageSize
+
+		if (state.pageIndex !== undefined) {
+			newApiParams._start = state.pageSize * state.pageIndex || 0
+		}
+	}
+
+	return newApiParams
 }

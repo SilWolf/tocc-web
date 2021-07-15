@@ -1,9 +1,8 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 
-import { useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
-import { Column,useTable } from 'react-table'
 
 import { Game } from 'types/Game.type'
 
@@ -11,22 +10,32 @@ import * as api from 'helpers/api/api.helper'
 
 import { DateSpan } from 'components/Datetime'
 
+import DataTable, {
+	DataTableColumnProps,
+	DataTableState,
+} from 'src/components/DataTable'
+
 const AdminGamePage: NextPage = () => {
-	const columns = useMemo<Column<Game>[]>(
+	const columns = useMemo<DataTableColumnProps<Game>[]>(
 		() => [
 			{
+				id: 'title',
 				Header: '標題',
 				accessor: 'title',
 			},
 			{
+				id: 'dm',
 				Header: 'DM',
 				accessor: ({ dm }) => dm?.name,
+				disableSortBy: true,
 			},
 			{
+				id: 'startAt',
 				Header: '現實時間',
 				accessor: ({ startAt }) => <DateSpan>{startAt}</DateSpan>,
 			},
 			{
+				id: 'worldStartAt',
 				Header: '世界觀時間',
 				accessor: ({ worldStartAt }) => (
 					<span>
@@ -35,15 +44,18 @@ const AdminGamePage: NextPage = () => {
 				),
 			},
 			{
+				id: 'capacityMin',
 				Header: '人數',
 				accessor: ({ capacityMin, capacityMax }) =>
 					`${capacityMin}-${capacityMax} 人`,
 			},
 			{
+				id: 'lvMin',
 				Header: '等級',
 				accessor: ({ lvMin, lvMax }) => `Lv. ${lvMin}-${lvMax}`,
 			},
 			{
+				id: 'status',
 				Header: '狀態',
 				accessor: ({ status }) => {
 					switch (status) {
@@ -89,6 +101,7 @@ const AdminGamePage: NextPage = () => {
 				},
 			},
 			{
+				id: 'actions',
 				Header: '動作',
 				accessor: ({ id }) => {
 					return (
@@ -101,57 +114,41 @@ const AdminGamePage: NextPage = () => {
 						</>
 					)
 				},
+				disableSortBy: true,
 			},
 		],
 		[]
 	)
 
-	const { data } = useQuery('games', api.getGames)
+	const [apiParams, setApiParams] = useState<api.ApiGetParams>({})
+	const { data } = useQuery(
+		['games', { params: apiParams }],
+		() => api.dmGetGames({ params: apiParams }),
+		{
+			keepPreviousData: true,
+		}
+	)
+	const { data: dataTotal } = useQuery(['games', 'count'], api.getGamesCount)
 
-	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable({ columns, data: data || [] })
+	const handleTableChangeState = useCallback((state: DataTableState<Game>) => {
+		setApiParams(api.convertDataTableStateToApiParams(state))
+	}, [])
 
 	return (
 		<>
 			<div className='space-y-4'>
-				<div className='text-right space-x-2'>
+				<div className='flex justify-between gap-x-4'>
+					<h2>劇本</h2>
 					<NextLink href='/admin/game/new' passHref>
 						<a className='button button-primary'>新增劇本</a>
 					</NextLink>
 				</div>
-				<div className='w-full overflow-x-auto'>
-					<table {...getTableProps} className='table-default'>
-						<thead>
-							{headerGroups.map((headerGroup) => (
-								// eslint-disable-next-line react/jsx-key
-								<tr {...headerGroup.getHeaderGroupProps()}>
-									{headerGroup.headers.map((column) => (
-										// eslint-disable-next-line react/jsx-key
-										<th {...column.getHeaderProps()}>
-											{column.render('Header')}
-										</th>
-									))}
-								</tr>
-							))}
-						</thead>
-						<tbody {...getTableBodyProps()}>
-							{rows.map((row) => {
-								prepareRow(row)
-								return (
-									// eslint-disable-next-line react/jsx-key
-									<tr {...row.getRowProps()}>
-										{row.cells.map((cell) => {
-											return (
-												// eslint-disable-next-line react/jsx-key
-												<td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-											)
-										})}
-									</tr>
-								)
-							})}
-						</tbody>
-					</table>
-				</div>
+				<DataTable
+					data={data || []}
+					dataTotal={dataTotal}
+					columns={columns}
+					onChangeState={handleTableChangeState}
+				/>
 				<div className='text-center text-xs text-gray-400'>
 					如要修改資料或進行更複雜的搜索，請登入 CMS 系統。
 				</div>

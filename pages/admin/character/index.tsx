@@ -13,10 +13,8 @@ import DataTable, {
 	DataTableState,
 } from 'components/DataTable'
 
-type PAGE_TABLE_DATA_TYPE = Character
-
 const AdminCharacterPage: NextPage = () => {
-	const columns = useMemo<DataTableColumnProps<PAGE_TABLE_DATA_TYPE>[]>(
+	const columns = useMemo<DataTableColumnProps<Character>[]>(
 		() => [
 			{
 				id: 'name',
@@ -91,24 +89,8 @@ const AdminCharacterPage: NextPage = () => {
 	)
 
 	const handleTableChangeState = useCallback(
-		(state: DataTableState<PAGE_TABLE_DATA_TYPE>) => {
-			const newApiParams: api.ApiGetParams = {}
-
-			if (state.sortBy?.length > 0) {
-				newApiParams._sort = state.sortBy
-					.map((sortBy) => `${sortBy.id}:${sortBy.desc ? 'DESC' : 'ASC'}`)
-					.join(',')
-			}
-
-			if (state.pageSize) {
-				newApiParams._limit = state.pageSize
-
-				if (state.pageIndex !== undefined) {
-					newApiParams._start = state.pageSize * state.pageIndex || 0
-				}
-			}
-
-			setApiParams(newApiParams)
+		(state: DataTableState<Character>) => {
+			setApiParams(api.convertDataTableStateToApiParams(state))
 		},
 		[]
 	)
