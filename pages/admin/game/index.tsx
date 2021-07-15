@@ -137,7 +137,7 @@ const AdminGamePage: NextPage = () => {
 						<a className='button button-primary'>新增劇本</a>
 					</NextLink>
 				</div>
-				<div className='w-full overflow-x-scroll'>
+				<div className='w-full overflow-x-auto'>
 					<table {...getTableProps} className='table-default'>
 						<thead>
 							{headerGroups.map((headerGroup) => (
