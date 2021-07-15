@@ -1,8 +1,9 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
+
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { useTable, Column } from 'react-table'
+import { Column,useTable } from 'react-table'
 
 import { City } from 'types/City.type'
 

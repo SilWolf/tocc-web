@@ -1,14 +1,15 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
+
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { useTable, Column } from 'react-table'
+import { Column,useTable } from 'react-table'
 
 import { Game } from 'types/Game.type'
 
-import { DateSpan } from 'components/Datetime'
-
 import * as api from 'helpers/api/api.helper'
+
+import { DateSpan } from 'components/Datetime'
 
 const AdminGamePage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(
