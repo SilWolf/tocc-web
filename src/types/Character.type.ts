@@ -1,3 +1,5 @@
+import { City } from './City.type'
+import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
 export type Character = Entity & {
@@ -8,6 +10,6 @@ export type Character = Entity & {
 	gp?: number
 	clses?: string[]
 	code?: string
-	city?: string
-	player?: string
+	city?: City
+	player?: User
 }

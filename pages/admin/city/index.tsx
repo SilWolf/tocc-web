@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { Column,useTable } from 'react-table'
+import { Column, useTable } from 'react-table'
 
 import { City } from 'types/City.type'
 
@@ -22,23 +22,24 @@ const AdminCityPage: NextPage = () => {
 			},
 			{
 				Header: '城市等級',
-				accessor: () => 0,
+				accessor: 'level',
 			},
 			{
 				Header: '繁榮度',
-				accessor: () => '0/0',
+				accessor: ({ prosperity, prosperityMax }) =>
+					`${prosperity || 0}/${prosperityMax || 0}`,
 			},
 			{
 				Header: '所屬店舖',
 				accessor: 'shopName',
 			},
 			{
-				Header: '已登記玩家人數',
-				accessor: () => '0人',
+				Header: '已登記角色人數',
+				accessor: ({ charactersCount }) => `${charactersCount || 0}名`,
 			},
 			{
-				Header: '已登記角色人數',
-				accessor: () => '0名',
+				Header: '已登記玩家人數',
+				accessor: ({ playersCount }) => `${playersCount || 0}人`,
 			},
 			{
 				Header: '動作',
@@ -58,7 +59,7 @@ const AdminCityPage: NextPage = () => {
 		[]
 	)
 
-	const { data } = useQuery('cities', api.getCities)
+	const { data } = useQuery('cities', api.dmGetCities)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
 		useTable({ columns, data: data || [] })

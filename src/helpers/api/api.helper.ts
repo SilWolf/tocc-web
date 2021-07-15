@@ -1,8 +1,10 @@
-import api from './api.service'
-
-import { User } from 'types/User.type'
-import { Game } from 'types/Game.type'
 import { City } from 'types/City.type'
+import { Game } from 'types/Game.type'
+import { User } from 'types/User.type'
+
+import { Character } from 'src/types'
+
+import api from './api.service'
 
 export const postLogin = async (
 	identifier: string,
@@ -36,3 +38,9 @@ export const getDMs = async (): Promise<User[]> =>
 	api.get<User[]>('/users?role.type=dungeon_master', {
 		cache: { maxAge: 5 * 60 * 1000 },
 	})
+
+export const dmGetCities = async (): Promise<City[]> =>
+	api.get<City[]>('/dm/cities', { cache: { maxAge: 5 * 60 * 1000 } })
+
+export const dmGetCharacters = async (): Promise<Character[]> =>
+	api.get<Character[]>('/characters', { cache: { maxAge: 5 * 60 * 1000 } })

@@ -5,4 +5,9 @@ export type City = Entity & {
 	code: string
 	shopName?: string
 	shopAddress?: string
+	charactersCount?: number
+	playersCount?: number
+	level?: number
+	prosperity?: number
+	prosperityMax?: number
 }
