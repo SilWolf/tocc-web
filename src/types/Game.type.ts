@@ -31,20 +31,15 @@ export type Game = Entity & {
 	characters?: Character[]
 	status?: GameStatus
 
-	characterAndRewards?: GameReward[]
 	journals?: string[]
 	city?: City
 
 	publishedAt?: string
 }
 
-export type Game_Req = Omit<
-	Game,
-	'dm' | 'characters' | 'characterAndRewards' | 'city'
-> & {
+export type Game_Req = Omit<Game, 'dm' | 'characters' | 'city'> & {
 	dm?: string
 	characters?: string[]
-	characterAndRewards?: GameReward_Req[]
 	city?: string
 }
 
@@ -79,7 +74,6 @@ export const gameDefaultValue: Game = {
 	city: undefined,
 	dm: undefined,
 	characters: [],
-	characterAndRewards: [],
 }
 
 export const gameDefaultValue_Req: Game_Req = {
@@ -87,5 +81,4 @@ export const gameDefaultValue_Req: Game_Req = {
 	city: '',
 	dm: '',
 	characters: [],
-	characterAndRewards: [],
 }

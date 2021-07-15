@@ -119,7 +119,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			city: undefined,
 			dm: undefined,
 			characters: [],
-			characterAndRewards: [],
 		},
 	})
 	const _formStatus = useWatch({ control, name: 'status' })
@@ -131,11 +130,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				...game,
 				dm: game.dm?.id,
 				city: game.city?.id,
-				characterAndRewards:
-					game.characterAndRewards?.map((reward) => ({
-						...reward,
-						character: reward.character?.id,
-					})) || [],
 				characters: game.characters?.map((character) => character?.id) || [],
 				startAt: lightFormat(
 					game.startAt ? new Date(game.startAt) : new Date(),
