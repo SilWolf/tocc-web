@@ -2,9 +2,7 @@ import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ApolloProvider } from '@apollo/client'
 import Dialog, { DialogProps } from '../components/Dialog'
-import apolloClient from '../apolloClient'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import '../styles/globals.css'
@@ -63,21 +61,19 @@ const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<>
 			<AppContext.Provider value={appContextValue}>
-				<ApolloProvider client={apolloClient}>
-					<QueryClientProvider client={queryClient}>
-						<Layout>
-							<Component {...pageProps} />
-						</Layout>
+				<QueryClientProvider client={queryClient}>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
 
-						<div
-							className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
-								isDialogOpened ? 'block' : 'hidden'
-							}`}
-						>
-							<Dialog {...dialogOptions} />
-						</div>
-					</QueryClientProvider>
-				</ApolloProvider>
+					<div
+						className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
+							isDialogOpened ? 'block' : 'hidden'
+						}`}
+					>
+						<Dialog {...dialogOptions} />
+					</div>
+				</QueryClientProvider>
 			</AppContext.Provider>
 		</>
 	)

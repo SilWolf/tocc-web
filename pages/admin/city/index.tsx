@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useMemo } from 'react'
-import { useQuery as useGraphqlQuery, gql } from '@apollo/client'
+import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
 
 import { City } from '../../../types/City.type'
 
-import { DateSpan } from '../../../components/Datetime'
+import * as api from '../../../apis/api.helper'
 
 const AdminCityPage: NextPage = () => {
 	const columns = useMemo<Column<City>[]>(
@@ -57,21 +57,10 @@ const AdminCityPage: NextPage = () => {
 		[]
 	)
 
-	const { data } = useGraphqlQuery(
-		gql(`
-			query {
-				cities {
-					id
-					name
-					code
-					shopName
-				}
-			}
-		`)
-	)
+	const { data } = useQuery('cities', api.getCities)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable({ columns, data: data?.cities || [] })
+		useTable({ columns, data: data || [] })
 
 	return (
 		<>

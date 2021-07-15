@@ -3,8 +3,6 @@ import NextLink from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import cns from 'classnames'
-import { gql } from '@apollo/client'
-import apolloClient from '../../../../apolloClient'
 
 import { Game, City, User } from '../../../../types'
 import { Game_Req } from '../../../../types/Game.type'

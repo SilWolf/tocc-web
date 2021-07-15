@@ -1,12 +1,14 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useMemo } from 'react'
-import { useQuery as useGraphqlQuery, gql } from '@apollo/client'
+import { useQuery } from 'react-query'
 import { useTable, Column } from 'react-table'
 
 import { Game } from '../../../types/Game.type'
 
 import { DateSpan } from '../../../components/Datetime'
+
+import * as api from '../../../apis/api.helper'
 
 const AdminGamePage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(
@@ -103,31 +105,10 @@ const AdminGamePage: NextPage = () => {
 		[]
 	)
 
-	const { loading, error, data } = useGraphqlQuery(
-		gql(`
-			query {
-				games {
-					id
-					title
-					startAt
-					endAt
-					worldStartAt
-					worldEndAt
-					lvMin
-					lvMax
-					capacityMin
-					capacityMax
-					status
-					dm {
-						name
-					}
-				}
-			}
-		`)
-	)
+	const { data } = useQuery('games', api.getGames)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable({ columns, data: data?.games || [] })
+		useTable({ columns, data: data || [] })
 
 	return (
 		<>
