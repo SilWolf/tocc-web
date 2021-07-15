@@ -2,8 +2,9 @@ import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import { createContext, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import Dialog, { DialogProps } from '../components/Dialog'
+import apolloClient from '../apolloClient'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import '../styles/globals.css'
@@ -16,11 +17,6 @@ const queryClient = new QueryClient({
 			staleTime: 5 * 60 * 1000,
 		},
 	},
-})
-
-const apolloClient = new ApolloClient({
-	uri: process.env.NEXT_PUBLIC_API_ENDPOINT,
-	cache: new InMemoryCache(),
 })
 
 type AppContextProps = {

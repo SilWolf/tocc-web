@@ -1,12 +1,10 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery as useGraphqlQuery, gql } from '@apollo/client'
 import { useTable, Column } from 'react-table'
 
 import { Game } from '../../../types/Game.type'
-
-import * as api from '../../../apis/api.helper'
 
 import { DateSpan } from '../../../components/Datetime'
 
@@ -105,10 +103,31 @@ const AdminGamePage: NextPage = () => {
 		[]
 	)
 
-	const query = useQuery('games', () => api.getGames())
+	const { loading, error, data } = useGraphqlQuery(
+		gql(`
+			query {
+				games {
+					id
+					title
+					startAt
+					endAt
+					worldStartAt
+					worldEndAt
+					lvMin
+					lvMax
+					capacityMin
+					capacityMax
+					status
+					dm {
+						name
+					}
+				}
+			}
+		`)
+	)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable({ columns, data: query.data || [] })
+		useTable({ columns, data: data?.games || [] })
 
 	return (
 		<>
