@@ -65,6 +65,27 @@ export const dmGetCharacters = async (
 export const getCharactersCount = async (): Promise<number> =>
 	api.get<number>('/characters/count', { cache: { maxAge: 5 * 60 * 1000 } })
 
+export const dmGetPlayers = async ({
+	params,
+	...config
+}: ExtendedAxiosRequestConfig): Promise<User[]> =>
+	api.get<User[]>('/users', {
+		cache: { maxAge: 5 * 60 * 1000 },
+		params: {
+			'role.name': 'Authenticated',
+			...params,
+		},
+		...config,
+	})
+
+export const getPlayersCount = async (): Promise<number> =>
+	api.get<number>('/users/count', {
+		params: {
+			'role.name': 'Authenticated',
+		},
+		cache: { maxAge: 5 * 60 * 1000 },
+	})
+
 export type ApiGetParams = {
 	_q?: string
 	_sort?: string

@@ -137,7 +137,7 @@ const DataTable = <T extends Record<string, unknown>>({
 
 	return (
 		<>
-			<div className='flex justify-between items-center'>
+			<div className='flex justify-between items-end'>
 				<p className='text-gray-400 text-sm'>共有 {dataTotal} 筆紀錄</p>
 				<DateTablePagination
 					pageCount={pageCount}

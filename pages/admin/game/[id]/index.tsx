@@ -319,7 +319,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 
 							<div className='form-group'>
 								{flowStepIndex < 4 && (
-									<div className='text-center text-gray-400'>
+									<div className='text-center text-gray-400 my-16'>
 										你要先跑完團才能派發獎勵。
 									</div>
 								)}

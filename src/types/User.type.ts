@@ -1,3 +1,4 @@
+import { City } from './City.type'
 import { Entity } from './utils/Entity.type'
 import { Media } from './utils/Media.type'
 
@@ -12,6 +13,7 @@ export type User = Entity & {
 	phone?: string
 	portraitImage?: Media
 	code?: string
+	city?: City
 }
 
 export type UserRole = Entity & {
