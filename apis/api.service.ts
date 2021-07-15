@@ -12,7 +12,7 @@ export type ExtendedAxiosRequestConfig = AxiosRequestConfig & {
 
 const instance: AxiosInstance = axios.create({
 	adapter: cache.adapter,
-	baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT || '/api',
+	baseURL: process.env.API_ENDPOINT || '/api',
 	timeout: 30000,
 	headers: {
 		'Content-Type': 'application/json',
