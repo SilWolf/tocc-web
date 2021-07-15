@@ -13,7 +13,7 @@ type NextIronRequest = NextApiRequest & { session: Session }
 
 export default withSession(
 	async (req: NextIronRequest, res: NextApiResponse) => {
-		const { slug, query } = req.query
+		const { slug, ...query } = req.query
 		const config: ExtendedAxiosRequestConfig = {
 			url: (slug as string[]).join('/'),
 			method: req.method as AxiosMethod,

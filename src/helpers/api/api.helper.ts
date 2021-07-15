@@ -4,7 +4,7 @@ import { User } from 'types/User.type'
 
 import { Character } from 'src/types'
 
-import api from './api.service'
+import api, { ExtendedAxiosRequestConfig } from './api.service'
 
 export const postLogin = async (
 	identifier: string,
@@ -42,5 +42,17 @@ export const getDMs = async (): Promise<User[]> =>
 export const dmGetCities = async (): Promise<City[]> =>
 	api.get<City[]>('/dm/cities', { cache: { maxAge: 5 * 60 * 1000 } })
 
-export const dmGetCharacters = async (): Promise<Character[]> =>
-	api.get<Character[]>('/characters', { cache: { maxAge: 5 * 60 * 1000 } })
+export const dmGetCharacters = async (
+	config: ExtendedAxiosRequestConfig
+): Promise<Character[]> =>
+	api.get<Character[]>('/characters', {
+		cache: { maxAge: 5 * 60 * 1000 },
+		...config,
+	})
+
+export type ApiGetParams = {
+	_q?: string
+	_sort?: string
+	_start?: string | number
+	_limit?: string | number
+}

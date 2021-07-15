@@ -1,6 +1,6 @@
+import { mock } from './mock'
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { setupCache } from 'axios-cache-adapter'
-import { mock } from './mock'
 
 const cache = setupCache({
 	maxAge: 0,
