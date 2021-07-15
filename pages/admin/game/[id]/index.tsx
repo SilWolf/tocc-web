@@ -1,7 +1,6 @@
 import { NextPage, GetServerSideProps } from 'next'
 import NextLink from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
 import { useForm, useWatch } from 'react-hook-form'
 import cns from 'classnames'
 
@@ -159,11 +158,12 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			case 'published':
 				return ['確認玩家的報名', 2]
 			case 'confirmed':
+				return ['跑完團了！', 3]
 			case 'completed':
-				return ['派發獎勵', 3]
+				return ['派發獎勵', 4]
 			case 'done':
 			case 'closed':
-				return ['已鎖定', 4]
+				return ['已鎖定', 5]
 		}
 
 		return ['儲存', 0]
@@ -322,64 +322,71 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							<h4>玩家XP、金錢獎勵、獲得物品</h4>
 
 							<div className='form-group'>
-								<table className='table-bordered'>
-									<thead>
-										<tr>
-											<th></th>
-											<th>獲得XP</th>
-											<th>獲得GP</th>
-											<th>增減物品/知識/人際關係/稱號...</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th className='w-28 text-right'>隊伍總和</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td></td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								{flowStepIndex < 4 && (
+									<div className='text-center text-gray-400'>
+										你要先跑完團才能派發獎勵。
+									</div>
+								)}
+								{flowStepIndex >= 4 && (
+									<table className='table-bordered'>
+										<thead>
+											<tr>
+												<th></th>
+												<th>獲得XP</th>
+												<th>獲得GP</th>
+												<th>增減物品/知識/人際關係/稱號...</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th className='w-28 text-right'>隊伍總和</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td></td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								)}{' '}
 							</div>
 						</div>
 

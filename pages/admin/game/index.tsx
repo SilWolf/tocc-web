@@ -6,9 +6,9 @@ import { useTable, Column } from 'react-table'
 
 import { Game } from '../../../types/Game.type'
 
-import * as api from '../../../apis/api.helper'
-
 import { DateSpan } from '../../../components/Datetime'
+
+import * as api from '../../../apis/api.helper'
 
 const AdminGamePage: NextPage = () => {
 	const columns = useMemo<Column<Game>[]>(
@@ -105,10 +105,10 @@ const AdminGamePage: NextPage = () => {
 		[]
 	)
 
-	const query = useQuery('games', () => api.getGames())
+	const { data } = useQuery('games', api.getGames)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-		useTable({ columns, data: query.data || [] })
+		useTable({ columns, data: data || [] })
 
 	return (
 		<>
@@ -118,7 +118,7 @@ const AdminGamePage: NextPage = () => {
 						<a className='button button-primary'>新增劇本</a>
 					</NextLink>
 				</div>
-				<div className='w-full overflow-x-scroll'>
+				<div className='w-full overflow-x-auto'>
 					<table {...getTableProps} className='table-default'>
 						<thead>
 							{headerGroups.map((headerGroup) => (
