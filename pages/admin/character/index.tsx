@@ -85,15 +85,27 @@ const AdminCharacterPage: NextPage = () => {
 			keepPreviousData: true,
 		}
 	)
+	const { data: dataTotal } = useQuery(
+		['characters', 'count'],
+		api.getCharactersCount
+	)
 
 	const handleTableChangeState = useCallback(
 		(state: DataTableState<PAGE_TABLE_DATA_TYPE>) => {
 			const newApiParams: api.ApiGetParams = {}
 
-			if (state.sortBy) {
+			if (state.sortBy?.length > 0) {
 				newApiParams._sort = state.sortBy
 					.map((sortBy) => `${sortBy.id}:${sortBy.desc ? 'DESC' : 'ASC'}`)
 					.join(',')
+			}
+
+			if (state.pageSize) {
+				newApiParams._limit = state.pageSize
+
+				if (state.pageIndex !== undefined) {
+					newApiParams._start = state.pageSize * state.pageIndex || 0
+				}
 			}
 
 			setApiParams(newApiParams)
@@ -104,18 +116,18 @@ const AdminCharacterPage: NextPage = () => {
 	return (
 		<>
 			<div className='space-y-4'>
-				<div className='text-right space-x-2'>
+				<div className='flex justify-between gap-x-4'>
+					<h2>玩家角色</h2>
 					<NextLink href='/admin/character/new' passHref>
 						<a className='button button-primary'>新增劇本</a>
 					</NextLink>
 				</div>
-				<div className='w-full overflow-x-auto'>
-					<DataTable
-						data={data || []}
-						columns={columns}
-						onChangeState={handleTableChangeState}
-					/>
-				</div>
+				<DataTable
+					data={data || []}
+					dataTotal={dataTotal}
+					columns={columns}
+					onChangeState={handleTableChangeState}
+				/>
 				<div className='text-center text-xs text-gray-400'>
 					如要修改資料或進行更複雜的搜索，請登入 CMS 系統。
 				</div>

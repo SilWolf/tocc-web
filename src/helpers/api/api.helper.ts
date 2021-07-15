@@ -50,6 +50,9 @@ export const dmGetCharacters = async (
 		...config,
 	})
 
+export const getCharactersCount = async (): Promise<number> =>
+	api.get<number>('/characters/count', { cache: { maxAge: 5 * 60 * 1000 } })
+
 export type ApiGetParams = {
 	_q?: string
 	_sort?: string

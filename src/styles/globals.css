@@ -176,7 +176,7 @@
 	}
 
 	table.table-default thead tr {
-		@apply bg-gray-200 text-gray-600 text-sm leading-normal;
+		@apply bg-gray-600 text-white text-sm leading-normal;
 	}
 
 	table.table-default thead tr th {
