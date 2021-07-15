@@ -1,14 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Session } from 'next-iron-session'
-import withSession from '../../hooks/withSession.hook'
-import { SessionUser } from '../../types/User.type'
 
-type NextIronRequest = NextApiRequest & { session: Session }
+import { SessionUser } from 'types/User.type'
 
 import api, {
-	ExtendedAxiosRequestConfig,
 	AxiosMethod,
-} from '../../apis/api.service'
+	ExtendedAxiosRequestConfig,
+} from 'helpers/api/api.service'
+import withSession from 'hooks/withSession.hook'
+
+type NextIronRequest = NextApiRequest & { session: Session }
 
 export default withSession(
 	async (req: NextIronRequest, res: NextApiResponse) => {

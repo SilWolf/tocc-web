@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Session } from 'next-iron-session'
-import withSession from '../../../hooks/withSession.hook'
-import { SessionUser } from '../../../types/User.type'
+
+import { SessionUser } from 'types/User.type'
+
+import withSession from 'hooks/withSession.hook'
 
 type NextIronRequest = NextApiRequest & { session: Session }
 

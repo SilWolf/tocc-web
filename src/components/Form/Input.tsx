@@ -5,10 +5,11 @@ import React, {
 	TextareaHTMLAttributes,
 	useMemo,
 } from 'react'
-import cns from 'classnames'
+import { FieldError } from 'react-hook-form'
 
 import styles from './input.component.module.css'
-import { FieldError } from 'react-hook-form'
+
+import cns from 'classnames'
 // import { useTranslations } from 'next-intl'
 
 type LabelProps = HTMLAttributes<HTMLLabelElement>

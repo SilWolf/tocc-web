@@ -1,13 +1,15 @@
-import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
+
 import { createContext, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import Dialog, { DialogProps } from '../components/Dialog'
+
+import AdminLayout from 'layouts/admin.layout'
+import GeneralLayout from 'layouts/general.layout'
+import Dialog, { DialogProps } from 'components/Dialog'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
-import '../styles/globals.css'
-import AdminLayout from '../layouts/admin.layout'
-import GeneralLayout from '../layouts/general.layout'
+import 'src/styles/globals.css'
 
 const queryClient = new QueryClient({
 	defaultOptions: {

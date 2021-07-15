@@ -1,4 +1,5 @@
 import React from 'react'
+
 import dateFnsLightFormat from 'date-fns/lightFormat'
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & {

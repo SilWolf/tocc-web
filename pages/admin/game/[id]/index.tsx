@@ -1,18 +1,20 @@
-import { NextPage, GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
+
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
+
+import { City, Game, User } from 'types'
+import { Game_Req } from 'types/Game.type'
+
+import * as api from 'helpers/api/api.helper'
+
+import Breadcrumb from 'components/Breadcrumb'
+import { Input } from 'components/Form'
+import Stepper from 'components/Stepper'
+
 import cns from 'classnames'
-
-import { Game, City, User } from '../../../../types'
-import { Game_Req } from '../../../../types/Game.type'
-
-import * as api from '../../../../apis/api.helper'
-import { Input } from '../../../../components/Form'
-import Stepper from '../../../../components/Stepper'
-
 import lightFormat from 'date-fns/lightFormat'
-import Breadcrumb from '../../../../components/Breadcrumb'
 
 type FormProps = Game_Req
 
