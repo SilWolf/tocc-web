@@ -60,13 +60,18 @@ const AdminCharacterPage: NextPage = () => {
 				Header: '動作',
 				accessor: ({ id }) => {
 					return (
-						<>
+						<div className='space-x-2'>
+							<NextLink href={`/character/${id}/profile`} passHref>
+								<a target='_blank'>
+									<i className='bi bi-person-badge'></i>
+								</a>
+							</NextLink>
 							<NextLink href={`/admin/character/${id}`} passHref>
 								<a>
 									<i className='bi bi-pencil-fill'></i>
 								</a>
 							</NextLink>
-						</>
+						</div>
 					)
 				},
 				disableSortBy: true,

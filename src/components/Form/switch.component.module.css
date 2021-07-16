@@ -1,0 +1,36 @@
+.toggleWrapper :global() {
+	@apply relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in;
+}
+
+.toggleWrapper :global([type='checkbox']:hover),
+.toggleWrapper :global([type='checkbox']:focus),
+.toggleWrapper :global([type='radio']:hover),
+.toggleWrapper
+	:global([type='radio']:focus)
+	.toggleWrapper
+	:global([type='checkbox']:checked:hover),
+.toggleWrapper :global([type='checkbox']:checked:focus),
+.toggleWrapper :global([type='radio']:checked:hover),
+.toggleWrapper :global([type='radio']:checked:focus) {
+	background-color: white;
+	border-color: inherit;
+}
+
+.toggleWrapper :global(.toggle-checkbox) {
+	@apply absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer ring-0;
+}
+
+.toggleWrapper :global(.toggle-checkbox:checked) {
+	@apply right-0 border-green-400 ring-0;
+	right: 0;
+	border-color: #68d391;
+}
+
+.toggleWrapper :global(.toggle-label) {
+	@apply block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer;
+}
+
+.toggleWrapper :global(.toggle-checkbox:checked + .toggle-label) {
+	@apply bg-green-400;
+	background-color: #68d391;
+}

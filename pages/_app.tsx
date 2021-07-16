@@ -23,6 +23,8 @@ type AppContextProps = {
 	isDialogOpened: boolean
 	openDialog: (options: DialogProps) => void
 	closeDialog: () => void
+	isDarkMode: boolean
+	toggleDarkMode: () => void
 }
 
 export const AppContext = createContext<AppContextProps>({
@@ -33,6 +35,10 @@ export const AppContext = createContext<AppContextProps>({
 	closeDialog: () => {
 		/* */
 	},
+	isDarkMode: false,
+	toggleDarkMode: () => {
+		/* */
+	},
 })
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -40,6 +46,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
 	const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 	const [dialogOptions, setDialogOptions] = useState<DialogProps>({})
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
 	const appContextValue = useMemo(
 		() => ({
@@ -51,8 +58,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 			closeDialog: () => {
 				setIsDialogOpened(false)
 			},
+			isDarkMode: isDarkMode,
+			toggleDarkMode: () => {
+				setIsDarkMode((prev) => !prev)
+			},
 		}),
-		[isDialogOpened]
+		[isDialogOpened, isDarkMode]
 	)
 
 	const Layout = useMemo(
@@ -64,16 +75,18 @@ const App = ({ Component, pageProps }: AppProps) => {
 		<>
 			<AppContext.Provider value={appContextValue}>
 				<QueryClientProvider client={queryClient}>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
+					<div className={isDarkMode ? 'dark' : ''}>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
 
-					<div
-						className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
-							isDialogOpened ? 'block' : 'hidden'
-						}`}
-					>
-						<Dialog {...dialogOptions} />
+						<div
+							className={`bg-black bg-opacity-70 bg h-full w-full top-0 bottom-0 left-0 right-0 absolute flex justify-center items-center z-10 ${
+								isDialogOpened ? 'block' : 'hidden'
+							}`}
+						>
+							<Dialog {...dialogOptions} />
+						</div>
 					</div>
 				</QueryClientProvider>
 			</AppContext.Provider>

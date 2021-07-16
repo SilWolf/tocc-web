@@ -4,7 +4,7 @@ const CharacterProfilePage: NextPage = () => {
 	return (
 		<div className='container py-24'>
 			<div className='grid grid-cols-3 gap-4'>
-				<div className='text-white'>
+				<div>
 					<div className='space-y-4'>
 						<div className='w-2/3 mx-auto'>
 							<div className='aspect-w-1 aspect-h-1'>
@@ -16,7 +16,7 @@ const CharacterProfilePage: NextPage = () => {
 						</div>
 						<div className='text-center'>
 							<h2>卡洛特</h2>
-							<h5 className='text-gray-400 text-sm'>Lv 9. 傳奇狼人戰士</h5>
+							<h5 className='text-subtitle text-sm'>Lv 9. 傳奇狼人戰士</h5>
 						</div>
 
 						<div className='text-center text-sm italic'>
@@ -29,13 +29,13 @@ const CharacterProfilePage: NextPage = () => {
 
 						<table>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-key-basic'></i>
 								</td>
 								<td className='text-sm'>編號: 00013-GO02</td>
 							</tr>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-player'></i>
 								</td>
 								<td className='text-sm'>玩家: 銀狼</td>
@@ -43,13 +43,13 @@ const CharacterProfilePage: NextPage = () => {
 						</table>
 						<table>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-bridge'></i>
 								</td>
 								<td className='text-sm'>所屬城市: 錫安城</td>
 							</tr>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-seagull'></i>
 								</td>
 								<td className='text-sm'>背景: 士兵</td>
@@ -57,25 +57,25 @@ const CharacterProfilePage: NextPage = () => {
 						</table>
 						<table>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-crown'></i>
 								</td>
 								<td className='text-sm'>稱號: --</td>
 							</tr>
 							<tr>
-								<td className='w-10'>
-									<i className='ra ra-fw ra-lg ra-pawn'></i>
+								<td className='w-8'>
+									<i className='ra ra-fw ra-lg ra-castle-flag'></i>
 								</td>
 								<td className='text-sm'>組織: --</td>
 							</tr>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-pawn'></i>
 								</td>
 								<td className='text-sm'>身分: --</td>
 							</tr>
 							<tr>
-								<td className='w-10'>
+								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-pisces'></i>
 								</td>
 								<td className='text-sm'>信仰: --</td>
@@ -87,22 +87,22 @@ const CharacterProfilePage: NextPage = () => {
 						</div>
 
 						<div>
-							<h5 className='text-gray-400'>個性</h5>
+							<h5 className='text-subtitle'>個性</h5>
 							<p>冷靜、顧全大局</p>
 						</div>
 
 						<div>
-							<h5 className='text-gray-400'>理想</h5>
+							<h5 className='text-subtitle'>理想</h5>
 							<p>建立一個能與家人一同幸福生活的環境</p>
 						</div>
 
 						<div>
-							<h5 className='text-gray-400'>羈絆</h5>
+							<h5 className='text-subtitle'>羈絆</h5>
 							<p>能為了家人付出一切努力</p>
 						</div>
 
 						<div>
-							<h5 className='text-gray-400'>缺憾</h5>
+							<h5 className='text-subtitle'>缺憾</h5>
 							<p>容易自我犧牲</p>
 						</div>
 
@@ -111,12 +111,12 @@ const CharacterProfilePage: NextPage = () => {
 						</div>
 
 						<div className='space-y-2'>
-							<h5 className='text-gray-400'>短記</h5>
+							<h5 className='text-subtitle'>短記</h5>
 
 							<div>
 								<div>
 									<a href='#'>討伐哥布林紀錄書</a>
-									<p className='text-xs text-gray-400'>2021.05.29</p>
+									<p className='text-xs text-subtitle'>2021.05.29</p>
 								</div>
 							</div>
 						</div>
@@ -126,13 +126,16 @@ const CharacterProfilePage: NextPage = () => {
 					<div className='space-y-8'>
 						<div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
-								分享
+								<i className='bi bi-share-fill mr-2'></i>
+								<span>分享</span>
 							</button>
 							<button data-ripplet className='button button-outline text-sm'>
-								角色紙
+								<i className='bi bi-file-spreadsheet-fill mr-2'></i>
+								<span>角色卡</span>
 							</button>
 							<button data-ripplet className='button button-outline text-sm'>
-								修改角色
+								<i className='bi bi-pencil-fill mr-2'></i>
+								<span>修改角色</span>
 							</button>
 						</div>
 						<div>
@@ -233,15 +236,15 @@ const CharacterProfilePage: NextPage = () => {
 
 						<div className='grid grid-cols-3 gap-x-4 text-center'>
 							<div>
-								<h5 className='text-gray-400 mb-1'>已完成劇本數</h5>
+								<h5 className='text-subtitle mb-1'>已完成劇本數</h5>
 								<h1>50</h1>
 							</div>
 							<div>
-								<h5 className='text-gray-400 mb-1'>已獲得的XP</h5>
+								<h5 className='text-subtitle mb-1'>已獲得的XP</h5>
 								<h1>29300</h1>
 							</div>
 							<div>
-								<h5 className='text-gray-400 mb-1'>已接觸的其他玩家角色</h5>
+								<h5 className='text-subtitle mb-1'>已接觸的其他玩家角色</h5>
 								<h1>30</h1>
 							</div>
 						</div>

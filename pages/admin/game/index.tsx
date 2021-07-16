@@ -61,37 +61,37 @@ const AdminGamePage: NextPage = () => {
 					switch (status) {
 						case 'draft':
 							return (
-								<span className='p-1 text-xs text-gray-700 border border-gray-400 bg-gray-100'>
+								<span className='p-1 text-xs text-gray-700 dark:text-gray-700 border border-gray-400 bg-gray-100'>
 									草稿
 								</span>
 							)
 						case 'published':
 							return (
-								<span className='p-1 text-xs text-blue-700 border border-blue-400 bg-blue-100'>
+								<span className='p-1 text-xs text-blue-700 dark:text-blue-700 border border-blue-400 bg-blue-100'>
 									已發佈, 等待確認報名中
 								</span>
 							)
 						case 'confirmed':
 							return (
-								<span className='p-1 text-xs text-green-700 border border-green-400 bg-green-100'>
+								<span className='p-1 text-xs text-green-700 dark:text-green-700 border border-green-400 bg-green-100'>
 									已確認報名, 等待開團
 								</span>
 							)
 						case 'completed':
 							return (
-								<span className='p-1 text-xs text-blue-700 border border-blue-400 bg-blue-100'>
+								<span className='p-1 text-xs text-blue-700 dark:text-blue-700 border border-blue-400 bg-blue-100'>
 									跑團完成, 等待派發獎勵
 								</span>
 							)
 						case 'done':
 							return (
-								<span className='p-1 text-xs text-gray-700 border border-gray-400 bg-gray-100'>
+								<span className='p-1 text-xs text-gray-700 dark:text-gray-700 border border-gray-400 bg-gray-100'>
 									完成
 								</span>
 							)
 						case 'closed':
 							return (
-								<span className='p-1 text-xs text-gray-700 border border-gray-400 bg-gray-100'>
+								<span className='p-1 text-xs text-gray-700 dark:text-gray-700 border border-gray-400 bg-gray-100'>
 									已取消
 								</span>
 							)
