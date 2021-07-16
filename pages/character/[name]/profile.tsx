@@ -123,7 +123,7 @@ const CharacterProfilePage: NextPage = () => {
 					</div>
 				</div>
 				<div className='col-span-2'>
-					<div className='dark space-y-8'>
+					<div className='space-y-8'>
 						<div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
 								分享
@@ -233,21 +233,15 @@ const CharacterProfilePage: NextPage = () => {
 
 						<div className='grid grid-cols-3 gap-x-4 text-center'>
 							<div>
-								<h5 className='text-gray-400 dark:text-gray-400 mb-1'>
-									已完成劇本數
-								</h5>
+								<h5 className='text-gray-400 mb-1'>已完成劇本數</h5>
 								<h1>50</h1>
 							</div>
 							<div>
-								<h5 className='text-gray-400 dark:text-gray-400 mb-1'>
-									已獲得的XP
-								</h5>
+								<h5 className='text-gray-400 mb-1'>已獲得的XP</h5>
 								<h1>29300</h1>
 							</div>
 							<div>
-								<h5 className='text-gray-400 dark:text-gray-400 mb-1'>
-									已接觸的其他玩家角色
-								</h5>
+								<h5 className='text-gray-400 mb-1'>已接觸的其他玩家角色</h5>
 								<h1>30</h1>
 							</div>
 						</div>

@@ -141,12 +141,16 @@
 		outline: none;
 	}
 
-	a[href] {
-		@apply text-yellow-900 dark:text-white hover:underline hover:text-yellow-800 dark:hover:text-yellow-50;
+	a {
+		@apply text-yellow-900 hover:underline hover:text-yellow-800;
+	}
+
+	.inverted {
+		@apply text-white hover:text-gray-50;
 	}
 
 	.button {
-		@apply py-1 px-4 bg-white text-black dark:text-black;
+		@apply py-1 px-4 bg-white text-black;
 	}
 
 	.button-text {
@@ -230,10 +234,29 @@
 	border-image-repeat: repeat;
 }
 
+.admin-sidebar {
+	position: relative;
+}
+
+.admin-sidebar:before {
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.6;
+	background-image: url('/images/admin-sidebar-bg.jpg');
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+	background-size: cover;
+}
+
 ul li {
 	@apply ml-2 my-2;
 }
 
 * {
-	@apply ring-yellow-300 dark:text-white;
+	@apply ring-yellow-300;
 }

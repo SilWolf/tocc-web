@@ -21,7 +21,7 @@ const CharacterSheetPage: NextPage = () => {
 							<span>XP: 20000/23000</span>
 						</div>
 					</div>
-					<div className='flex-none space-x-2 dark'>
+					<div className='flex-none space-x-2'>
 						<button data-ripplet className='button button-outline text-sm'>
 							分享
 						</button>
