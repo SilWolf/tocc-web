@@ -1,11 +1,10 @@
-import { Game, User, City } from 'types'
+import { City, Game, User } from 'types'
 
-import MockAdapter from 'axios-mock-adapter'
-import { AxiosInstance } from 'axios'
-
-import gameJson from './data/game.json'
-import dmsJson from './data/dms.json'
 import citiesJson from './data/cities.json'
+import dmsJson from './data/dms.json'
+import gameJson from './data/game.json'
+import { AxiosInstance } from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 
 export const mock = (instance: AxiosInstance): void => {
 	const mock = new MockAdapter(instance)

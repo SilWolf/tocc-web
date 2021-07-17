@@ -7,7 +7,7 @@ export type User = Entity & {
 	name: string
 	email?: string
 	provider?: string
-	role?: string | UserRole
+	role?: UserRole
 	confirmed?: boolean
 	blocked?: boolean
 	phone?: string
@@ -26,4 +26,9 @@ export type SessionUser = {
 	jwt: string
 	user: User
 	isLogined: boolean
+}
+
+export const ROLE = {
+	DUNGEON_MASTER: 'Dungeon Master',
+	PLAYER: 'Player',
 }

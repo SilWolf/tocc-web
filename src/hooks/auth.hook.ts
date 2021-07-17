@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
 import { default as Router } from 'next/router'
+
+import { useCallback, useEffect, useState } from 'react'
+
 import { SessionUser } from 'types/User.type'
 
 import * as api from 'helpers/api/api.helper'
