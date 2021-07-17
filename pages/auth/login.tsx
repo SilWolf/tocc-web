@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { default as NextRouter } from 'next/router'
 
 import { useCallback, useContext } from 'react'
 
@@ -8,6 +9,10 @@ import { AppContext } from '../_app'
 
 const LoginPage: NextPage = () => {
 	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
+
+	const handleClickConnectGoogle = useCallback(() => {
+		NextRouter.push('/auth/connect/google/authorize')
+	}, [])
 
 	const handleClickRegister = useCallback(
 		(event) => {
@@ -54,7 +59,11 @@ const LoginPage: NextPage = () => {
 						alt=''
 					/>
 
-					<button data-ripplet className='button button-primary w-full mx-auto'>
+					<button
+						data-ripplet
+						className='button button-primary w-full mx-auto'
+						onClick={handleClickConnectGoogle}
+					>
 						用Google登入
 					</button>
 					<div className='h-px w-3/4 mx-auto bg-gray-600'></div>

@@ -114,3 +114,14 @@ export const convertDataTableStateToApiParams = (
 
 	return newApiParams
 }
+
+export const getAuthProviderCallback = (
+	provider: string,
+	accessToken: string
+): Promise<{
+	jwt: string
+	user: User
+}> =>
+	api.get(`/auth/${provider}/callback`, {
+		params: { access_token: accessToken },
+	})
