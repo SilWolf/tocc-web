@@ -1,20 +1,33 @@
 import { NextPage } from 'next'
 
-import { MouseEventHandler,useCallback, useContext } from 'react'
+import { useCallback, useContext } from 'react'
+
+import { Input } from 'src/components/Form'
 
 import { AppContext } from '../_app'
 
 const LoginPage: NextPage = () => {
-	const { openDialog, closeDialog } = useContext(AppContext)
+	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
 
-	const handleClickRegister = useCallback<MouseEventHandler<HTMLAnchorElement>>(
+	const handleClickRegister = useCallback(
 		(event) => {
 			event.preventDefault()
 
 			openDialog({
 				title: '僅限TOCC玩家註冊',
-				content:
-					'這是專為TOCC (Tales of Coastal Cities) 玩家而設的網站，故不開放外人註冊。假如你曾參加過TOCC遊戲，而未有登入的帳號密碼，請聯絡DM，他將會提供協助。',
+				content: (
+					<>
+						<img
+							src='/images/tocc-logo.png'
+							className='h-16 mx-auto mb-4'
+							alt=''
+						/>
+						<p>
+							這是專為TOCC (Tales of Coastal Cities)
+							玩家而設的網站，故不開放外人註冊。假如你曾參加過TOCC遊戲，而未有登入的帳號密碼，請聯絡DM，他將會提供協助。
+						</p>
+					</>
+				),
 				actions: [
 					{
 						children: '關閉',
@@ -31,63 +44,48 @@ const LoginPage: NextPage = () => {
 			className='w-full h-screen bg-cover bg-center'
 			style={{ backgroundImage: 'url("/images/login-bg.jpg")' }}
 		>
-			<div className='container max-w-screen-md h-full flex items-center'>
-				<div className='w-full m-auto rounded-md bg-yellow-50 bg-opacity-90 shadow-lg px-8 py-6 space-y-6'>
-					<div className='space-y-6'>
-						<div>
-							<label
-								className='block text-sm text-gray-500 mb-1'
-								htmlFor='email'
-							>
-								Email
-							</label>
-							<input
-								type='email'
-								id='email'
-								className='form-input block w-full'
-							/>
-						</div>
-						<div>
-							<label
-								className='block text-sm text-gray-500 mb-1'
-								htmlFor='password'
-							>
-								密碼
-							</label>
-							<input
-								type='password'
-								id='password'
-								className='form-input block w-full'
-							/>
-						</div>
-					</div>
+			<div className='container max-w-screen-tablet h-full flex items-center'>
+				<div className='card w-full m-auto rounded-md shadow-lg px-8 py-6 space-y-6'>
+					<img
+						src={
+							isDarkMode ? '/images/tocc-logo-w.png' : '/images/tocc-logo.png'
+						}
+						className='h-16 mb-4 mx-auto'
+						alt=''
+					/>
 
-					<div className='space-y-4 text-center'>
+					<button data-ripplet className='button button-primary w-full mx-auto'>
+						用Google登入
+					</button>
+					<div className='h-px w-3/4 mx-auto bg-gray-600'></div>
+
+					<form className='space-y-6'>
+						<Input label='Email' type='email' />
+						<Input label='密碼' type='password' />
+
+						<div className='text-center'>
+							<button
+								type='submit'
+								data-ripplet
+								className='button button-primary'
+							>
+								登入
+							</button>
+						</div>
+					</form>
+
+					<div className='h-px w-3/4 mx-auto bg-gray-600'></div>
+
+					<div className='grid grid-cols-2 gap-4'>
 						<button
 							data-ripplet
-							className='button button-primary h-12 w-full mx-auto active:ring-yellow-300'
+							className='button button-outline'
+							onClick={handleClickRegister}
 						>
-							登入
+							註冊帳號
 						</button>
-						<div className='w-full space-x-4 text-right'>
-							<a
-								href='#'
-								className='text-yellow-900'
-								onClick={handleClickRegister}
-							>
-								註冊帳號
-							</a>
-							<a href='#' className='text-yellow-900'>
-								無法登入
-							</a>
-						</div>
-					</div>
-
-					<hr />
-
-					<div>
-						<button data-ripplet className='button h-12 w-full mx-auto'>
-							用Google登入
+						<button data-ripplet className='button button-outline'>
+							無法登入
 						</button>
 					</div>
 				</div>

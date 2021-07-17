@@ -15,12 +15,12 @@ module.exports = {
 				DEFAULT: '4rem',
 			},
 		},
-		ripple: (theme) => ({
-			colors: theme('colors'),
-		}),
 		extend: {
 			flex: {
 				2: '2 2 0%',
+			},
+			colors: {
+				primary: 'var(--color-primary)',
 			},
 		},
 	},

@@ -1,5 +1,9 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css');
 
+:root {
+	--color-primary: #52a6e3;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -145,29 +149,29 @@
 	}
 
 	.button {
-		@apply py-1 px-4 bg-gray-600 dark:bg-white text-white dark:text-gray-900 border-gray-600 dark:border-white;
+		@apply py-2 px-4 border border-white bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
 	}
 
-	.button-text {
-		@apply bg-transparent text-gray-500 hover:text-gray-700;
+	.button-primary {
+		@apply bg-primary border-primary text-white dark:bg-primary dark:text-white;
 	}
 
 	.button.button-outline {
-		@apply bg-transparent border-2 text-gray-900 dark:text-white;
+		@apply bg-transparent border-2 text-gray-600 dark:text-white;
+	}
+
+	.button.button-outline.button-primary {
+		@apply text-primary dark:text-primary;
+	}
+
+	.button.button-text {
+		@apply bg-transparent border-transparent text-gray-600 dark:text-white;
 	}
 
 	.button:active,
 	.button:focus {
 		/* @apply ring; */
 		outline: 0;
-	}
-
-	.button-primary {
-		@apply border border-gray-600 bg-gray-600 text-white dark:bg-white dark:text-gray-900;
-	}
-
-	.button-primary:hover {
-		@apply border-gray-700 bg-gray-700 text-white dark:bg-gray-50 dark:text-gray-900;
 	}
 
 	table.table-default {
@@ -220,6 +224,10 @@
 
 	table.table-bordered tbody tr td {
 		@apply py-3 px-2 text-center whitespace-nowrap;
+	}
+
+	.card {
+		@apply bg-gray-300 dark:bg-gray-800 rounded p-4;
 	}
 }
 

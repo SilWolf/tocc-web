@@ -1,7 +1,7 @@
 export type DialogProps = React.HTMLAttributes<HTMLDivElement> & {
 	title?: string
 	subtitle?: string
-	content?: string
+	content?: React.ReactNode
 	actions?: DialogActionProps[]
 }
 
