@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 
 import React, { useCallback, useMemo, useState } from 'react'
@@ -14,6 +14,7 @@ import DataTable, {
 	DataTableColumnProps,
 	DataTableState,
 } from 'src/components/DataTable'
+import { ProtectAdminPage } from 'src/hooks/withSession.hook'
 
 const AdminGamePage: NextPage = () => {
 	const columns = useMemo<DataTableColumnProps<Game>[]>(
@@ -156,4 +157,7 @@ const AdminGamePage: NextPage = () => {
 		</>
 	)
 }
+
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage()
+
 export default AdminGamePage

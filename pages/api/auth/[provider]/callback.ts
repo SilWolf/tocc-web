@@ -14,7 +14,6 @@ export default withSession(
 		const accessToken = req.body?.accessToken as string
 
 		try {
-			// we check that the user exists on GitHub and store some data in session
 			const result = await getAuthProviderCallback(provider, accessToken)
 			const sessionUser: SessionUser = {
 				isLogined: true,
@@ -27,6 +26,7 @@ export default withSession(
 
 			res.json(sessionUser)
 		} catch (error) {
+			console.log(error)
 			const { response: fetchResponse } = error
 			res.status(fetchResponse?.status || 500).json(error.message)
 		}

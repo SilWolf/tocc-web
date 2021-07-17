@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 
 import { useMemo } from 'react'
@@ -8,6 +8,8 @@ import { Column, useTable } from 'react-table'
 import { City } from 'types/City.type'
 
 import * as api from 'helpers/api/api.helper'
+
+import { ProtectAdminPage } from 'src/hooks/withSession.hook'
 
 const AdminCityPage: NextPage = () => {
 	const columns = useMemo<Column<City>[]>(
@@ -112,4 +114,7 @@ const AdminCityPage: NextPage = () => {
 		</>
 	)
 }
+
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage()
+
 export default AdminCityPage

@@ -13,6 +13,8 @@ import Breadcrumb from 'components/Breadcrumb'
 import { Input } from 'components/Form'
 import Stepper from 'components/Stepper'
 
+import { ProtectAdminPage } from 'src/hooks/withSession.hook'
+
 import cns from 'classnames'
 import lightFormat from 'date-fns/lightFormat'
 
@@ -124,7 +126,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	const _formStatus = useWatch({ control, name: 'status' })
 
 	useEffect(() => {
-		console.log(game)
 		if (game && reset) {
 			reset({
 				...game,
@@ -449,34 +450,36 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	if (params?.id === 'new') {
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
+	async ({ params }) => {
+		if (params?.id === 'new') {
+			return {
+				props: {
+					isNew: true,
+				},
+			}
+		}
+
+		if (!params?.id) {
+			return {
+				notFound: true,
+			}
+		}
+
+		const [game, cities, dms] = await Promise.all([
+			api.getGameById(params.id as string),
+			api.getCities(),
+			api.getDMs(),
+		])
+
 		return {
 			props: {
-				isNew: true,
+				game,
+				cities,
+				dms,
 			},
 		}
 	}
-
-	if (!params?.id) {
-		return {
-			notFound: true,
-		}
-	}
-
-	const [game, cities, dms] = await Promise.all([
-		api.getGameById(params.id as string),
-		api.getCities(),
-		api.getDMs(),
-	])
-
-	return {
-		props: {
-			game,
-			cities,
-			dms,
-		},
-	}
-}
+)
 
 export default AdminGameDetailPage

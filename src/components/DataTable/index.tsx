@@ -48,7 +48,6 @@ const DateTablePagination = React.memo(
 
 		const handleChangePage = useCallback(
 			(e: any) => {
-				console.log(e)
 				onChangePage?.(parseInt(e.target.value))
 			},
 			[onChangePage]
@@ -131,7 +130,6 @@ const DataTable = <T extends Record<string, unknown>>({
 	)
 
 	useEffect(() => {
-		console.log(state)
 		onChangeState?.(state)
 	}, [onChangeState, state])
 

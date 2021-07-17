@@ -1,3 +1,8 @@
+import {
+	GetServerSideProps,
+	GetServerSidePropsResult,
+	NextApiResponse,
+} from 'next'
 import { default as Router } from 'next/router'
 
 import { useCallback, useEffect, useState } from 'react'
@@ -5,6 +10,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { SessionUser } from 'types/User.type'
 
 import * as api from 'helpers/api/api.helper'
+
+import withSession from './withSession.hook'
 
 export const useSessionUser = ({
 	redirectTo = undefined,
@@ -46,7 +53,6 @@ export const useSessionUser = ({
 						handler(_sessionUser as unknown as SessionUser)
 					})
 					.catch(() => {
-						console.log('getMe failure')
 						handler(undefined)
 					})
 					.finally(() => {
