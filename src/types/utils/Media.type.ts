@@ -10,7 +10,10 @@ export type Media = Entity & {
 	size?: number
 	width?: number
 	height?: number
-	formats?: Record<'thumbnail', Omit<Media, 'id' | 'formats'>>
+	formats?: Record<
+		'thumbnail' | 'small' | 'medium' | 'large',
+		Omit<Media, 'id' | 'formats'>
+	>
 	path?: string | null
 	provider?: string
 	related?: string[]

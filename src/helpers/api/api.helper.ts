@@ -65,6 +65,9 @@ export const dmGetCharacters = async (
 export const getCharactersCount = async (): Promise<number> =>
 	api.get<number>('/characters/count', { cache: { maxAge: 5 * 60 * 1000 } })
 
+export const getCharacterByName = async (name: string): Promise<Character> =>
+	api.get<Character>('characters/byName', { params: { name } })
+
 export const dmGetPlayers = async ({
 	params,
 	...config

@@ -26,7 +26,7 @@ const CharacterSheetPage: NextPage = () => {
 							分享
 						</button>
 						<button data-ripplet className='button button-outline text-sm'>
-							角色紙
+							角色首頁
 						</button>
 						<button data-ripplet className='button button-outline text-sm'>
 							修改角色
@@ -88,10 +88,6 @@ const CharacterSheetPage: NextPage = () => {
 
 						<div className='flex justify-between gap-x-4 text-center'>
 							<div>
-								<h5 className='text-gray-400'>先攻值</h5>
-								<h2>+2</h2>
-							</div>
-							<div>
 								<h5 className='text-gray-400'>熟練加成</h5>
 								<h2>+3</h2>
 							</div>
@@ -107,6 +103,10 @@ const CharacterSheetPage: NextPage = () => {
 								<h5 className='text-gray-400'>被動洞悉(感知)</h5>
 								<h2>13</h2>
 							</div>
+							<div>
+								<h5 className='text-gray-400'>先攻值</h5>
+								<h2>+2</h2>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -115,7 +115,7 @@ const CharacterSheetPage: NextPage = () => {
 					<div className='space-y-8'>
 						<div className='space-y-2'>
 							<div className='flex justify-between'>
-								<h5 className='flex-none'>技能</h5>
+								<h5 className='flex-none'>熟練: 技能</h5>
 								<a href='#' className='flex-none text-sm'>
 									顯示全部
 								</a>
@@ -141,7 +141,7 @@ const CharacterSheetPage: NextPage = () => {
 						</div>
 						<div className='space-y-2'>
 							<div className='flex justify-between'>
-								<h5 className='flex-none'>工具/語言/武器/防具</h5>
+								<h5 className='flex-none'>熟練: 工具/語言/武器/防具</h5>
 							</div>
 							<p>
 								盜賊工具, 通用語, 簡易武器, 軍用武器, 輕甲, 中甲, 重甲, 盾牌

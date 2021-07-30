@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 
 import Switch from 'src/components/Form/Switch'
+import styles from './layout.module.css'
 
 import cns from 'classnames'
 import { AppContext } from 'pages/_app'
@@ -103,13 +104,16 @@ const AdminLayout: React.FC = ({ children }) => {
 										</div>
 									</button>
 
-									<div className='inline-block space-x-2'>
+									<div
+										className={(styles.toolbarUser, 'inline-block space-x-2')}
+									>
 										<img
 											src='https://truth.bahamut.com.tw/s01/s202107/67a49d3735452b130336e55976859bbf.JPG'
 											alt=''
 											className='inline-block rounded-full h-9 w-9 border-2 border-white'
 										/>
 										<span className='uppercase'>Dicky</span>
+										<div className='toolbar-user-menu'>abc</div>
 									</div>
 								</div>
 							</div>
