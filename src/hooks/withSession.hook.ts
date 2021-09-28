@@ -11,7 +11,7 @@ import { SessionUser } from 'src/types/User.type'
 
 export const ironSessionConfig = {
 	password: process.env.SECRET_COOKIE_PASSWORD as string,
-	cookieName: 'tocc-web/with-iron-session',
+	cookieName: 'salesi-web/with-iron-session',
 	cookieOptions: {
 		// the next line allows to use the session in non-https environments like
 		// Next.js dev mode (http://localhost:3000)
@@ -35,7 +35,25 @@ export const serverSidePropsWithSession = (
 	handler: GetServerSideProps
 ): GetServerSideProps => withIronSession(handler, ironSessionConfig)
 
-export const ProtectAdminPage = (
+export const ProtectPublicPage = (
+	handler?: GetServerSideProps
+): GetServerSideProps =>
+	withIronSession(async (context: GetServerSidePropsContextWithIronSession) => {
+		const sessionUser = context.req.session.get<SessionUser>('sessionUser')
+
+		if (sessionUser && sessionUser.isLogined) {
+			return {
+				redirect: {
+					destination: '/',
+					permanent: false,
+				},
+			}
+		}
+
+		return handler?.(context) || { props: {} }
+	}, ironSessionConfig)
+
+export const ProtectAuthPage = (
 	handler?: GetServerSideProps
 ): GetServerSideProps =>
 	withIronSession(async (context: GetServerSidePropsContextWithIronSession) => {
@@ -50,7 +68,7 @@ export const ProtectAdminPage = (
 			}
 		}
 
-		if (sessionUser.user?.role?.name !== 'Dungeon Master') {
+		if (sessionUser.user?.role?.name !== 'Authenticated') {
 			return {
 				redirect: {
 					destination: '/403',

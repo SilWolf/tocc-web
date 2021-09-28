@@ -19,6 +19,7 @@ export const mock = (instance: AxiosInstance): void => {
 			{ ...gameJson, status: 'closed' },
 			{ ...gameJson, status: 'done' },
 		])
+	mock.onGet('/games?_pending=true').reply<Game[]>(200, [gameJson])
 
 	mock.onGet(/\/games\/\w+/).reply<Game>(200, gameJson)
 

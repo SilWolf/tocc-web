@@ -46,5 +46,6 @@ module.exports = {
 		'import/first': 'error',
 		'import/newline-after-import': 'error',
 		'import/no-duplicates': 'error',
+		'@next/next/no-img-element': 'off',
 	},
 }
