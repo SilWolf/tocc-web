@@ -125,7 +125,7 @@ const CharacterProfilePage: NextPage = () => {
 				</div>
 				<div className='col-span-2'>
 					<div className='space-y-8'>
-						{/* <div className='text-right space-x-2'>
+						<div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
 								<i className='bi bi-share-fill mr-2'></i>
 								<span>分享</span>
@@ -140,7 +140,7 @@ const CharacterProfilePage: NextPage = () => {
 								<i className='bi bi-pencil-fill mr-2'></i>
 								<span>修改角色</span>
 							</button>
-						</div> */}
+						</div>
 						<div>
 							<h3>近期活動</h3>
 							<ul>
