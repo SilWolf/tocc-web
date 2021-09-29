@@ -6,6 +6,7 @@ import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
 
 import { ExtendedAxiosRequestConfig, getInstance } from './api.service'
+import { Promotion } from 'src/types/Promotion.type'
 
 export type ApiGetParams = {
 	_q?: string
@@ -119,6 +120,12 @@ export const getApis = (config?: { jwt: string }) => {
 					'role.name': 'Authenticated',
 				},
 				cache: { maxAge: 5 * 60 * 1000 },
+			}),
+
+		getPromotions: async (): Promise<Promotion> =>
+			api.get<Promotion>('/promotions', {
+				cache: { maxAge: 5 * 60 * 1000 },
+				...config,
 			}),
 
 		getAuthProviderCallback: async (

@@ -9,6 +9,7 @@ import GeneralLayout from 'layouts/general.layout'
 import Dialog, { DialogProps } from 'components/Dialog'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
+import 'swiper/css'
 import 'src/styles/globals.css'
 
 const queryClient = new QueryClient({
