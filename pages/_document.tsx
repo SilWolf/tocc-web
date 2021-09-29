@@ -35,6 +35,14 @@ class MyDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
+					<div id='fb-root'></div>
+					<script
+						async
+						defer
+						crossOrigin='anonymous'
+						src='https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v12.0&appId=2954824384768206&autoLogAppEvents=1'
+						nonce='c9KAci5O'
+					></script>
 				</body>
 			</Html>
 		)

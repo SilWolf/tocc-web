@@ -14,6 +14,7 @@ import {
 import { Game } from 'src/types'
 import { Promotion } from 'src/types/Promotion.type'
 import { SessionUser } from 'src/types/User.type'
+import FacebookPageEmbed from 'src/widgets/FacebookPageEmbed'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 type PageProps = {
@@ -32,16 +33,22 @@ const HomePage: NextPage<PageProps> = ({
 				style={{ backgroundImage: 'url("/images/homepage-bg.jpg")' }}
 			></div>
 
-			<div className='container py-12 flex-1'>
-				<div className='grid grid-cols-3 gap-x-6 gap-y-8'>
+			<div className='container py-12 flex-1 space-y-8'>
+				<div className='grid tablet:grid-cols-3 gap-x-6 gap-y-8'>
 					<div
-						className={pendingGames?.length > 1 ? 'col-span-3' : 'col-span-1'}
+						className={
+							pendingGames?.length > 1
+								? 'tablet:col-span-3'
+								: 'tablet:col-span-1'
+						}
 					>
 						<h3 className='mb-2'>招募中</h3>
 						<div
 							className={classNames(
 								'grid gap-x-6 gap-y-4',
-								pendingGames?.length > 1 ? 'col-span-3' : 'col-span-1'
+								pendingGames?.length > 1
+									? 'tablet:col-span-3'
+									: 'tablet:col-span-1'
 							)}
 						>
 							{pendingGames.map((game) => (
@@ -101,28 +108,34 @@ const HomePage: NextPage<PageProps> = ({
 					</div>
 
 					<div
-						className={pendingGames?.length > 1 ? 'col-span-3' : 'col-span-2'}
+						className={
+							pendingGames?.length > 1
+								? 'tablet:col-span-3'
+								: 'tablet:col-span-2'
+						}
 					>
 						<h3 className='mb-2'>最新活動</h3>
-						<Swiper slidesPerView={1} spaceBetween={0}>
-							{promotions.map((promotion) => (
-								<SwiperSlide key={promotion.id}>
-									<BgImage src={promotion.image.url} className='h-96' />
-								</SwiperSlide>
-							))}
-						</Swiper>
+						<div>
+							<Swiper slidesPerView={1} spaceBetween={0}>
+								{promotions.map((promotion) => (
+									<SwiperSlide key={promotion.id}>
+										<div className='w-full aspect-w-12 aspect-h-5 tablet:aspect-h-8'>
+											<BgImage className='w-full' src={promotion.image.url} />
+										</div>
+									</SwiperSlide>
+								))}
+							</Swiper>
+						</div>
 					</div>
-					<div className='col-span-2 card'>
-						<h3>海城週聞</h3>
+				</div>
+
+				<div className='flex flex-col tablet:flex-row gap-x-6 gap-y-8'>
+					<div className='flex-1'>
+						<h3 className='mb-2'>隨機條目</h3>
+						<div className='card'>（建立中）</div>
 					</div>
-					<div className='card row-span-2'>
-						<h3>角色動態</h3>
-					</div>
-					<div className='col-span-2 card'>
-						<h3>你知道嗎?</h3>
-					</div>
-					<div className='col-span-3 card'>
-						<h3>外部連結</h3>
+					<div className='flex-none'>
+						<FacebookPageEmbed />
 					</div>
 				</div>
 			</div>
