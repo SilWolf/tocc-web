@@ -81,7 +81,7 @@ const HomePage: NextPage<PageProps> = ({
 										</div>
 									</div>
 
-									<NextLink href='/' passHref>
+									<NextLink href={`/game/${game.id}?signUp=true`} passHref>
 										<a
 											data-ripplet
 											className='block text-center bg-primary text-white hover:text-white text-lg px-2 py-2 rounded'
