@@ -23,7 +23,7 @@ const GeneralLayout: React.FC = ({ children }) => {
 									</a>
 								</NextLink>
 							</div>
-							<div className='flex-none'>
+							{/* <div className='flex-none'>
 								<a href='#'>WIKI</a>
 							</div>
 							<div className='flex-none'>
@@ -35,22 +35,22 @@ const GeneralLayout: React.FC = ({ children }) => {
 								<NextLink href='/character/1/profile' passHref>
 									<a>商店</a>
 								</NextLink>
-							</div>
+							</div> */}
 							<div className='flex-1'></div>
 							{/* 
 							<div className='flex-none'>
 								<Switch checked={isDarkMode} onChange={toggleDarkMode} />
 							</div> */}
-							<div className='flex-none'>
+							{/* <div className='flex-none'>
 								<NextLink href='/admin/player' passHref>
 									<a>管理員後台</a>
 								</NextLink>
-							</div>
-							<div className='flex-none'>
+							</div> */}
+							{/* <div className='flex-none'>
 								<NextLink href='/auth/login' passHref>
 									<a>登入</a>
 								</NextLink>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>

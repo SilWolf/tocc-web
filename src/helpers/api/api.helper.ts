@@ -37,7 +37,7 @@ export const convertDataTableStateToApiParams = (
 	return newApiParams
 }
 
-export const getApis = (config?: { jwt: string }) => {
+export const getApis = (config?: { jwt?: string }) => {
 	const api = getInstance(config)
 
 	return {
