@@ -7,13 +7,17 @@ import { useForm, useWatch } from 'react-hook-form'
 import { City, Game, User } from 'types'
 import { Game_Req } from 'types/Game.type'
 
-import * as api from 'helpers/api/api.helper'
+import apis, { getApis } from 'helpers/api/api.helper'
 
 import Breadcrumb from 'components/Breadcrumb'
 import { Input } from 'components/Form'
 import Stepper from 'components/Stepper'
 
-import { ProtectAdminPage } from 'src/hooks/withSession.hook'
+import {
+	ProtectAdminPage,
+	serverSidePropsWithSession,
+} from 'src/hooks/withSession.hook'
+import { SessionUser } from 'src/types/User.type'
 
 import cns from 'classnames'
 import lightFormat from 'date-fns/lightFormat'
@@ -451,7 +455,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 }
 
 export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
-	async ({ params }) => {
+	serverSidePropsWithSession(async ({ params, req: { session } }) => {
 		if (params?.id === 'new') {
 			return {
 				props: {
@@ -466,10 +470,13 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 			}
 		}
 
+		const sessionUser = session.get<SessionUser>('sessionUser')
+		const apis = getApis({ jwt: sessionUser?.jwt })
+
 		const [game, cities, dms] = await Promise.all([
-			api.getGameById(params.id as string),
-			api.getCities(),
-			api.getDMs(),
+			apis.getGameById(params.id as string),
+			apis.getCities(),
+			apis.getDMs(),
 		])
 
 		return {
@@ -479,7 +486,7 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				dms,
 			},
 		}
-	}
+	})
 )
 
 export default AdminGameDetailPage

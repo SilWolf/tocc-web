@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsResult, NextPage } from 'next'
 
-import * as api from 'helpers/api/api.helper'
+import apis from 'helpers/api/api.helper'
 
 import {
 	NextIronRequest,
@@ -18,7 +18,7 @@ const AuthConnectGoogleCallbackPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps =
 	serverSidePropsWithSession(async ({ req, params, query }) => {
-		const RESPONSE_IF_FAIL: GetServerSidePropsResult<unknown> = {
+		const RESPONSE_IF_FAIL: GetServerSidePropsResult<any> = {
 			redirect: {
 				destination: '/auth/login?error=true&connect=google',
 				permanent: false,
@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps =
 				return RESPONSE_IF_FAIL
 			}
 
-			const result = await api.getAuthProviderCallback(provider, accessToken)
+			const result = await apis.getAuthProviderCallback(provider, accessToken)
 			const sessionUser: SessionUser = {
 				isLogined: true,
 				user: result.user,

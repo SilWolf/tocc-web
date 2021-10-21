@@ -6,7 +6,10 @@ import { useQuery } from 'react-query'
 
 import { Game } from 'types/Game.type'
 
-import * as api from 'helpers/api/api.helper'
+import apis, {
+	ApiGetParams,
+	convertDataTableStateToApiParams,
+} from 'helpers/api/api.helper'
 
 import { DateSpan } from 'components/Datetime'
 
@@ -121,18 +124,18 @@ const AdminGamePage: NextPage = () => {
 		[]
 	)
 
-	const [apiParams, setApiParams] = useState<api.ApiGetParams>({})
+	const [apiParams, setApiParams] = useState<ApiGetParams>({})
 	const { data } = useQuery(
 		['games', { params: apiParams }],
-		() => api.dmGetGames({ params: apiParams }),
+		() => apis.dmGetGames({ params: apiParams }),
 		{
 			keepPreviousData: true,
 		}
 	)
-	const { data: dataTotal } = useQuery(['games', 'count'], api.getGamesCount)
+	const { data: dataTotal } = useQuery(['games', 'count'], apis.getGamesCount)
 
 	const handleTableChangeState = useCallback((state: DataTableState<Game>) => {
-		setApiParams(api.convertDataTableStateToApiParams(state))
+		setApiParams(convertDataTableStateToApiParams(state))
 	}, [])
 
 	return (

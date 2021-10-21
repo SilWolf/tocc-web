@@ -7,7 +7,6 @@ module.exports = {
 		'next',
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:import/recommended',
 		'plugin:import/typescript',
 		'prettier',
 	],
@@ -19,7 +18,7 @@ module.exports = {
 		ecmaVersion: 12,
 		sourceType: 'module',
 	},
-	plugins: ['react', '@typescript-eslint', 'simple-import-sort'],
+	plugins: ['@typescript-eslint', 'simple-import-sort'],
 	rules: {
 		'linebreak-style': ['error', 'unix'],
 		'react/display-name': 'off',
@@ -46,5 +45,7 @@ module.exports = {
 		'import/first': 'error',
 		'import/newline-after-import': 'error',
 		'import/no-duplicates': 'error',
+		'@next/next/no-img-element': 'off',
+		'@next/next/no-script-in-document': 'off',
 	},
 }

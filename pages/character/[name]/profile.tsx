@@ -1,7 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next'
-import NextLink from 'next/link'
 
-import * as api from 'helpers/api/api.helper'
+import apis from 'helpers/api/api.helper'
 
 import ReactHTML from 'src/components/ReactHTML'
 import { Character } from 'src/types'
@@ -133,7 +132,7 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 				</div>
 				<div className='col-span-2'>
 					<div className='space-y-8'>
-						<div className='text-right space-x-2'>
+						{/* <div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
 								<i className='bi bi-share-fill mr-2'></i>
 								<span>分享</span>
@@ -148,12 +147,16 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 									<span>角色卡</span>
 								</a>
 							</NextLink>
+							<Button className='button-outline text-sm' disabled>
+								<i className='bi bi-file-spreadsheet-fill mr-2'></i>
+								<span>切換至戰鬥(暫未開放)</span>
+							</Button>
 
 							<button data-ripplet className='button button-outline text-sm'>
 								<i className='bi bi-pencil-fill mr-2'></i>
 								<span>修改角色</span>
 							</button>
-						</div>
+						</div> */}
 						<div>
 							<h3>近期活動</h3>
 							<ul>
@@ -221,7 +224,7 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 	const [character] = await Promise.all([
-		api.getCharacterByName(params?.name as string),
+		apis.getCharacterByName(params?.name as string),
 	])
 
 	if (!character) {

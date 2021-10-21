@@ -3,13 +3,13 @@ import { Session } from 'next-iron-session'
 
 import { SessionUser } from 'types/User.type'
 
-import api, {
+import apis, {
 	AxiosMethod,
 	ExtendedAxiosRequestConfig,
 } from 'helpers/api/api.service'
 import withSession from 'hooks/withSession.hook'
 
-type NextIronRequest = NextApiRequest & { session: Session }
+type NextIronRequest = NextApiRequest & { session?: Session }
 
 export default withSession(
 	async (req: NextIronRequest, res: NextApiResponse) => {
@@ -21,14 +21,14 @@ export default withSession(
 			data: req.body,
 		}
 
-		const sessionUser = req.session.get<SessionUser>('sessionUser')
+		const sessionUser = req.session?.get<SessionUser>('sessionUser')
 		if (sessionUser) {
 			config.headers = {
 				Authorization: `Bearer ${sessionUser.jwt}`,
 			}
 		}
 
-		const result = await api.rawRequest(config)
+		const result = await apis.rawRequest(config)
 		res.status(result.status).json(result.data)
 	}
 )

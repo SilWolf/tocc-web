@@ -6,7 +6,10 @@ import { useQuery } from 'react-query'
 
 import { User } from 'types/User.type'
 
-import * as api from 'helpers/api/api.helper'
+import apis, {
+	ApiGetParams,
+	convertDataTableStateToApiParams,
+} from 'helpers/api/api.helper'
 
 import DataTable, {
 	DataTableColumnProps,
@@ -85,18 +88,18 @@ const AdminPlayerPage: NextPage = () => {
 		[]
 	)
 
-	const [apiParams, setApiParams] = useState<api.ApiGetParams>({})
+	const [apiParams, setApiParams] = useState<ApiGetParams>({})
 	const { data } = useQuery(
 		['users', { params: apiParams }],
-		() => api.dmGetPlayers({ params: apiParams }),
+		() => apis.dmGetPlayers({ params: apiParams }),
 		{
 			keepPreviousData: true,
 		}
 	)
-	const { data: dataTotal } = useQuery(['users', 'count'], api.getPlayersCount)
+	const { data: dataTotal } = useQuery(['users', 'count'], apis.getPlayersCount)
 
 	const handleTableChangeState = useCallback((state: DataTableState<User>) => {
-		setApiParams(api.convertDataTableStateToApiParams(state))
+		setApiParams(convertDataTableStateToApiParams(state))
 	}, [])
 
 	return (

@@ -6,7 +6,10 @@ import { useQuery } from 'react-query'
 
 import { Character } from 'types/Character.type'
 
-import * as api from 'helpers/api/api.helper'
+import apis, {
+	ApiGetParams,
+	convertDataTableStateToApiParams,
+} from 'helpers/api/api.helper'
 
 import DataTable, {
 	DataTableColumnProps,
@@ -82,22 +85,22 @@ const AdminCharacterPage: NextPage = () => {
 		[]
 	)
 
-	const [apiParams, setApiParams] = useState<api.ApiGetParams>({})
+	const [apiParams, setApiParams] = useState<ApiGetParams>({})
 	const { data } = useQuery(
 		['characters', { params: apiParams }],
-		() => api.dmGetCharacters({ params: apiParams }),
+		() => apis.dmGetCharacters({ params: apiParams }),
 		{
 			keepPreviousData: true,
 		}
 	)
 	const { data: dataTotal } = useQuery(
 		['characters', 'count'],
-		api.getCharactersCount
+		apis.getCharactersCount
 	)
 
 	const handleTableChangeState = useCallback(
 		(state: DataTableState<Character>) => {
-			setApiParams(api.convertDataTableStateToApiParams(state))
+			setApiParams(convertDataTableStateToApiParams(state))
 		},
 		[]
 	)

@@ -3,16 +3,17 @@ module.exports = {
 	darkMode: 'class', // or 'media' or 'class'
 	theme: {
 		screens: {
-			tablet: '640px',
-			// => @media (min-width: 640px) { ... }
+			tablet: '980px',
+			// => @media (min-width: 980px) { ... }
 
-			laptop: '1024px',
-			// => @media (min-width: 1024px) { ... }
+			laptop: '1280px',
+			// => @media (min-width: 1280px) { ... }
 		},
 		container: {
 			center: true,
 			padding: {
-				DEFAULT: '4rem',
+				DEFAULT: '1rem',
+				tablet: '4rem',
 			},
 		},
 		extend: {

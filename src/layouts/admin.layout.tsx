@@ -8,6 +8,7 @@ import styles from './layout.module.css'
 
 import cns from 'classnames'
 import { AppContext } from 'pages/_app'
+import Footer from 'src/widgets/Footer'
 
 const routes = [
 	{
@@ -126,29 +127,8 @@ const AdminLayout: React.FC = ({ children }) => {
 						</div>
 
 						<div className='flex-none dark bg-gray-800 dark:bg-gray-800 text-white py-2 px-8'>
-							<div className='space-y-1'>
-								<div className='flex gap-x-2 justify-between items-center'>
-									<div className='flex-none'>
-										<div>Copyright</div>
-										<div className='space-x-4'>
-											<a href='#'>Link</a>
-											<a href='#'>Link</a>
-											<a href='#'>Link</a>
-											<a href='#'>Link</a>
-										</div>
-									</div>
-									<div className='flex-none space-x-6 text-2xl'>
-										<a href='#'>
-											<i className='bi-telegram'></i>
-										</a>
-										<a href='#'>
-											<i className='bi-facebook'></i>
-										</a>
-										<a href='#'>
-											<i className='bi-discord'></i>
-										</a>
-									</div>
-								</div>
+							<div className='container'>
+								<Footer />
 							</div>
 						</div>
 					</div>

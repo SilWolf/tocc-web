@@ -1,7 +1,7 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css');
 
 :root {
-	--color-primary: #52a6e3;
+	--color-primary: #fac125;
 }
 
 @tailwind base;
@@ -53,7 +53,7 @@
 	[multiple],
 	textarea,
 	select {
-		@apply py-2 pl-4 w-full outline-none ring-0 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-200 dark:border-gray-800 text-sm;
+		@apply py-2 pl-4 w-full outline-none ring-0 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-500 dark:border-gray-800 text-sm;
 	}
 
 	.form-group .input-static {
@@ -145,11 +145,15 @@
 	}
 
 	a {
-		@apply text-gray-900 dark:text-white hover:underline hover:text-gray-800 dark:hover:text-gray-50;
+		@apply text-gray-900 dark:text-white hover:text-gray-800 dark:hover:text-gray-50;
 	}
 
 	.button {
-		@apply py-2 px-4 border border-white bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
+		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
+	}
+
+	a.button {
+		@apply block text-center;
 	}
 
 	a.button {
@@ -161,7 +165,7 @@
 	}
 
 	.button.button-outline {
-		@apply bg-transparent border-2 text-gray-600 dark:text-white;
+		@apply bg-transparent text-gray-600 dark:text-white;
 	}
 
 	.button.button-outline.button-primary {
@@ -231,7 +235,7 @@
 	}
 
 	.card {
-		@apply bg-gray-300 dark:bg-gray-800 rounded p-4;
+		@apply bg-white dark:bg-gray-800 rounded p-4 shadow;
 	}
 }
 
@@ -268,6 +272,18 @@ ul li {
 	@apply ring-gray-300 text-gray-900 dark:text-white;
 }
 
+[data-ripplet] {
+	@apply cursor-pointer;
+}
+
 .text-subtitle {
 	@apply text-gray-600 dark:text-gray-400;
+}
+
+.paragraph-ellipsis-3 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* number of lines to show */
+	-webkit-box-orient: vertical;
 }

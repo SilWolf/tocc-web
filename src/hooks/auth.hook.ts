@@ -1,17 +1,10 @@
-import {
-	GetServerSideProps,
-	GetServerSidePropsResult,
-	NextApiResponse,
-} from 'next'
 import { default as Router } from 'next/router'
 
 import { useCallback, useEffect, useState } from 'react'
 
 import { SessionUser } from 'types/User.type'
 
-import * as api from 'helpers/api/api.helper'
-
-import withSession from './withSession.hook'
+import apis from 'helpers/api/api.helper'
 
 export const useSessionUser = ({
 	redirectTo = undefined,
@@ -47,7 +40,7 @@ export const useSessionUser = ({
 			if (!sessionUser?.isLogined) {
 				setIsLogining(true)
 
-				api
+				apis
 					.getMe()
 					.then((_sessionUser) => {
 						handler(_sessionUser as unknown as SessionUser)

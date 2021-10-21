@@ -1,18 +1,14 @@
 import { NextPage } from 'next'
-import { default as NextRouter } from 'next/router'
 
 import { useCallback, useContext } from 'react'
 
+import Button from 'src/components/Button'
 import { Input } from 'src/components/Form'
 
 import { AppContext } from '../_app'
 
 const LoginPage: NextPage = () => {
 	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
-
-	const handleClickConnectGoogle = useCallback(() => {
-		NextRouter.push('/auth/connect/google/authorize')
-	}, [])
 
 	const handleClickRegister = useCallback(
 		(event) => {
@@ -56,46 +52,57 @@ const LoginPage: NextPage = () => {
 							isDarkMode ? '/images/tocc-logo-w.png' : '/images/tocc-logo.png'
 						}
 						className='h-16 mb-4 mx-auto'
-						alt=''
+						alt='tocc logo'
 					/>
 
-					<button
-						data-ripplet
-						className='button button-primary w-full mx-auto'
-						onClick={handleClickConnectGoogle}
-					>
-						用Google登入
-					</button>
-					<div className='h-px w-3/4 mx-auto bg-gray-600'></div>
-
-					<form className='space-y-6'>
-						<Input label='Email' type='email' />
-						<Input label='密碼' type='password' />
-
-						<div className='text-center'>
-							<button
-								type='submit'
-								data-ripplet
-								className='button button-primary'
+					<div className='flex items-stretch gap-x-8'>
+						<div className='flex-1 space-y-4 self-center'>
+							<Button
+								href='/auth/connect/google/authorize'
+								className='button-white w-full mx-auto'
 							>
-								登入
-							</button>
+								<img
+									src='https://developers.google.com/identity/images/g-logo.png'
+									alt='Google'
+									className='inline-block h-5 w-5 mr-2 align-middle'
+								/>
+								<span>使用Google登錄</span>
+							</Button>
 						</div>
-					</form>
+						<div className='flex-none'>
+							<div className='h-full w-px bg-gray-300'></div>
+						</div>
+						<div className='flex-1 space-y-6 py-8'>
+							<form className='space-y-6'>
+								<Input label='Email' type='email' />
+								<Input label='密碼' type='password' />
 
-					<div className='h-px w-3/4 mx-auto bg-gray-600'></div>
+								<div className='text-center'>
+									<Button
+										type='submit'
+										data-ripplet
+										className='button-primary w-full'
+									>
+										登入
+									</Button>
+								</div>
+							</form>
 
-					<div className='grid grid-cols-2 gap-4'>
-						<button
-							data-ripplet
-							className='button button-outline'
-							onClick={handleClickRegister}
-						>
-							註冊帳號
-						</button>
-						<button data-ripplet className='button button-outline'>
-							無法登入
-						</button>
+							<div className='h-px w-3/4 mx-auto bg-gray-300'></div>
+
+							<div className='grid grid-cols-2 gap-4'>
+								<button
+									data-ripplet
+									className='button button-outline'
+									onClick={handleClickRegister}
+								>
+									註冊帳號
+								</button>
+								<button data-ripplet className='button button-outline'>
+									無法登入
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

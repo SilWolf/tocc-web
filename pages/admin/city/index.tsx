@@ -7,7 +7,7 @@ import { Column, useTable } from 'react-table'
 
 import { City } from 'types/City.type'
 
-import * as api from 'helpers/api/api.helper'
+import apis from 'helpers/api/api.helper'
 
 import { ProtectAdminPage } from 'src/hooks/withSession.hook'
 
@@ -61,7 +61,7 @@ const AdminCityPage: NextPage = () => {
 		[]
 	)
 
-	const { data } = useQuery('cities', api.dmGetCities)
+	const { data } = useQuery('cities', apis.dmGetCities)
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
 		useTable({ columns, data: data || [] })
