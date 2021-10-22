@@ -10,8 +10,9 @@
 
 @layer base {
 	body {
-		/* background-image: url('/images/body-bg.jpg'); */
-		@apply bg-scroll;
+		background-image: url('/images/bg-1.jpg');
+		background-size: cover;
+		background-repeat: repeat-y;
 	}
 
 	h1 {
@@ -268,10 +269,6 @@ ul li {
 	@apply ml-2 my-2;
 }
 
-* {
-	@apply ring-gray-300 text-gray-900 dark:text-white;
-}
-
 [data-ripplet] {
 	@apply cursor-pointer;
 }
@@ -286,4 +283,24 @@ ul li {
 	display: -webkit-box;
 	-webkit-line-clamp: 3; /* number of lines to show */
 	-webkit-box-orient: vertical;
+}
+
+.parchment {
+	border-width: 32px 32px;
+	border-image: url('/images/parchment-1.jpg') 50 50 fill round;
+	color: #461904;
+}
+
+.parchment.framed {
+	border-width: 60px 60px;
+	border-image: url('/images/parchment-2.jpg') 80 80 fill round;
+}
+
+.parchment h1,
+.parchment h2,
+.parchment h3,
+.parchment h4,
+.parchment h5,
+.parchment h6 {
+	color: #d65b27;
 }
