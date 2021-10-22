@@ -269,7 +269,7 @@ ul li {
 }
 
 * {
-	@apply ring-gray-300 text-gray-900 dark:text-white;
+	@apply ring-gray-300;
 }
 
 [data-ripplet] {

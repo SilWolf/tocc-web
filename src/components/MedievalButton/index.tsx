@@ -3,7 +3,7 @@ import React, { ButtonHTMLAttributes } from 'react'
 import styles from './MedievalButton.module.css'
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-	color: 'primary' | 'secondary' | 'success' | 'danger' | 'info' | 'warning'
+	color?: 'primary' | 'secondary' | 'success' | 'danger' | 'info' | 'warning'
 }
 
 const MedievalButton = ({
