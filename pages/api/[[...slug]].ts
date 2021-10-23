@@ -1,18 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Session } from 'next-iron-session'
-import withSession from '../../hooks/withSession.hook'
-import { SessionUser } from '../../types/User.type'
 
-type NextIronRequest = NextApiRequest & { session: Session }
+import { SessionUser } from 'types/User.type'
 
-import api, {
-	ExtendedAxiosRequestConfig,
+import apis, {
 	AxiosMethod,
-} from '../../apis/api.service'
+	ExtendedAxiosRequestConfig,
+} from 'helpers/api/api.service'
+import withSession from 'hooks/withSession.hook'
+
+type NextIronRequest = NextApiRequest & { session?: Session }
 
 export default withSession(
 	async (req: NextIronRequest, res: NextApiResponse) => {
-		const { slug, query } = req.query
+		const { slug, ...query } = req.query
 		const config: ExtendedAxiosRequestConfig = {
 			url: (slug as string[]).join('/'),
 			method: req.method as AxiosMethod,
@@ -20,14 +21,14 @@ export default withSession(
 			data: req.body,
 		}
 
-		const sessionUser = req.session.get<SessionUser>('sessionUser')
+		const sessionUser = req.session?.get<SessionUser>('sessionUser')
 		if (sessionUser) {
 			config.headers = {
 				Authorization: `Bearer ${sessionUser.jwt}`,
 			}
 		}
 
-		const result = await api.rawRequest(config)
+		const result = await apis.rawRequest(config)
 		res.status(result.status).json(result.data)
 	}
 )

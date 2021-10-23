@@ -1,4 +1,6 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
+
+import { ProtectAdminPage } from 'src/hooks/withSession.hook'
 
 const AdminIndexPage: NextPage = () => {
 	return (
@@ -9,4 +11,7 @@ const AdminIndexPage: NextPage = () => {
 		</>
 	)
 }
+
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage()
+
 export default AdminIndexPage

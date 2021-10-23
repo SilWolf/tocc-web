@@ -1,14 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Session } from 'next-iron-session'
-import withSession from '../../../hooks/withSession.hook'
-import { SessionUser } from '../../../types/User.type'
+
+import { SessionUser } from 'types/User.type'
+
+import withSession from 'hooks/withSession.hook'
 
 type NextIronRequest = NextApiRequest & { session: Session }
 
 export default withSession(
 	async (req: NextIronRequest, res: NextApiResponse) => {
 		const user = req.session.get<SessionUser>('sessionUser')
-		console.log('getMe', user)
 
 		if (user) {
 			// in a real world application you might read the user id from the session and then do a database request

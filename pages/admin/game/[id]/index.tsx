@@ -1,19 +1,26 @@
-import { NextPage, GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
+
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
 import { useForm, useWatch } from 'react-hook-form'
+
+import { City, Game, User } from 'types'
+import { Game_Req } from 'types/Game.type'
+
+import apis, { getApis } from 'helpers/api/api.helper'
+
+import Breadcrumb from 'components/Breadcrumb'
+import { Input } from 'components/Form'
+import Stepper from 'components/Stepper'
+
+import {
+	ProtectAdminPage,
+	serverSidePropsWithSession,
+} from 'src/hooks/withSession.hook'
+import { SessionUser } from 'src/types/User.type'
+
 import cns from 'classnames'
-
-import { Game, City, User } from '../../../../types'
-import { Game_Req } from '../../../../types/Game.type'
-
-import * as api from '../../../../apis/api.helper'
-import { Input } from '../../../../components/Form'
-import Stepper from '../../../../components/Stepper'
-
 import lightFormat from 'date-fns/lightFormat'
-import Breadcrumb from '../../../../components/Breadcrumb'
 
 type FormProps = Game_Req
 
@@ -118,23 +125,16 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			city: undefined,
 			dm: undefined,
 			characters: [],
-			characterAndRewards: [],
 		},
 	})
 	const _formStatus = useWatch({ control, name: 'status' })
 
 	useEffect(() => {
-		console.log(game)
 		if (game && reset) {
 			reset({
 				...game,
 				dm: game.dm?.id,
 				city: game.city?.id,
-				characterAndRewards:
-					game.characterAndRewards?.map((reward) => ({
-						...reward,
-						character: reward.character?.id,
-					})) || [],
 				characters: game.characters?.map((character) => character?.id) || [],
 				startAt: lightFormat(
 					game.startAt ? new Date(game.startAt) : new Date(),
@@ -159,11 +159,12 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			case 'published':
 				return ['確認玩家的報名', 2]
 			case 'confirmed':
+				return ['跑完團了！', 3]
 			case 'completed':
-				return ['派發獎勵', 3]
+				return ['派發獎勵', 4]
 			case 'done':
 			case 'closed':
-				return ['已鎖定', 4]
+				return ['已鎖定', 5]
 		}
 
 		return ['儲存', 0]
@@ -322,64 +323,71 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							<h4>玩家XP、金錢獎勵、獲得物品</h4>
 
 							<div className='form-group'>
-								<table className='table-bordered'>
-									<thead>
-										<tr>
-											<th></th>
-											<th>獲得XP</th>
-											<th>獲得GP</th>
-											<th>增減物品/知識/人際關係/稱號...</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th className='w-28 text-right'>隊伍總和</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td></td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-										<tr className='align-top'>
-											<th className='w-28 text-right pt-5'>卡洛特</th>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td className='w-28'>
-												<Input type='number' />
-											</td>
-											<td>
-												<Input type='textarea' rows={2} />
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								{flowStepIndex < 4 && (
+									<div className='text-center text-gray-400 mt-4 mb-16'>
+										你要先跑完團才能派發獎勵。
+									</div>
+								)}
+								{flowStepIndex >= 4 && (
+									<table className='table-bordered'>
+										<thead>
+											<tr>
+												<th></th>
+												<th>獲得XP</th>
+												<th>獲得GP</th>
+												<th>增減物品/知識/人際關係/稱號...</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th className='w-28 text-right'>隊伍總和</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td></td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+											<tr className='align-top'>
+												<th className='w-28 text-right pt-5'>卡洛特</th>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td className='w-28'>
+													<Input type='number' />
+												</td>
+												<td>
+													<Input type='textarea' rows={2} />
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								)}{' '}
 							</div>
 						</div>
 
@@ -446,34 +454,39 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	if (params?.id === 'new') {
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
+	serverSidePropsWithSession(async ({ params, req: { session } }) => {
+		if (params?.id === 'new') {
+			return {
+				props: {
+					isNew: true,
+				},
+			}
+		}
+
+		if (!params?.id) {
+			return {
+				notFound: true,
+			}
+		}
+
+		const sessionUser = session.get<SessionUser>('sessionUser')
+		const apis = getApis({ jwt: sessionUser?.jwt })
+
+		const [game, cities, dms] = await Promise.all([
+			apis.getGameById(params.id as string),
+			apis.getCities(),
+			apis.getDMs(),
+		])
+
 		return {
 			props: {
-				isNew: true,
+				game,
+				cities,
+				dms,
 			},
 		}
-	}
-
-	if (!params?.id) {
-		return {
-			notFound: true,
-		}
-	}
-
-	const [game, cities, dms] = await Promise.all([
-		api.getGameById(params.id as string),
-		api.getCities(),
-		api.getDMs(),
-	])
-
-	return {
-		props: {
-			game,
-			cities,
-			dms,
-		},
-	}
-}
+	})
+)
 
 export default AdminGameDetailPage

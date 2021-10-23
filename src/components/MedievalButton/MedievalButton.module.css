@@ -1,0 +1,202 @@
+.medievalButton :global() {
+}
+
+.medievalButton :global(.mb-btn) {
+	display: block;
+	width: 100%;
+	position: relative;
+	padding: 0;
+	border: 0;
+	margin-bottom: 4px;
+	cursor: not-allowed;
+
+	--mb-ring-color-1: #ba8550;
+	--mb-ring-color-2: #724622;
+	--mb-ring-color-3: #ba8550;
+	--mb-edge-color-top: #9e4436;
+	--mb-edge-color-bottom: #3a1510;
+	--mb-edge-color-left: #6a2223;
+	--mb-edge-color-right: #5a231c;
+	--mb-edge-color-light-1: #ae2b20;
+	--mb-edge-color-light-2: #e1914d;
+	--mb-body-color-1: #9d281e;
+	--mb-body-color-2: #7f2323;
+	--mb-body-color-3: #782626;
+	--mb-body-color-4: #862829;
+	--mb-text-color: #ebb275;
+}
+
+.medievalButton :global(.mb-btn:enabled) {
+	cursor: pointer;
+}
+
+.medievalButton :global(.mb-btn .mb-overlay) {
+	position: absolute;
+	top: 4px;
+	bottom: 4px;
+	left: 4px;
+	right: 4px;
+	opacity: 0;
+	background: #ffffff;
+	pointer-events: none;
+}
+
+.medievalButton :global(.mb-btn:enabled:hover .mb-overlay) {
+	opacity: 0.08;
+}
+
+.medievalButton :global(.mb-btn:enabled:active .mb-overlay) {
+	background: #000000;
+	opacity: 0.15;
+}
+
+.medievalButton :global(.mb-btn .mb-ring) {
+	padding: 5px;
+	background: linear-gradient(
+		to bottom,
+		var(--mb-ring-color-1),
+		var(--mb-ring-color-1) 3px,
+		var(--mb-ring-color-2) 4px,
+		var(--mb-ring-color-3)
+	);
+	box-shadow: rgba(0, 0, 0, 0.8) 0 0 2px 2px;
+}
+
+.medievalButton :global(.mb-btn .mb-edge) {
+	width: 100%;
+	border: 6px solid #000;
+	border-top-color: var(--mb-edge-color-top);
+	border-bottom-color: var(--mb-edge-color-bottom);
+	border-left-color: var(--mb-edge-color-left);
+	border-right-color: var(--mb-edge-color-right);
+	background: radial-gradient(
+		var(--mb-edge-color-light-1) 66%,
+		var(--mb-edge-color-light-2)
+	);
+	padding: 1px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	box-shadow: rgba(0, 0, 0, 0.8) 0 0 2px 2px;
+}
+
+.medievalButton :global(.mb-btn .mb-body) {
+	width: 100%;
+	padding: 4px 8px;
+	min-width: 120px;
+	background: linear-gradient(
+		170deg,
+		var(--mb-body-color-1),
+		var(--mb-body-color-2) 6px,
+		var(--mb-body-color-3) 10px,
+		var(--mb-body-color-4) 50%,
+		var(--mb-body-color-3)
+	);
+}
+
+.medievalButton :global(.mb-btn .mb-text) {
+	color: var(--mb-text-color);
+	text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.87);
+}
+
+.medievalButton :global(.mb-btn.mb-style-primary) {
+	--mb-ring-color-1: #ba8550;
+	--mb-ring-color-2: #724622;
+	--mb-ring-color-3: #ba8550;
+	--mb-edge-color-top: #9e4436;
+	--mb-edge-color-bottom: #3a1510;
+	--mb-edge-color-left: #6a2223;
+	--mb-edge-color-right: #5a231c;
+	--mb-edge-color-light-1: #ae2b20;
+	--mb-edge-color-light-2: #e1914d;
+	--mb-body-color-1: #9d281e;
+	--mb-body-color-2: #7f2323;
+	--mb-body-color-3: #782626;
+	--mb-body-color-4: #862829;
+	--mb-text-color: #ebb275;
+}
+
+.medievalButton :global(.mb-btn.mb-style-secondary) {
+	--mb-edge-color-top: #b3bcc7;
+	--mb-edge-color-bottom: #5e656e;
+	--mb-edge-color-left: #848d99;
+	--mb-edge-color-right: #747c87;
+	--mb-edge-color-light-1: #848e99;
+	--mb-edge-color-light-2: #848d96;
+	--mb-body-color-1: #b0b5c2;
+	--mb-body-color-2: #999fad;
+	--mb-body-color-3: #989ca6;
+	--mb-body-color-4: #b4b8c2;
+	--mb-text-color: #e9eef5;
+}
+
+.medievalButton :global(.mb-btn.mb-style-success) {
+	--mb-edge-color-top: #5e9e36;
+	--mb-edge-color-bottom: #254714;
+	--mb-edge-color-left: #366a22;
+	--mb-edge-color-right: #265a1c;
+	--mb-edge-color-light-1: #267516;
+	--mb-edge-color-light-2: #267516;
+	--mb-body-color-1: #339d1e;
+	--mb-body-color-2: #357f23;
+	--mb-body-color-3: #347826;
+	--mb-body-color-4: #38992e;
+	--mb-text-color: #cbf7b5;
+}
+
+.medievalButton :global(.mb-btn.mb-style-danger) {
+	--mb-edge-color-top: #e02b2b;
+	--mb-edge-color-bottom: #661414;
+	--mb-edge-color-left: #ad2121;
+	--mb-edge-color-right: #8f1b1b;
+	--mb-edge-color-light-1: #bd1e1e;
+	--mb-edge-color-light-2: #eb2d2d;
+	--mb-body-color-1: #940719;
+	--mb-body-color-2: #b8091f;
+	--mb-body-color-3: #99091b;
+	--mb-body-color-4: #c9001a;
+	--mb-text-color: #ffd9d9;
+}
+
+.medievalButton :global(.mb-btn.mb-style-info) {
+	--mb-edge-color-top: #7beded;
+	--mb-edge-color-bottom: #458282;
+	--mb-edge-color-left: #6fd1d1;
+	--mb-edge-color-right: #60b5b5;
+	--mb-edge-color-light-1: #5fb3b3;
+	--mb-edge-color-light-2: #72d6d6;
+	--mb-body-color-1: #4acfcf;
+	--mb-body-color-2: #75d9d9;
+	--mb-body-color-3: #75d9d9;
+	--mb-body-color-4: #88f2f2;
+	--mb-text-color: #bfffff;
+}
+
+.medievalButton :global(.mb-btn.mb-style-warning) {
+	--mb-edge-color-top: #f7df97;
+	--mb-edge-color-bottom: #7d714c;
+	--mb-edge-color-left: #cfbb7e;
+	--mb-edge-color-right: #ab9a68;
+	--mb-edge-color-light-1: #cca93f;
+	--mb-edge-color-light-2: #e0ba46;
+	--mb-body-color-1: #c9ac55;
+	--mb-body-color-2: #debe5d;
+	--mb-body-color-3: #d4b65b;
+	--mb-body-color-4: #f7d777;
+	--mb-text-color: #fff8e3;
+}
+
+.medievalButton :global(.mb-btn:disabled),
+.medievalButton :global(.mb-btn[disabled]) {
+	--mb-edge-color-top: #a3a3a3;
+	--mb-edge-color-bottom: #575757;
+	--mb-edge-color-left: #9c9c9c;
+	--mb-edge-color-right: #7d7d7d;
+	--mb-edge-color-light-1: #878787;
+	--mb-edge-color-light-2: #878787;
+	--mb-body-color-1: #808080;
+	--mb-body-color-2: #808080;
+	--mb-body-color-3: #808080;
+	--mb-body-color-4: #7a7a7a;
+	--mb-text-color: #bababa;
+}

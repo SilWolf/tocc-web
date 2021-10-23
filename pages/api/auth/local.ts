@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Session } from 'next-iron-session'
-import withSession from '../../../hooks/withSession.hook'
 
-import { postLogin } from '../../../apis/api.helper'
-import { SessionUser } from '../../../types/User.type'
+import { SessionUser } from 'types/User.type'
+
+import apis from 'helpers/api/api.helper'
+import withSession from 'hooks/withSession.hook'
 
 type NextIronRequest = NextApiRequest & { session: Session }
 
@@ -13,7 +14,7 @@ export default withSession(
 
 		try {
 			// we check that the user exists on GitHub and store some data in session
-			const result = await postLogin(identifier, password)
+			const result = await apis.postLogin(identifier, password)
 			const sessionUser: SessionUser = {
 				isLogined: true,
 				user: result.user,
@@ -24,7 +25,7 @@ export default withSession(
 			await req.session.save()
 
 			res.json(sessionUser)
-		} catch (error) {
+		} catch (error: any) {
 			const { response: fetchResponse } = error
 			res.status(fetchResponse?.status || 500).json(error.message)
 		}
