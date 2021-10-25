@@ -2,6 +2,7 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import React from 'react'
 
+import Button from 'src/components/Button'
 import { DateSpan } from 'src/components/Datetime'
 import { getApis } from 'src/helpers/api/api.helper'
 import {
@@ -18,28 +19,72 @@ type Props = {
 const GameDetailPage: NextPage<Props> = ({ game }: Props) => {
 	return (
 		<div className='container py-24'>
-			<div className='mx-auto' style={{ maxWidth: 600 }}>
-				<div className='bg-white shadow p-8 space-y-6 mb-8'>
-					<div>
-						<p className='text-sm font-light text-gray-500'>劇本名稱</p>
-						<p className='text-3xl'>{game.title}</p>
+			<div className='mx-auto' style={{ maxWidth: 800 }}>
+				<div className='parchment framed space-y-6 mb-8'>
+					<p className='text-right'>
+						第三紀元{' '}
+						<DateSpan format='yyyy年MM月dd日'>{game.worldStartAt}</DateSpan>
+					</p>
+
+					<h1 className='text-center'>{game.title}</h1>
+
+					<p className='text-center italic'>{game.description}</p>
+
+					<div className='text-center pt-8 pb-8'>
+						<img
+							src='/images/divider-1.png'
+							alt='divider'
+							className='opacity-30 w-1/2 mx-auto'
+						/>
 					</div>
 
-					<div>
-						<p className='text-sm font-light text-gray-500'>時間日期</p>
-						<p className='text-3xl'>
-							<DateSpan format='yyyy/MM/dd HH:mm'>{game.startAt}</DateSpan>
-						</p>
+					<div className='flex justify-center gap-12'>
+						<div className='flex-none'>
+							<p className='text-2xl'>
+								<DateSpan format='yyyy/MM/dd HH:mm'>{game.startAt}</DateSpan>
+							</p>
+							<p className='text-sm font-light text-gray-500'>時間日期</p>
+						</div>
+
+						<div className='flex-none'>
+							<p className='text-2xl'>
+								{game.city?.name || ''} ({game.city?.code || ''})
+							</p>
+							<p className='text-sm font-light text-gray-500'>場地</p>
+						</div>
 					</div>
 
-					<div>
-						<p className='text-sm font-light text-gray-500'>場地</p>
-						<p className='text-3xl'>{game.city?.name || ''}</p>
+					<div className='flex justify-center gap-12'>
+						<div className='flex-none'>
+							<p className='text-2xl'>{game.dm?.name || ''}</p>
+							<p className='text-sm font-light text-gray-500'>DM</p>
+						</div>
+
+						<div className='flex-none'>
+							<p className='text-2xl'>
+								Lv. {game.lvMin}-{game.lvMax}
+							</p>
+							<p className='text-sm font-light text-gray-500'>等級範圍</p>
+						</div>
+
+						<div className='flex-none'>
+							<p className='text-2xl'>
+								{game.capacityMin}-{game.capacityMax}人
+							</p>
+							<p className='text-sm font-light text-gray-500'>人數</p>
+						</div>
 					</div>
 
-					<div>
-						<p className='text-sm font-light text-gray-500'>帶團DM</p>
-						<p className='text-3xl'>{game.dm?.name || ''}</p>
+					<div className='text-center pt-8'>
+						<img
+							src='/images/divider-1.png'
+							alt='divider'
+							className='opacity-30 w-1/2 mx-auto'
+						/>
+					</div>
+
+					<div className='text-right'>
+						<Button>報名</Button>
 					</div>
 				</div>
 
@@ -52,13 +97,8 @@ const GameDetailPage: NextPage<Props> = ({ game }: Props) => {
 					</div>
 				</div>
 
-				<div className='px-8'>
-					<a
-						data-ripplet
-						className='block text-center bg-primary text-white hover:text-white text-lg px-2 py-2 rounded'
-					>
-						報名
-					</a>
+				<div className='text-right'>
+					<Button>報名</Button>
 				</div>
 			</div>
 		</div>

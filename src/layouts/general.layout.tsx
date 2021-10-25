@@ -3,16 +3,16 @@ import NextLink from 'next/link'
 import React, { useContext } from 'react'
 
 import Switch from 'src/components/Form/Switch'
+import Footer from 'src/widgets/Footer'
 
 import { AppContext } from 'pages/_app'
-import Footer from 'src/widgets/Footer'
 
 const GeneralLayout: React.FC = ({ children }) => {
 	const { isDarkMode, toggleDarkMode } = useContext(AppContext)
 
 	return (
 		<>
-			<div className='bg-gray-200 dark:bg-gray-900'>
+			<div>
 				<div className='bg-yellow-900 dark:bg-gray-800 dark py-3 shadow fixed top-0 left-0 right-0 z-10'>
 					<div className='container'>
 						<div className='flex items-center gap-x-6'>

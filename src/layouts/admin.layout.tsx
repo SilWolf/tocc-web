@@ -4,11 +4,11 @@ import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 
 import Switch from 'src/components/Form/Switch'
+import Footer from 'src/widgets/Footer'
 import styles from './layout.module.css'
 
 import cns from 'classnames'
 import { AppContext } from 'pages/_app'
-import Footer from 'src/widgets/Footer'
 
 const routes = [
 	{
@@ -51,7 +51,7 @@ const AdminLayout: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<div className='h-screen flex items-stretch bg-gray-200 dark:bg-gray-900 min-w-0'>
+			<div className='h-screen flex items-stretch min-w-0'>
 				<div className='admin-sidebar dark flex-none contianer w-64 px-4 bg-gray-800'>
 					<div className='relative'>
 						<div className='py-4'>
