@@ -61,6 +61,9 @@ export const getApis = (config?: { jwt?: string }) => {
 			return api.get<User>('/auth/me')
 		},
 
+		getMyCharacters: async (): Promise<Character[]> =>
+			api.get<Character[]>('/characters/me'),
+
 		getGames: async (): Promise<Game[]> => api.get<Game[]>('/games'),
 		getPendingGames: async (): Promise<Game[]> =>
 			api.get<Game[]>('/games?_pending=true'),
