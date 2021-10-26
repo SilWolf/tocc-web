@@ -10,6 +10,7 @@ import Select, {
 
 import Button from 'src/components/Button'
 import { DateSpan } from 'src/components/Datetime'
+import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 import { getApis } from 'src/helpers/api/api.helper'
 import {
@@ -29,11 +30,9 @@ const CharacterPlaceholder = ({
 	...props
 }: SelectPlaceholderProps<Character>) => {
 	return (
-		<div className='flex items-center h-8'>
-			<SelectComponents.Placeholder {...props}>
-				{children}
-			</SelectComponents.Placeholder>
-		</div>
+		<SelectComponents.Placeholder {...props}>
+			<div className='flex items-center h-14'>{children}</div>
+		</SelectComponents.Placeholder>
 	)
 }
 
@@ -55,7 +54,7 @@ const CharacterSingleValue = ({
 				</div>
 				<div className='flex-1'>
 					<p>{character.name}</p>
-					<p className='text-sm text-gray-400 space-x-2'>
+					<p className='leading-4 text-sm text-gray-400 space-x-2'>
 						<span>等級{character.level}</span>
 						<span>{character.city?.name}</span>
 						<span></span>
@@ -164,6 +163,7 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 
 					<div className='w-3/4 mx-auto bg-yellow-800 bg-opacity-20 p-4 space-y-8'>
 						<div>
+							<label className='font-bold'>報名的角色</label>
 							<Select
 								options={characters}
 								isSearchable={false}
@@ -174,6 +174,11 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 									Placeholder: CharacterPlaceholder,
 								}}
 							></Select>
+						</div>
+
+						<div>
+							<label className='font-bold'>想告訴DM的話</label>
+							<Input type='textarea' rows={4}></Input>
 						</div>
 
 						<div className='text-center mx-12'>

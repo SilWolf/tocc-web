@@ -1,20 +1,27 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { AnchorHTMLAttributes } from 'react'
 
 import styles from './MedievalButton.module.css'
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	color?: 'primary' | 'secondary' | 'success' | 'danger' | 'info' | 'warning'
+	disabled?: boolean
 }
 
 const MedievalButton = ({
 	children,
 	color = 'primary',
 	className,
+	disabled,
+	href,
 	...props
 }: Props): JSX.Element => {
 	return (
 		<div className={`${styles.medievalButton} ${className}`}>
-			<button className={`mb-btn mb-style-${color}`} {...props}>
+			<a
+				className={`mb-btn mb-style-${color} ${disabled ? 'mb-disabled' : ''}`}
+				href={!disabled ? href : '#'}
+				{...props}
+			>
 				<div className='mb-ring'>
 					<div className='mb-edge'>
 						<div className='mb-body'>
@@ -23,7 +30,7 @@ const MedievalButton = ({
 					</div>
 				</div>
 				<div className='mb-overlay'></div>
-			</button>
+			</a>
 		</div>
 	)
 }

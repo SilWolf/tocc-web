@@ -6,6 +6,7 @@ import React from 'react'
 import BgImage from 'src/components/BgImage'
 import Button from 'src/components/Button'
 import { DateSpan } from 'src/components/Datetime'
+import MedievalButton from 'src/components/MedievalButton'
 import { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
@@ -38,7 +39,7 @@ const HomePage: NextPage<PageProps> = ({
 			<div className='container py-12 flex-1 space-y-4'>
 				{pendingGames.map((game) => (
 					<div key={game.id}>
-						<div className='shadow-md bg-white p-8'>
+						<div className='parchment framed'>
 							<div className='flex gap-x-4 items-start'>
 								<div className='flex-none w-24 text-center'>
 									<p className='text-4xl font-thin'>10</p>
@@ -84,12 +85,7 @@ const HomePage: NextPage<PageProps> = ({
 									</div>
 
 									<NextLink href={`/game/${game.id}?signUp=true`} passHref>
-										<a
-											data-ripplet
-											className='block text-center bg-primary text-white hover:text-white text-lg px-2 py-2 rounded'
-										>
-											報名
-										</a>
+										<MedievalButton>報名</MedievalButton>
 									</NextLink>
 								</div>
 							</div>
