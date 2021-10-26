@@ -1,7 +1,7 @@
 import { GetServerSideProps, GetServerSidePropsResult, NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { useEffect } from 'react-transition-group/node_modules/@types/react'
+import { useEffect } from 'react'
 
 import apis from 'helpers/api/api.helper'
 

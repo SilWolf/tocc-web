@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 
 import React from 'react'
 
+import Dropdown from 'src/components/Dropdown'
 import { useUser } from 'src/hooks/auth.hook'
 import Footer from 'src/widgets/Footer'
 
@@ -44,7 +45,39 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<a>管理員後台</a>
 								</NextLink>
 							</div> */}
-							{!user && (
+							{user ? (
+								<div className='flex-none'>
+									<Dropdown
+										header={
+											<div className='flex gap-x-2'>
+												<img
+													className='h-8 w-8 bg-gray-800'
+													src={user.portraitImage?.formats?.thumbnail?.url}
+													alt=''
+												/>
+												<div>
+													<h6>{user.name}</h6>
+													<p className='text-white text-xs leading-3'>
+														{user.role?.name}
+													</p>
+												</div>
+											</div>
+										}
+									>
+										<div
+											className='parchment'
+											style={{ borderWidth: 8, minWidth: 140 }}
+										>
+											<NextLink href='/auth/logout' passHref>
+												<a href='' className='block py-1 text-red-900'>
+													<i className='bi bi-box-arrow-right mr-2'></i>
+													<span>登出</span>
+												</a>
+											</NextLink>
+										</div>
+									</Dropdown>
+								</div>
+							) : (
 								<div className='flex-none'>
 									<NextLink href='/auth/login' passHref>
 										<a>登入</a>

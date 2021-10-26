@@ -77,15 +77,6 @@ export const ProtectAuthPage = (
 			}
 		}
 
-		if (sessionUser.user?.role?.name !== 'Authenticated') {
-			return {
-				redirect: {
-					destination: '/403',
-					permanent: false,
-				},
-			}
-		}
-
 		return handler?.(context) || { props: {} }
 	}, ironSessionConfig)
 

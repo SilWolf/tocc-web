@@ -76,7 +76,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 		<>
 			<AppContext.Provider value={appContextValue}>
 				<QueryClientProvider client={queryClient}>
-					<div className={isDarkMode ? 'dark' : ''}>
+					<div>
 						<Layout>
 							<Component {...pageProps} />
 						</Layout>

@@ -1,6 +1,6 @@
 import { default as Router } from 'next/router'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { SessionUser, User } from 'types/User.type'
 
@@ -87,21 +87,35 @@ export const useSessionUserForProtectedPages = () =>
 		redirectTo: '/auth/login',
 	})
 
-export const useUser = (user?: User): User | undefined => {
+export const useUser = (user?: User | null): User | null => {
+	const refreshRef = useRef<boolean>(false)
+
 	useEffect(() => {
-		if (user) {
-			localStorage.setItem('tocc-user', JSON.stringify(user))
+		console.log(user)
+		if (typeof window !== 'undefined') {
+			if (user) {
+				localStorage.setItem('tocc-user', JSON.stringify(user))
+			} else if (user === null) {
+				localStorage.removeItem('tocc-user')
+			}
+			refreshRef.current = !refreshRef.current
 		}
 	}, [user])
 
 	const storedUser = useMemo(() => {
-		const stored = localStorage.getItem('tocc-user')
-		if (stored) {
-			return JSON.parse(stored)
+		console.log('refreshREf')
+		if (typeof window !== 'undefined') {
+			const stored = localStorage.getItem('tocc-user')
+
+			console.log(stored)
+			if (stored) {
+				return JSON.parse(stored)
+			}
 		}
 
 		return undefined
-	}, [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [refreshRef.current])
 
 	return storedUser
 }

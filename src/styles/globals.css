@@ -146,7 +146,7 @@
 	}
 
 	a {
-		@apply text-gray-900 dark:text-white hover:text-gray-800 dark:hover:text-gray-50;
+		@apply text-gray-900 hover:text-gray-800;
 	}
 
 	.button {

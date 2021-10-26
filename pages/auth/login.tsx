@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 
 import React, { useCallback, useContext } from 'react'
 
-import Button from 'src/components/Button'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 
@@ -58,7 +57,10 @@ const LoginPage: NextPage = () => {
 
 					<div className='flex items-stretch gap-x-8'>
 						<div className='flex-1 space-y-4 self-center'>
-							<MedievalButton color='secondary'>
+							<MedievalButton
+								href='/auth/connect/google/authorize'
+								color='secondary'
+							>
 								<div className='flex items-center justify-center'>
 									<img
 										src='https://developers.google.com/identity/images/g-logo.png'
