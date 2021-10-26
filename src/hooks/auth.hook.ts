@@ -1,8 +1,8 @@
 import { default as Router } from 'next/router'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { SessionUser } from 'types/User.type'
+import { SessionUser, User } from 'types/User.type'
 
 import apis from 'helpers/api/api.helper'
 
@@ -86,3 +86,22 @@ export const useSessionUserForProtectedPages = () =>
 	useSessionUser({
 		redirectTo: '/auth/login',
 	})
+
+export const useUser = (user?: User): User | undefined => {
+	useEffect(() => {
+		if (user) {
+			localStorage.setItem('tocc-user', JSON.stringify(user))
+		}
+	}, [user])
+
+	const storedUser = useMemo(() => {
+		const stored = localStorage.getItem('tocc-user')
+		if (stored) {
+			return JSON.parse(stored)
+		}
+
+		return undefined
+	}, [])
+
+	return storedUser
+}

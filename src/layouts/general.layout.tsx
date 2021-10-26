@@ -1,14 +1,12 @@
 import NextLink from 'next/link'
 
-import React, { useContext } from 'react'
+import React from 'react'
 
-import Switch from 'src/components/Form/Switch'
+import { useUser } from 'src/hooks/auth.hook'
 import Footer from 'src/widgets/Footer'
 
-import { AppContext } from 'pages/_app'
-
 const GeneralLayout: React.FC = ({ children }) => {
-	const { isDarkMode, toggleDarkMode } = useContext(AppContext)
+	const user = useUser()
 
 	return (
 		<>
@@ -46,11 +44,13 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<a>管理員後台</a>
 								</NextLink>
 							</div> */}
-							<div className='flex-none'>
-								<NextLink href='/auth/login' passHref>
-									<a>登入</a>
-								</NextLink>
-							</div>
+							{!user && (
+								<div className='flex-none'>
+									<NextLink href='/auth/login' passHref>
+										<a>登入</a>
+									</NextLink>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

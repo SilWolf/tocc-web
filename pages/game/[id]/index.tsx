@@ -8,7 +8,6 @@ import Select, {
 	SingleValueProps as SelectSingleValueProps,
 } from 'react-select'
 
-import Button from 'src/components/Button'
 import { DateSpan } from 'src/components/Datetime'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
