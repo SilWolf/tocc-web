@@ -35,7 +35,11 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<a>商店</a>
 								</NextLink>
 							</div> */}
-							<div className='flex-1'></div>
+							<div className='flex-1 space-x-4'>
+								<NextLink href='/admin' passHref>
+									<a>管理員後台</a>
+								</NextLink>
+							</div>
 							{/* 
 							<div className='flex-none'>
 								<Switch checked={isDarkMode} onChange={toggleDarkMode} />

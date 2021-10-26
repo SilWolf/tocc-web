@@ -91,7 +91,6 @@ export const useUser = (user?: User | null): User | null => {
 	const refreshRef = useRef<boolean>(false)
 
 	useEffect(() => {
-		console.log(user)
 		if (typeof window !== 'undefined') {
 			if (user) {
 				localStorage.setItem('tocc-user', JSON.stringify(user))
@@ -103,11 +102,9 @@ export const useUser = (user?: User | null): User | null => {
 	}, [user])
 
 	const storedUser = useMemo(() => {
-		console.log('refreshREf')
 		if (typeof window !== 'undefined') {
 			const stored = localStorage.getItem('tocc-user')
 
-			console.log(stored)
 			if (stored) {
 				return JSON.parse(stored)
 			}
