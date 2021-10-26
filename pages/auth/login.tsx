@@ -47,7 +47,7 @@ const LoginPage: NextPage = () => {
 			style={{ backgroundImage: 'url("/images/login-bg.jpg")' }}
 		>
 			<div className='container max-w-screen-tablet h-full flex items-center'>
-				<div className='card w-full m-auto rounded-md shadow-lg px-8 py-6 space-y-6'>
+				<div className='parchment framed w-full m-auto space-y-6'>
 					<img
 						src={
 							isDarkMode ? '/images/tocc-logo-w.png' : '/images/tocc-logo.png'
@@ -70,7 +70,7 @@ const LoginPage: NextPage = () => {
 							</MedievalButton>
 						</div>
 						<div className='flex-none'>
-							<div className='h-full w-px bg-gray-300'></div>
+							<div className='h-full w-px bg-yellow-600'></div>
 						</div>
 						<div className='flex-1 space-y-6 py-8'>
 							<form className='space-y-6'>

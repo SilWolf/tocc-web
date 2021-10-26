@@ -46,11 +46,11 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<a>管理員後台</a>
 								</NextLink>
 							</div> */}
-							{/* <div className='flex-none'>
+							<div className='flex-none'>
 								<NextLink href='/auth/login' passHref>
 									<a>登入</a>
 								</NextLink>
-							</div> */}
+							</div>
 						</div>
 					</div>
 				</div>
