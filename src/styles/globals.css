@@ -289,12 +289,12 @@ ul li {
 	border-width: 32px 32px;
 	border-image: url('/images/parchment-1.jpg') 50 50 fill round;
 	color: #461904;
-	box-shadow: 0 10px 2px rgba(0, 0, 0, 0.8);
 }
 
 .parchment.framed {
 	border-width: 60px 60px;
 	border-image: url('/images/parchment-2.jpg') 80 80 fill round;
+	box-shadow: 0 10px 2px rgba(0, 0, 0, 0.8);
 }
 
 .parchment h1,
