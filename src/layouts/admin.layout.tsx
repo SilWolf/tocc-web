@@ -58,7 +58,7 @@ const AdminLayout: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<div className='h-screen flex items-stretch min-w-0'>
+			<div className='bg-white h-screen flex items-stretch min-w-0'>
 				<div className='admin-sidebar flex-none contianer w-64 bg-gray-800'>
 					<div className='h-full flex flex-col items-stretch'>
 						<div className='flex-none'>

@@ -58,7 +58,7 @@ export const getApis = (config?: { jwt?: string }) => {
 		},
 
 		getMe: async (): Promise<User> => {
-			return api.get<User>('/auth/me')
+			return api.get<User>('/users/me')
 		},
 
 		getMyCharacters: async (): Promise<Character[]> =>

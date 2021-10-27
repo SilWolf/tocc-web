@@ -4,6 +4,7 @@ import React from 'react'
 
 import Dropdown from 'src/components/Dropdown'
 import { useUser } from 'src/hooks/auth.hook'
+import { USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
 
 const GeneralLayout: React.FC = ({ children }) => {
@@ -12,9 +13,9 @@ const GeneralLayout: React.FC = ({ children }) => {
 	return (
 		<>
 			<div>
-				<div className='bg-yellow-900 dark:bg-gray-800 dark py-3 shadow fixed top-0 left-0 right-0 z-10'>
+				<div className='bg-yellow-900 py-3 shadow fixed top-0 left-0 right-0 z-10'>
 					<div className='container'>
-						<div className='flex items-center gap-x-6'>
+						<div className='flex items-center gap-x-6 text-white'>
 							<div className='flex-none'>
 								<NextLink href='/' passHref>
 									<a>
@@ -22,38 +23,26 @@ const GeneralLayout: React.FC = ({ children }) => {
 									</a>
 								</NextLink>
 							</div>
-							{/* <div className='flex-none'>
-								<a href='#'>WIKI</a>
+							<div className='flex-1 space-x-6'>
+								<NextLink href='/game' passHref>
+									<a>劇本</a>
+								</NextLink>
+
+								<NextLink href='/map' passHref>
+									<a>世界地圖</a>
+								</NextLink>
+
+								{user && user.role?.name === USER_ROLE.DM && (
+									<NextLink href='/admin' passHref>
+										<a>管理員後台</a>
+									</NextLink>
+								)}
 							</div>
-							<div className='flex-none'>
-								<NextLink href='/character/1/profile' passHref>
-									<a>我的角色</a>
-								</NextLink>
-							</div>
-							<div className='flex-none'>
-								<NextLink href='/character/1/profile' passHref>
-									<a>商店</a>
-								</NextLink>
-							</div> */}
-							<div className='flex-1 space-x-4'>
-								<NextLink href='/admin' passHref>
-									<a>管理員後台</a>
-								</NextLink>
-							</div>
-							{/* 
-							<div className='flex-none'>
-								<Switch checked={isDarkMode} onChange={toggleDarkMode} />
-							</div> */}
-							{/* <div className='flex-none'>
-								<NextLink href='/admin/player' passHref>
-									<a>管理員後台</a>
-								</NextLink>
-							</div> */}
 							{user ? (
 								<div className='flex-none'>
 									<Dropdown
 										header={
-											<div className='flex gap-x-2'>
+											<div className='flex items-center gap-x-2'>
 												<img
 													className='h-8 w-8 bg-gray-800'
 													src={user.portraitImage?.formats?.thumbnail?.url}
@@ -72,8 +61,14 @@ const GeneralLayout: React.FC = ({ children }) => {
 											className='parchment'
 											style={{ borderWidth: 8, minWidth: 140 }}
 										>
+											<NextLink href='/auth/account' passHref>
+												<a href='' className='block py-1 pl-2'>
+													<i className='bi bi-person-circle mr-2'></i>
+													<span>帳號</span>
+												</a>
+											</NextLink>
 											<NextLink href='/auth/logout' passHref>
-												<a href='' className='block py-1 text-red-900'>
+												<a href='' className='block py-1 pl-2 text-red-900'>
 													<i className='bi bi-box-arrow-right mr-2'></i>
 													<span>登出</span>
 												</a>
@@ -92,10 +87,10 @@ const GeneralLayout: React.FC = ({ children }) => {
 					</div>
 				</div>
 
-				<div className='min-h-screen flex flex-col'>
+				<div className='min-h-screen flex flex-col pt-24'>
 					<div className='flex-1'>{children}</div>
 
-					<div className='dark flex-none bg-yellow-900 dark:bg-gray-800 py-4'>
+					<div className='flex-none bg-yellow-900 text-white py-4'>
 						<div className='container'>
 							<Footer />
 						</div>

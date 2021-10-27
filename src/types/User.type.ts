@@ -16,8 +16,14 @@ export type User = Entity & {
 	city?: City
 }
 
+export enum USER_ROLE {
+	PLAYER = 'Player',
+	DM = 'Dungeon Master',
+	NORMAL = 'Authenciated',
+}
+
 export type UserRole = Entity & {
-	name: string
+	name: USER_ROLE
 	type: string
 	description: string
 }

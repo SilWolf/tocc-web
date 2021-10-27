@@ -145,10 +145,6 @@
 		outline: none;
 	}
 
-	a {
-		@apply text-gray-900 hover:text-gray-800;
-	}
-
 	.button {
 		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
 	}
