@@ -52,7 +52,9 @@ const CharacterSingleValue = ({
 					/>
 				</div>
 				<div className='flex-1'>
-					<p>{character.name}</p>
+					<p>
+						{character.name} / {character.code}
+					</p>
 					<p className='leading-4 text-sm text-gray-400 space-x-2'>
 						<span>等級{character.level}</span>
 						<span>{character.city?.name}</span>
@@ -181,7 +183,9 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 						</div>
 
 						<div className='text-center mx-12'>
-							<MedievalButton color='success'>提交報名</MedievalButton>
+							<MedievalButton color='success' disabled>
+								提交報名
+							</MedievalButton>
 						</div>
 					</div>
 				</div>

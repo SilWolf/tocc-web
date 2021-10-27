@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes } from 'react'
+import React, { AnchorHTMLAttributes, useCallback } from 'react'
 
 import styles from './MedievalButton.module.css'
 
@@ -13,13 +13,25 @@ const MedievalButton = ({
 	className,
 	disabled,
 	href,
+	onClick,
 	...props
 }: Props): JSX.Element => {
+	const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement>>(
+		(e) => {
+			if (!href) {
+				e.preventDefault()
+			}
+			onClick?.(e)
+		},
+		[href, onClick]
+	)
+
 	return (
 		<div className={`${styles.medievalButton} ${className}`}>
 			<a
+				onClick={handleClick}
 				className={`mb-btn mb-style-${color} ${disabled ? 'mb-disabled' : ''}`}
-				href={!disabled ? href : '#'}
+				href={!disabled ? href : ''}
 				{...props}
 			>
 				<div className='mb-ring'>

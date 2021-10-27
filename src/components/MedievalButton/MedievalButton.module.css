@@ -186,8 +186,7 @@
 	--mb-text-color: #fff8e3;
 }
 
-.medievalButton :global(.mb-btn:disabled),
-.medievalButton :global(.mb-btn[disabled]) {
+.medievalButton :global(.mb-btn.mb-disabled) {
 	--mb-edge-color-top: #a3a3a3;
 	--mb-edge-color-bottom: #575757;
 	--mb-edge-color-left: #9c9c9c;
