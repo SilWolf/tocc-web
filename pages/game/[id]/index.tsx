@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next'
 
-import React from 'react'
+import React, { useCallback } from 'react'
+import { Controller as RHFController, useForm } from 'react-hook-form'
 import Select, {
 	components as SelectComponents,
 	OptionProps as SelectOptionProps,
@@ -96,6 +97,21 @@ const CharacterOption = ({
 }
 
 const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
+	const {
+		register,
+		control: rhfControl,
+		handleSubmit: rhfHandleSubmit,
+	} = useForm({
+		defaultValues: {
+			character: null,
+			remarks: '',
+		},
+	})
+
+	const handleSubmit = useCallback((value) => {
+		console.log(value)
+	}, [])
+
 	return (
 		<div className='container py-24'>
 			<div className='mx-auto' style={{ maxWidth: 800 }}>
@@ -162,32 +178,43 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 						/>
 					</div>
 
-					<div className='w-3/4 mx-auto bg-yellow-800 bg-opacity-20 p-4 space-y-8'>
+					<form
+						className='w-3/4 mx-auto bg-yellow-800 bg-opacity-20 p-4 space-y-8'
+						onSubmit={rhfHandleSubmit(handleSubmit)}
+					>
 						<div>
 							<label className='font-bold'>報名的角色</label>
-							<Select
-								options={characters}
-								isSearchable={false}
-								placeholder='選擇報名角色'
-								components={{
-									Option: CharacterOption,
-									SingleValue: CharacterSingleValue,
-									Placeholder: CharacterPlaceholder,
-								}}
-							></Select>
+							<RHFController
+								control={rhfControl}
+								name='character'
+								render={({ field: { onChange, value } }) => (
+									<Select
+										value={characters.find((c) => c.id === value)}
+										onChange={(val) => onChange((val as Character)?.id)}
+										options={characters}
+										isSearchable={false}
+										placeholder='選擇報名角色'
+										components={{
+											Option: CharacterOption,
+											SingleValue: CharacterSingleValue,
+											Placeholder: CharacterPlaceholder,
+										}}
+									></Select>
+								)}
+							/>
 						</div>
 
 						<div>
 							<label className='font-bold'>想告訴DM的話</label>
-							<Input type='textarea' rows={4}></Input>
+							<Input type='textarea' rows={4} {...register('remarks')}></Input>
 						</div>
 
 						<div className='text-center mx-12'>
-							<MedievalButton color='success' disabled>
+							<MedievalButton type='submit' color='success'>
 								提交報名
 							</MedievalButton>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
