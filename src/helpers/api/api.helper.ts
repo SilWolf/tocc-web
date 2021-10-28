@@ -152,6 +152,9 @@ export const getApis = (config?: { jwt?: string }) => {
 			gameId: string,
 			payload: GameSignUp_Req
 		): Promise<GameSignUp> => api.post(`/games/${gameId}/signUp`, payload),
+
+		getMyGameSignUpsByGameId: async (gameId: string): Promise<GameSignUp> =>
+			api.get(`/users/me/games/${gameId}/game-sign-ups`),
 	}
 }
 

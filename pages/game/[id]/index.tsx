@@ -20,10 +20,12 @@ import {
 } from 'src/hooks/withSession.hook'
 import { Character, Game } from 'src/types'
 import { SessionUser } from 'src/types/User.type'
+import { GameSignUp } from 'src/types/Game.type'
 
 type Props = {
 	game: Game
 	characters: Character[]
+	gameSignUps: GameSignUp[]
 }
 
 const CharacterPlaceholder = ({
@@ -99,7 +101,11 @@ const CharacterOption = ({
 	)
 }
 
-const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
+const GameDetailPage: NextPage<Props> = ({
+	game,
+	characters,
+	gameSignUps,
+}: Props) => {
 	const [errorMsg, setErrorMsg] = useState<string>('')
 	const {
 		register,
@@ -119,6 +125,7 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 			.postSignUp(game.id, value)
 			.then(() => {
 				console.log('done')
+				alert('已成功報名。當DM確認你的報名後，就會發出通知。')
 			})
 			.catch((res) => {
 				const data = res.response.data
@@ -148,7 +155,7 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 	}, [])
 
 	return (
-		<div className='container py-24'>
+		<div className='container'>
 			<div className='mx-auto' style={{ maxWidth: 800 }}>
 				<div className='parchment framed space-y-6 mb-8'>
 					<p className='text-right'>
@@ -213,49 +220,57 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 						/>
 					</div>
 
-					<form
-						className='w-3/4 mx-auto bg-yellow-800 bg-opacity-20 p-4 space-y-8'
-						onSubmit={rhfHandleSubmit(handleSubmit)}
-					>
-						<div>
-							<label className='font-bold'>報名的角色</label>
-							<RHFController
-								control={rhfControl}
-								name='character'
-								render={({ field: { onChange, value } }) => (
-									<Select
-										value={characters.find((c) => c.id === value)}
-										onChange={(val) => onChange((val as Character)?.id)}
-										options={characters}
-										isSearchable={false}
-										placeholder='選擇報名角色'
-										components={{
-											Option: CharacterOption,
-											SingleValue: CharacterSingleValue,
-											Placeholder: CharacterPlaceholder,
-										}}
-									></Select>
-								)}
-							/>
-						</div>
+					{gameSignUps?.length > 0 ? (
+						<Alert>你已經報名此劇本</Alert>
+					) : (
+						<form
+							className='w-3/4 mx-auto bg-yellow-800 bg-opacity-20 p-4 space-y-8'
+							onSubmit={rhfHandleSubmit(handleSubmit)}
+						>
+							<div>
+								<label className='font-bold'>報名的角色</label>
+								<RHFController
+									control={rhfControl}
+									name='character'
+									render={({ field: { onChange, value } }) => (
+										<Select
+											value={characters.find((c) => c.id === value)}
+											onChange={(val) => onChange((val as Character)?.id)}
+											options={characters}
+											isSearchable={false}
+											placeholder='選擇報名角色'
+											components={{
+												Option: CharacterOption,
+												SingleValue: CharacterSingleValue,
+												Placeholder: CharacterPlaceholder,
+											}}
+										></Select>
+									)}
+								/>
+							</div>
 
-						<div>
-							<label className='font-bold'>想告訴DM的話</label>
-							<Input type='textarea' rows={4} {...register('remarks')}></Input>
-						</div>
+							<div>
+								<label className='font-bold'>想告訴DM的話</label>
+								<Input
+									type='textarea'
+									rows={4}
+									{...register('remarks')}
+								></Input>
+							</div>
 
-						{errorMsg && <Alert type='danger'>{errorMsg}</Alert>}
+							{errorMsg && <Alert type='danger'>{errorMsg}</Alert>}
 
-						<div className='text-center mx-12'>
-							<MedievalButton
-								type='submit'
-								color='success'
-								disabled={!selectedCharacter}
-							>
-								提交報名
-							</MedievalButton>
-						</div>
-					</form>
+							<div className='text-center mx-12'>
+								<MedievalButton
+									type='submit'
+									color='success'
+									disabled={!selectedCharacter}
+								>
+									提交報名
+								</MedievalButton>
+							</div>
+						</form>
+					)}
 				</div>
 			</div>
 		</div>
@@ -284,12 +299,18 @@ export const getServerSideProps: GetServerSideProps =
 			}
 
 			// const [characters] = await Promise.all([apis.getMyCharacters()])
-			const [characters] = await Promise.all([apis.getMyCharacters()])
+			const [characters, gameSignUps] = await Promise.all([
+				apis.getMyCharacters(),
+				apis.getMyGameSignUpsByGameId(game.id),
+			])
+
+			console.log(gameSignUps)
 
 			return {
 				props: {
 					game,
 					characters,
+					gameSignUps,
 				}, // will be passed to the page component as props
 			}
 		}
