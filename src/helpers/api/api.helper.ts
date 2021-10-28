@@ -1,5 +1,5 @@
 import { City } from 'types/City.type'
-import { Game } from 'types/Game.type'
+import { Game, GameSignUp, GameSignUp_Req } from 'types/Game.type'
 import { User } from 'types/User.type'
 
 import { DataTableState } from 'src/components/DataTable'
@@ -147,6 +147,11 @@ export const getApis = (config?: { jwt?: string }) => {
 			api.get(`/auth/${provider}/callback`, {
 				params: { access_token: accessToken },
 			}),
+
+		postSignUp: async (
+			gameId: string,
+			payload: GameSignUp_Req
+		): Promise<GameSignUp> => api.post(`/games/${gameId}/signUp`, payload),
 	}
 }
 

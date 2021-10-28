@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next'
 
-import React, { useCallback } from 'react'
-import { Controller as RHFController, useForm } from 'react-hook-form'
+import React, { useCallback, useState } from 'react'
+import { Controller as RHFController, useForm, useWatch } from 'react-hook-form'
 import Select, {
 	components as SelectComponents,
 	OptionProps as SelectOptionProps,
@@ -12,7 +12,8 @@ import Select, {
 import { DateSpan } from 'src/components/Datetime'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
-import { getApis } from 'src/helpers/api/api.helper'
+import Alert from 'src/components/Alert'
+import apis, { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
 	serverSidePropsWithSession,
@@ -84,7 +85,9 @@ const CharacterOption = ({
 					/>
 				</div>
 				<div className='flex-1'>
-					<p>{character.name}</p>
+					<p>
+						{character.name} / {character.code}
+					</p>
 					<p className='text-sm text-gray-400 space-x-2'>
 						<span>等級{character.level}</span>
 						<span>{character.city?.name}</span>
@@ -97,6 +100,7 @@ const CharacterOption = ({
 }
 
 const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
+	const [errorMsg, setErrorMsg] = useState<string>('')
 	const {
 		register,
 		control: rhfControl,
@@ -107,9 +111,40 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 			remarks: '',
 		},
 	})
+	const selectedCharacter = useWatch({ control: rhfControl, name: 'character' })
 
 	const handleSubmit = useCallback((value) => {
-		console.log(value)
+		setErrorMsg('')
+		apis
+			.postSignUp(game.id, value)
+			.then(() => {
+				console.log('done')
+			})
+			.catch((res) => {
+				const data = res.response.data
+				if (data.message) {
+					switch (data.message.errorCode) {
+						case 'NOT_AUTHORIZED':
+							setErrorMsg('錯誤: 你未登入。')
+							break
+						case 'ALREADY_SIGN_UP':
+							setErrorMsg('錯誤: 你已經報名過了！')
+							break
+						case 'GAME_NOT_FOUND':
+							setErrorMsg('錯誤: 找不到劇本，有可能它被刪除了。')
+							break
+						case 'NOT_PUBLISHED':
+							setErrorMsg('錯誤: 劇本的報名已經截止。')
+							break
+						case 'MISSING_CHARACTER':
+							setErrorMsg('錯誤: 你必須選擇報名的角色。')
+							break
+						case 'CHARACTER_NOT_FOUND':
+							setErrorMsg('錯誤: 找不到你選擇的角色。')
+							break
+					}
+				}
+			})
 	}, [])
 
 	return (
@@ -209,8 +244,14 @@ const GameDetailPage: NextPage<Props> = ({ game, characters }: Props) => {
 							<Input type='textarea' rows={4} {...register('remarks')}></Input>
 						</div>
 
+						{errorMsg && <Alert type='danger'>{errorMsg}</Alert>}
+
 						<div className='text-center mx-12'>
-							<MedievalButton type='submit' color='success'>
+							<MedievalButton
+								type='submit'
+								color='success'
+								disabled={!selectedCharacter}
+							>
 								提交報名
 							</MedievalButton>
 						</div>
@@ -243,122 +284,7 @@ export const getServerSideProps: GetServerSideProps =
 			}
 
 			// const [characters] = await Promise.all([apis.getMyCharacters()])
-			const [characters] = await Promise.all([
-				Promise.resolve([
-					{
-						level: 0,
-						xp: 0,
-						gp: 0,
-						clses: [],
-						_id: '6013c2f3ae992d5eaef29c4a',
-						name: '卡洛特',
-						code: 'D-GO01',
-						createdAt: '2021-01-29T08:10:27.264Z',
-						updatedAt: '2021-01-29T08:12:34.463Z',
-						__v: 0,
-						created_by: {
-							isActive: true,
-							blocked: false,
-							_id: '600f9aee8e4062d494e12a2f',
-							username: null,
-							registrationToken: null,
-							firstname: 'SilWolf',
-							lastname: 'Karlott',
-							email: 'silwolf1121@gmail.com',
-							__v: 0,
-							preferedLanguage: 'zh',
-							id: '600f9aee8e4062d494e12a2f',
-						},
-						updated_by: {
-							isActive: true,
-							blocked: false,
-							_id: '600f9aee8e4062d494e12a2f',
-							username: null,
-							registrationToken: null,
-							firstname: 'SilWolf',
-							lastname: 'Karlott',
-							email: 'silwolf1121@gmail.com',
-							__v: 0,
-							preferedLanguage: 'zh',
-							id: '600f9aee8e4062d494e12a2f',
-						},
-						city: {
-							level: 1,
-							prosperity: 0,
-							prosperityMax: 0,
-							_id: '60110336fffd3f23a0fd5275',
-							name: '鍚安城',
-							shopName: '開棋 Games On',
-							shopAddress: '油麻地彌敦道566號 橋建大廈11樓566室 香港香港',
-							code: 'GO',
-							shopAbbr: 'GO',
-							createdAt: '2021-01-27T06:07:50.149Z',
-							updatedAt: '2021-10-21T09:23:49.730Z',
-							__v: 0,
-							created_by: '600f9aee8e4062d494e12a2f',
-							updated_by: '600f9aee8e4062d494e12a2f',
-							telegramChatId: '-499164852',
-							id: '60110336fffd3f23a0fd5275',
-						},
-						player: {
-							confirmed: true,
-							blocked: false,
-							isPlayer: false,
-							_id: '60110107222e8513969913c9',
-							username: 'Dicky',
-							email: 'dicky@tocc.com',
-							provider: 'local',
-							createdAt: '2021-01-27T05:58:31.362Z',
-							updatedAt: '2021-10-20T09:21:07.723Z',
-							__v: 0,
-							created_by: '600f9aee8e4062d494e12a2f',
-							role: '600f9dda01d354d4d17f1abc',
-							updated_by: '600f9aee8e4062d494e12a2f',
-							portraitImage: {
-								_id: '601106c36a6b2d246c163722',
-								name: '螢幕截圖 2020-06-22 下午1.58.05.png',
-								alternativeText: '',
-								caption: '',
-								hash: '2020_06_22_1_58_05_589ca94c04',
-								ext: '.png',
-								mime: 'image/png',
-								size: 47.42,
-								width: 300,
-								height: 302,
-								url: 'http://localhost:4566/tocc-cms-strapi-bucket/2020_06_22_1_58_05_589ca94c04.png',
-								formats: {
-									thumbnail: {
-										name: 'thumbnail_螢幕截圖 2020-06-22 下午1.58.05.png',
-										hash: 'thumbnail_2020_06_22_1_58_05_589ca94c04',
-										ext: '.png',
-										mime: 'image/png',
-										width: 155,
-										height: 156,
-										size: 49.81,
-										path: null,
-										url: 'http://localhost:4566/tocc-cms-strapi-bucket/thumbnail_2020_06_22_1_58_05_589ca94c04.png',
-									},
-								},
-								provider: 's3-plus',
-								related: ['60110107222e8513969913c9'],
-								createdAt: '2021-01-27T06:22:59.971Z',
-								updatedAt: '2021-01-27T06:23:02.666Z',
-								__v: 0,
-								created_by: '600f9aee8e4062d494e12a2f',
-								updated_by: '600f9aee8e4062d494e12a2f',
-								id: '601106c36a6b2d246c163722',
-							},
-							code: 'D',
-							name: 'Dicky',
-							telegramChatId: '170511844',
-							telegramUserId: '170511844',
-							telegramValidationCode: '123123',
-							id: '60110107222e8513969913c9',
-						},
-						id: '6013c2f3ae992d5eaef29c4a',
-					},
-				]),
-			])
+			const [characters] = await Promise.all([apis.getMyCharacters()])
 
 			return {
 				props: {

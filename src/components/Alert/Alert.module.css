@@ -1,0 +1,28 @@
+.alert :global() {
+	--alert-background: rgba(250, 250, 250, 0.75);
+	--alert-border-color: #999999;
+	--alert-color: rgba(0, 0, 0, 0.87);
+
+	background: var(--alert-background);
+	border: 1px solid var(--alert-border-color);
+	color: var(--alert-color);
+	padding: 8px 16px;
+}
+
+.alert:global(.alert-default) {
+	--alert-background: rgba(250, 250, 250, 0.75);
+	--alert-border-color: #999999;
+	--alert-color: rgba(0, 0, 0, 0.87);
+}
+
+.alert:global(.alert-success) {
+	--alert-background: rgba(138, 207, 118, 0.75);
+	--alert-border-color: #5e9c4c;
+	--alert-color: rgba(44, 69, 37, 0.87);
+}
+
+.alert:global(.alert-danger) {
+	--alert-background: rgba(224, 146, 146, 0.75);
+	--alert-border-color: #b85656;
+	--alert-color: rgba(77, 33, 33, 0.87);
+}

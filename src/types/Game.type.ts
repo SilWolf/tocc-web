@@ -82,3 +82,17 @@ export const gameDefaultValue_Req: Game_Req = {
 	dm: '',
 	characters: [],
 }
+
+export type GameSignUp = Entity & {
+	game: Game
+	character: Character
+	player: User
+	status: 'pending' | 'accepted' | 'rejected'
+	remarks: string
+}
+
+export type GameSignUp_Req = {
+	character: string
+	game: string
+	remarks: string
+}
