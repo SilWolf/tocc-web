@@ -8,13 +8,13 @@ type Props = ImgHTMLAttributes<HTMLImageElement> & {
 
 const PLACEHOLDER_AVATAR_DWARF = '/images/avatar/avatar-dwarf.png'
 
-const StrapiImg = ({ image, size, ...others }: Props): JSX.Element => {
-	const { url, width, height } = useMemo(() => {
+const StrapiImg = ({ image, size, src, ...others }: Props): JSX.Element => {
+	const { _src, _width, _height } = useMemo(() => {
 		if (!image) {
 			return {
-				url: PLACEHOLDER_AVATAR_DWARF,
-				width: 0,
-				height: 0,
+				_src: PLACEHOLDER_AVATAR_DWARF,
+				_width: 0,
+				_height: 0,
 			}
 		}
 
@@ -22,21 +22,21 @@ const StrapiImg = ({ image, size, ...others }: Props): JSX.Element => {
 			const _image = image.formats?.[size]
 			if (_image) {
 				return {
-					url: _image.url,
-					width: _image.width,
-					height: _image.height,
+					_src: _image.url,
+					_width: _image.width,
+					_height: _image.height,
 				}
 			}
 		}
 
 		return {
-			url: image.url,
-			width: image.width,
-			height: image.height,
+			_src: image.url,
+			_width: image.width,
+			_height: image.height,
 		}
 	}, [size])
 
-	return <img src={url} width={width} height={height} {...others} />
+	return <img src={_src} width={_width} height={_height} {...others} />
 }
 
 export default React.memo(StrapiImg)

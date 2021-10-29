@@ -93,6 +93,7 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 														<StrapiImg
 															className={classNames('w-10 h-10')}
 															image={character.portraitImage}
+															size='thumbnail'
 															alt=''
 														/>
 													</div>
