@@ -11,11 +11,15 @@ const DateSpan: React.FC<Props> = ({
 	children,
 	...others
 }) => {
-	return (
-		<span {...others}>
-			{dateFnsLightFormat(new Date(children as string), format)}
-		</span>
-	)
+	try {
+		return (
+			<span {...others}>
+				{dateFnsLightFormat(new Date(children as string), format)}
+			</span>
+		)
+	} catch (e) {
+		return <></>
+	}
 }
 
 const DateSpanMemoed = React.memo(DateSpan)

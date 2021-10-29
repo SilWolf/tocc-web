@@ -30,6 +30,11 @@ export type Game = Entity & {
 	dm?: User
 	characters?: Character[]
 	gameSignUps?: GameSignUp[]
+	gameSignUpCounting?: {
+		accepted: number
+		rejected: number
+		pending: number
+	}
 	status?: GameStatus
 
 	journals?: string[]

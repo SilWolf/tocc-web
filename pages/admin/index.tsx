@@ -18,7 +18,6 @@ type Props = {
 }
 
 const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
-	console.log(games)
 	return (
 		<>
 			<h2>待跑劇本</h2>
@@ -26,22 +25,43 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 				{games.map((game) => {
 					return (
 						<div className='parchment space-y-2'>
-							<h2>
-								[{game.code}] {game.title}
-							</h2>
+							<div className='flex items-center'>
+								<div className='flex-1'>
+									<h2>
+										<a href={`/admin/game/${game._id}`} target='_blank'>
+											[{game.code}] {game.title}
+										</a>
+									</h2>
+								</div>
+								<div className='flex-none space-x-2'>
+									<button>Trello卡</button>
+									<button>行事曆</button>
+								</div>
+							</div>
 
 							<div className='grid tablet:grid-cols-3 laptop:grid-cols-3 gap-4'>
-								<div className='tablet:col-span-2 laptop:col-span-2'>
+								<div className='tablet:col-span-2 laptop:col-span-2 space-y-3'>
 									<table>
 										<tr>
 											<td>日期時間: </td>
-											<td className='pl-2 font-bold'>
-												<DateSpan format='yyyy年MM月dd日'>
-													{game.startAt}
-												</DateSpan>{' '}
-												<DateSpan format='HH:mm'>{game.startAt}</DateSpan>
-												{' - '}
-												<DateSpan format='HH:mm'>{game.endAt}</DateSpan>
+											<td className='pl-2'>
+												<p className='font-bold'>
+													<DateSpan format='yyyy年MM月dd日'>
+														{game.startAt}
+													</DateSpan>{' '}
+													<DateSpan format='HH:mm'>{game.startAt}</DateSpan>
+													{' - '}
+													<DateSpan format='HH:mm'>{game.endAt}</DateSpan>
+												</p>
+												<p className='text-xs font-light'>
+													<DateSpan format='第三紀元yyyy年MM月dd日'>
+														{game.worldStartAt}
+													</DateSpan>
+													{' - '}
+													<DateSpan format='MM月dd日'>
+														{game.worldEndAt}
+													</DateSpan>
+												</p>
 											</td>
 										</tr>
 										<tr>
@@ -58,8 +78,17 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 										</tr>
 										<tr>
 											<td>人數: </td>
-											<td className='pl-2 font-bold'>
-												{game.capacityMin}-{game.capacityMax}人
+											<td className='pl-2'>
+												<span className='font-bold'>
+													{game.capacityMin}-{game.capacityMax}人
+												</span>
+												{game.gameSignUpCounting && (
+													<span className='pl-2 text-sm'>
+														( {game.gameSignUpCounting.accepted}確認 /{' '}
+														{game.gameSignUpCounting.pending}等待 /{' '}
+														{game.gameSignUpCounting.rejected}拒絕 )
+													</span>
+												)}
 											</td>
 										</tr>
 									</table>
@@ -99,10 +128,20 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 													</div>
 													<div className='flex-1'>
 														<p className='text-normal leading-4'>
-															{character.code} {character.name}
+															<a
+																href={`/admin/character/${character._id}`}
+																target='_blank'
+															>
+																{character.code} {character.name}
+															</a>
 														</p>
 														<p className='text-xs leading-3 opacity-80'>
-															{player.code} {player.name}
+															<a
+																href={`/admin/player/${character._id}`}
+																target='_blank'
+															>
+																{player.code} {player.name}
+															</a>
 														</p>
 													</div>
 												</div>
@@ -200,6 +239,24 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 							? 1
 							: -1
 					})
+
+					const counting = {
+						accepted: 0,
+						rejected: 0,
+						pending: 0,
+					}
+
+					for (const gameSignUp of game.gameSignUps) {
+						if (gameSignUp.status === 'accepted') {
+							counting.accepted++
+						} else if (gameSignUp.status === 'rejected') {
+							counting.rejected++
+						} else if (gameSignUp.status === 'pending') {
+							counting.pending++
+						}
+					}
+
+					game.gameSignUpCounting = counting
 				}
 			}
 
