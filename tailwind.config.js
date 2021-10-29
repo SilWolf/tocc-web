@@ -22,6 +22,30 @@ module.exports = {
 			},
 			colors: {
 				primary: 'var(--color-primary)',
+				accepted: {
+					// Greenish
+					darkest: '#376e37',
+					dark: '#408140',
+					DEFAULT: '#4a934a',
+					light: '#53a653',
+					lightest: '#5cb85c',
+				},
+				rejected: {
+					// Red
+					darkest: '#d32f2f',
+					dark: '#e53935',
+					DEFAULT: '#f44336',
+					light: '#ef5350',
+					lightest: '#e57373',
+				},
+				pending: {
+					// Yellow
+					darkest: '#d48806',
+					dark: '#faad14',
+					DEFAULT: '#ffc53d',
+					light: '#ffd666',
+					lightest: '#ffe58f',
+				},
 			},
 		},
 	},

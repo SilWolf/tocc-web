@@ -29,6 +29,7 @@ export type Game = Entity & {
 	remark?: string
 	dm?: User
 	characters?: Character[]
+	gameSignUps?: GameSignUp[]
 	status?: GameStatus
 
 	journals?: string[]
@@ -74,6 +75,7 @@ export const gameDefaultValue: Game = {
 	city: undefined,
 	dm: undefined,
 	characters: [],
+	gameSignUps: [],
 }
 
 export const gameDefaultValue_Req: Game_Req = {
