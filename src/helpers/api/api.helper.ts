@@ -155,6 +155,9 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		getMyGameSignUpsByGameId: async (gameId: string): Promise<GameSignUp> =>
 			api.get(`/users/me/games/${gameId}/game-sign-ups`),
+
+		getDMPendingGames: async (): Promise<GameSignUp> =>
+			api.get(`/dms/me/games?_pending=true`),
 	}
 }
 

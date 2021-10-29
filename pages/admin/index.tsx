@@ -1,8 +1,20 @@
 import { GetServerSideProps, NextPage } from 'next'
+import { getApis } from 'src/helpers/api/api.helper'
 
-import { ProtectAdminPage } from 'src/hooks/withSession.hook'
+import {
+	GetServerSidePropsContextWithIronSession,
+	ProtectAdminPage,
+	serverSidePropsWithSession,
+} from 'src/hooks/withSession.hook'
+import { Game } from 'src/types'
+import { SessionUser } from 'src/types/User.type'
 
-const AdminIndexPage: NextPage = () => {
+type Props = {
+	games: Game[]
+}
+
+const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
+	console.log(games)
 	return (
 		<>
 			<h2>待跑劇本</h2>
@@ -150,6 +162,19 @@ const AdminIndexPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = ProtectAdminPage()
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
+	serverSidePropsWithSession(
+		async (context: GetServerSidePropsContextWithIronSession) => {
+			const sessionUser = context.req.session.get<SessionUser>('sessionUser')
+			const apis = getApis({ jwt: sessionUser?.jwt })
+
+			const games = await apis.getDMPendingGames()
+
+			return {
+				props: { games },
+			}
+		}
+	)
+)
 
 export default AdminIndexPage
