@@ -179,6 +179,97 @@ const KsIntetionsPage = () => {
 
 	return (
 		<>
+			<div className='flex'>
+				<div className='flex-none'>
+					<div
+						className='grid grid-cols-3 p-4 gap-4 mt-24 ml-8'
+						style={{
+							background: `url('/images/ks/board-bg.jpg')`,
+							backgroundSize: 'cover',
+						}}
+					>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+								background: `url(${RESOURCES[OFFENSIVE].iconSrc})`,
+								backgroundSize: '15%',
+								backgroundRepeat: 'no-repeat',
+								backgroundPosition: 'center 15px',
+							}}
+						>
+							Add one random Offense Evolve card into discard pile, then
+							reshuffle discard pile and form a new draw pile. <br /> <br />
+							If you can&apos;t, you are overwhelmed by this non-stop evolving
+							corruption. You spend your last bullet, scream until last breath,
+							and your adventure ends here.
+						</div>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+								background: `url(${RESOURCES[DEFENSIVE].iconSrc})`,
+								backgroundSize: '15%',
+								backgroundRepeat: 'no-repeat',
+								backgroundPosition: 'center 15px',
+							}}
+						>
+							Add one random Defense Evolve card into discard pile, then
+							reshuffle discard pile and form a new draw pile. <br /> <br />
+							If you can&apos;t, your body can no longer resist to the
+							evolution. You become something that you slumber a lot on the way,
+							and your adventure ends here.
+						</div>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+								background: `url(${RESOURCES[SPECIAL].iconSrc})`,
+								backgroundSize: '15%',
+								backgroundRepeat: 'no-repeat',
+								backgroundPosition: 'center 15px',
+							}}
+						>
+							Add one random Special Evolve card into discard pile, then
+							reshuffle discard pile and form a new draw pile. <br />
+							<br />
+							If you can&apos;t, you learn the truth of this world, and you turn
+							into the executor of your God. You become the one who ends human
+							era, and your adventure ends here.
+						</div>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+							}}
+						>
+							discard pile
+						</div>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+							}}
+						>
+							discard pile
+						</div>
+						<div
+							className='border border-white rounded flex items-center justify-center text-sm text-white text-center p-4'
+							style={{
+								width: 400,
+								height: 300,
+							}}
+						>
+							discard pile
+						</div>
+					</div>
+				</div>
+			</div>
 			<div className='px-8 py-24' style={{ width: '180%' }}>
 				<div className='flex flex-wrap mb-16'>
 					{intentions.map((intention, i) => (
