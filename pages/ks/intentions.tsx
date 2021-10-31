@@ -139,7 +139,7 @@ const KsIntetionsPage = () => {
 							key={i}
 							style={{
 								width: 375,
-								height: 212,
+								height: 262,
 								border: '12px solid #333',
 								borderRadius: 8,
 							}}
@@ -271,18 +271,21 @@ const KsIntetionsPage = () => {
 									</div> */}
 								</div>
 								<div
-									className='flex items-center justify-center'
-									style={{ width: 18 }}
+									className='flex items-center justify-center bg-gray-500'
+									style={{ width: 18, boxShadow: '#666 1px 0 2px', zIndex: 1 }}
 								>
 									<i
 										className='bi bi-caret-right-fill'
-										style={{ fontSize: 24, marginLeft: -3, color: '#666' }}
+										style={{ fontSize: 24, marginLeft: -3, color: '#fff' }}
 									></i>
 								</div>
 								<div
 									style={{
 										width: '100px',
-										background: RESOURCES[intention.nextType].background,
+										background: `linear-gradient(to left, ${
+											RESOURCES[intention.nextType].background
+										}, #fff)`,
+										// background: '#fff',
 									}}
 								>
 									<div className='flex h-full flex-col justify-center items-center text-center text-sm'>
@@ -296,17 +299,24 @@ const KsIntetionsPage = () => {
 											<strong>{RESOURCES[intention.nextType].text}</strong> pile
 										</p>
 										<div
+											className='border border-black py-1 px-2 rounded mt-2'
 											style={{
-												backgroundColor: RESOURCES[intention.nextType].color,
-												width: 32,
-												height: 32,
-												WebkitMaskImage: `url('${
-													RESOURCES[intention.nextType].iconSrc
-												}')`,
-												WebkitMaskPosition: 'center',
-												WebkitMaskSize: 'cover',
+												background: RESOURCES[intention.nextType].background,
 											}}
-										></div>
+										>
+											<div
+												style={{
+													backgroundColor: RESOURCES[intention.nextType].color,
+													width: 28,
+													height: 28,
+													WebkitMaskImage: `url('${
+														RESOURCES[intention.nextType].iconSrc
+													}')`,
+													WebkitMaskPosition: 'center',
+													WebkitMaskSize: 'cover',
+												}}
+											></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -319,7 +329,7 @@ const KsIntetionsPage = () => {
 							key={i}
 							style={{
 								width: 375,
-								height: 212,
+								height: 262,
 								border: '12px solid #333',
 								borderRadius: 8,
 							}}

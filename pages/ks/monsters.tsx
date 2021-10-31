@@ -72,33 +72,46 @@ const KsMonstersPage = () => {
 					name: 'Thug',
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-thug.png',
-					hp: 25,
+					hp: 20,
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
+							content: <p>Attack 3 (R 1).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Move 2. Attack 3 (R 1)</p>,
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Attack 3 (R 1). Inflict 1 Bleeding (R 1).
+								</p>
+							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Block 3.</p>,
+							content: <p>Block 5.</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Block 3. Inflict 1 Bleeding (R 1).</p>,
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Block 5. Inflict 1 Bleeding (R 1).
+									<br />
+								</p>
+							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Move 2. Inflict 1 Bleeding (R 1).</p>,
+							content: <p>Attack 3 (R 4-1). Inflict 1 Bleeding (R 1).</p>,
 						},
 					],
 				},
@@ -112,36 +125,52 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
+							content: <p>Attack 3 (R 1).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Move 1. Attack 3 (R 1). Move 1. Attack 2 (R 1).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Block 3.</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
 							content: (
-								<p>Block 3. Inflict 1 Bleeding to most Red cards (R 1).</p>
+								<p>
+									Move 2.
+									<br />
+									Attack 3 (R 1). Inflict 2 Bleedings. (R 1).
+								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [5, 6],
+							values: [0],
+							content: <p>Block 5.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2],
 							content: (
-								<p>Block 3. Inflict 2 Bleedings to most Red cards (R 1).</p>
+								<p>
+									Move 2.
+									<br />
+									Block 5. Inflict 2 Bleedings (R 1).
+									<br />
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [3, 4, 5, 6],
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Inflict 3 Bleedings (R 1).
+									<br />
+								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Move 2. Inflict 1 Bleeding (R 1).</p>,
+							content: <p>Attack 3 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
 						},
 					],
 				},
@@ -155,559 +184,16 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4],
-							content: <p>Move 1. Attack 3 (R 1). Move 1. Attack 3 (R 1).</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: <p>Move 2. Attack 3 (R 1). Inflict 1 Bleeding (R 1).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Block 3. </p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>Block 5. Inflict 1 Bleeding to most Red cards (R 1).</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>Block 5. Inflict 2 Bleedings to most Red cards (R 1).</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: (
-								<p>
-									Each player takes 3 piercing damages for each owned Bleeding.
-									<br />
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: (
-								<p>
-									Each player inflicts 1 Bleeding.
-									<br />
-									Reshuffle all discarded <strong>Offense 3-6</strong> back to
-									pile.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Thug',
-					lv: ELITE,
-					imageSrc: '/images/ks/monster-thug.png',
-					hp: 25,
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1. Attack 4 (R 1). <br />
-									Move 1. Attack 2 (R 1). Inflict 1 Bleeding (R 1).
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>Move 2. Attack 3 (R 1). Inflict 2 Bleedings (R 1).</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Block 3. </p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1. Block 5. Inflict 1 Bleeding to most Red cards (R 1).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>Block 5. Inflict 2 Bleedings to most Red cards (R 1).</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: (
-								<p>
-									Each player takes 3 piercing damages for each owned Bleeding.
-									<br />
-									Each player who does not own Bleeding inflict 1 Bleeding.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: (
-								<p>
-									Each player inflicts 1 Bleeding.
-									<br />
-									Reshuffle all discarded <strong>Offense 3-6</strong> back to
-									pile.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Archer',
-					lv: MINOR,
-					imageSrc: '/images/ks/monster-archer.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Deals 3 percing damages to itself.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 4 (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: (
-								<p>Remove up to one Fire trap by player&apos;s choice</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>Each Fire deals 2 damages to each player within 1 spaces.</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Archer',
-					lv: NORMAL,
-					imageSrc: '/images/ks/monster-archer.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Deals 3 percing damages to itself.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 4 (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: (
-								<p>Remove up to one Fire trap by player&apos;s choice</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (R 1-2).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>Each Fire deals 2 damages to each player within 1 spaces.</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Archer',
-					lv: ADVANCED,
-					imageSrc: '/images/ks/monster-archer.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Deals 3 percing damages to itself.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 6 (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: (
-								<p>Remove up to one Fire trap by player&apos;s choice</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (
-									<span className='text-red-700'>R X, X = intention no.</span>).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (R 1-3).
-									<br /> Place a Fire trap on this space.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>Each Fire deals 2 damages to each player within 1 spaces.</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Archer',
-					lv: ELITE,
-					imageSrc: '/images/ks/monster-archer.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Deals 3 percing damages to itself.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2],
-							content: (
-								<p>Attack 4 (AR 3-4). Place Fire trap on both spaces.</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [3, 4],
-							content: (
-								<p>Attack 4 (AR 4-5). Place Fire trap on both spaces.</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>Attack 4 (AR 5-6). Place Fire trap on both spaces.</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: (
-								<p>Remove up to one Fire trap by player&apos;s choice</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (AR 3-4).
-									<br /> Place Fire trap on both spaces.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [3, 4],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (AR 4-5).
-									<br /> Place Fire trap on both spaces.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Inflict 2 Immobolize to most green cards (R 1-3).
-									<br />
-									Push 1 (R 1-3). Place a Fire trap on target&apos;s space.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: (
-								<p>Each Fire deals 2 damages to each player within 1 spaces.</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: <p>Place Fire trap on each space of R2, R5 and R8.</p>,
-						},
-					],
-				},
-				{
-					name: 'Doctor',
-					lv: MINOR,
-					imageSrc: '/images/ks/monster-doctor.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Poison (R 1-3, monster).</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Inflict 1 Poison (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Disarm (R 1-3, monster).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Inflict 1 Disarm (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Heal 3 (R 0-5, all monsters)
-									<br />
-									Attack 3 (R 1-5, all players)
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Doctor',
-					lv: NORMAL,
-					imageSrc: '/images/ks/monster-doctor.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Poison (R 1-3, monster).</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Inflict 2 Poison (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Disarm (R 1-3, monster).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: <p>Inflict 2 Disarm (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: <p>Remove all status cards on monsters.</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Heal 5 (R 0-5, all monsters)
-									<br />
-									Attack 3 (R 1-5, all players)
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Doctor',
-					lv: ADVANCED,
-					imageSrc: '/images/ks/monster-doctor.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Poison (R 1-3, monster).</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4],
-							content: <p>Inflict 2 Poison (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: <p>Inflict 2 Poison (R 1-8, all players).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Disarm (R 1-3, monster).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: <p>Inflict 2 Disarm (R 1-5, 2 players).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: <p>Debuff 1 (R 1-5, all monsters).</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: (
-								<p>
-									Heal 5 (R 0-5, all monsters)
-									<br />
-									Each player discards 2 top cards from their library for each
-									status cards they owned.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: (
-								<p>
-									Heal 5 (R 0-5, all monsters)
-									<br />
-									Each player takes 1 piercing damages for each status cards
-									they owned.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Doctor',
-					lv: ELITE,
-					imageSrc: '/images/ks/monster-doctor.png',
-					hp: 20,
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Inflict 1 Poison (R 1-3, monster).</p>,
+							content: <p>Attack 3 (R 1).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2],
 							content: (
 								<p>
-									Inflict 2 Poison (R 1-5, 2 players).
+									Move 2.
 									<br />
-									Remove all blocks (R 1-5, 2 players)
+									Attack 3 (R 1). Inflict 2 Bleedings. (R 1).
 								</p>
 							),
 						},
@@ -716,30 +202,1409 @@ const KsMonstersPage = () => {
 							values: [3, 4, 5, 6],
 							content: (
 								<p>
-									Inflict 2 Poison (R 1-8, all players).
+									Move 2.
 									<br />
-									Remove all blocks (R 1-8, all players)
+									Attack 3 (R 1). Piercing Attack 3 (R 1).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Inflict 1 Disarm (R 1-3, monster).</p>,
+							content: <p>Block 5.</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2],
-							content: <p>Inflict 2 Disarm (R 1-5, 2 players).</p>,
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Block 5. Inflict 2 Bleedings (R 1).
+									<br />
+								</p>
+							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [3, 4, 5, 6],
 							content: (
 								<p>
-									Debuff 1 (R 1-5, all monsters).
+									Move 2.
 									<br />
-									Inflict 1 Protection (R 1-5, all monsters)
+									Inflict 3 Bleedings (R 1).
+									<br />
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Attack 3 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
+						},
+					],
+				},
+				{
+					name: 'Thug',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-thug.png',
+					hp: 30,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Attack 4 (R 1).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2],
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Attack 4 (R 1). Inflict 2 Bleedings. (R 1).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [3, 4, 5, 6],
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Attack 4 (R 1). Piercing Attack 3 (R 1).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									<span className='text-red-700'>Attack 4 (R 1)</span>.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2],
+							content: (
+								<p>
+									Move 2.
+									<br />
+									<span className='text-red-700'>Attack 4 (R 1)</span>. Inflict
+									2 Bleedings (R 1).
+									<br />
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [3, 4, 5, 6],
+							content: (
+								<p>
+									Move 2.
+									<br />
+									Inflict 3 Bleedings (R 1).
+									<br />
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B'],
+							content: <p>Attack 4 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C', 'D'],
+							content: (
+								<p>
+									Each player takes 2 piercing damage for each Bleeding they
+									owned.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Archer',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-archer.png',
+					hp: 18,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Attack 3 (R 5-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Attack 3 (R 1-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									<br />
+									Back 1.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A'],
+							content: <p>Attack 4 (R 2).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['B'],
+							content: <p>Attack 4 (R 3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C'],
+							content: <p>Attack 4 (R 4).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['D'],
+							content: <p>Attack 4 (R 5).</p>,
+						},
+					],
+				},
+				{
+					name: 'Archer',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-archer.png',
+					hp: 20,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Attack 3 (R 5-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 (R 1-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									<br />
+									Back 1.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [6],
+							content: <p>Push 6 (R 1-3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['A'],
+							content: <p>Attack 6 (R 2).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['B'],
+							content: <p>Attack 6 (R 3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C'],
+							content: <p>Attack 6 (R 4).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['D'],
+							content: <p>Attack 6 (R 5).</p>,
+						},
+					],
+				},
+				{
+					name: 'Archer',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-archer.png',
+					hp: 20,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 (R 5-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [6],
+							content: <p>Attack 6 (R 5-3).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 (R 1-3).
+									<br />
+									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									<br />
+									Back 1.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [6],
+							content: <p>Push 6 (R 1-3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['A'],
+							content: <p>Attack 6 (R 2).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['B'],
+							content: <p>Attack 6 (R 3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C'],
+							content: <p>Attack 6 (R 4).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['D'],
+							content: <p>Attack 6 (R 5).</p>,
+						},
+					],
+				},
+				{
+					name: 'Archer',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-archer.png',
+					hp: 25,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 2 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 (R 5-3). Piercing Attack 1 (R 5-3).
+									<br />
+									Push 1 & Inflict 2 Disarm to most Red card (R 1).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [6],
+							content: <p>Attack 6 (R 5-3). Piercing Attack 2 (R 5-3).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Push 1 & Inflict 2 Disarm to most Red card (R 1).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 (R 1-3). Piercing Attack 1 (R 1-3).
+									<br />
+									Push 1 & Inflict 2 Disarm to most Red card (R 1).
+									<br />
+									Back 1.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [6],
+							content: (
+								<p>Push 6 & Inflict 2 Immobolize to most Green card (R 1-3).</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A'],
+							content: <p>Attack 10 (R 2).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['B'],
+							content: <p>Attack 10 (R 3).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C'],
+							content: <p>Attack 10 (R 4).</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['D'],
+							content: <p>Attack 10 (R 5).</p>,
+						},
+					],
+				},
+				{
+					name: 'Doctor',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-doctor.png',
+					hp: 18,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Discard 1 (R 1-3).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: <p>Discard 1 (R 1-8 Brust, 2 players).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Heal 3 & remove status cards (R 1-3, monster).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Heal 3 & remove status cards (R 1-8 Brust, 2 monsters).
+									<br />
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Each player lose 1 HP for every 2 empty slots in their play
+									areas.
+									<br />
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Doctor',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-doctor.png',
+					hp: 20,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Discard 2 (R 1-3).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: <p>Discard 2 (R 1-8 Brust, 2 players).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Heal 3 & remove status cards (R 1-3, monster).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>Heal 3 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>Heal 3 & remove status cards (R 1-8 Brust, all monsters).</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Each player lose 1 HP for every 2 empty slots in their play
+									areas.
+									<br />
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Doctor',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-doctor.png',
+					hp: 20,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Discard 2 (R 1-3).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2],
+							content: (
+								<p>
+									Discard all cards in left columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [3, 4],
+							content: (
+								<p>
+									Discard all cards in right columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Discard all cards in center columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Heal 5 & remove status cards (R 1-3, monster).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>Heal 5 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>Heal 5 & remove status cards (R 1-8 Brust, all monsters).</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Each player lose 1 HP for every 2 empty slots in their play
+									areas.
+									<br />
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Doctor',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-doctor.png',
+					hp: 25,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Discard 3 (R 1-3).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2],
+							content: (
+								<p>
+									Discard all cards in left columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [3, 4],
+							content: (
+								<p>
+									Discard all cards in right columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Discard all cards in center columns (R 1-8 Brust, 2 players).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Heal 5 (R 1-3, monster).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>Heal 5 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>Heal 5 & remove status cards (R 1-8 Brust, all monsters).</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Each player lose 1 HP for every 2 empty slots in their play
+									areas.
+									<br />
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Flyer',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-flyer.png',
+					hp: 20,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP (R 0).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP (R 0).
+									<br />
+									Attack 2 (R 1). Attack 2 (R 1).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP (R 0).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 1 Immobolize to most green card (R 0-1).
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Place a monster token onto closet player, then set aside
+									flyer&apos;s figure. Flyer is on the same space of marker.
+									<br />
+									If flyer is pushed/pulled or marked player dies, remove the
+									marker and return its figure to appropiate space.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Flyer',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-flyer.png',
+					hp: 25,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP (R 0).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP (R 0).
+									<br />
+									Attack 3 (R 1). Attack 3 (R 1).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP (R 0).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Drain 2 HP (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 1 Immobolize to most green card (R 0-1).
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 1 Immobolize to most green card (Brust R 0-2).
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Place a monster token onto closet player, then set aside
+									flyer&apos;s figure. Flyer is on the same space of marker.
+									<br />
+									If flyer is pushed/pulled or marked player dies, remove the
+									marker and return its figure to appropiate space.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Flyer',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-flyer.png',
+					hp: 25,
+					firstIntention: DEFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP & Discard 1 Blue/any cards (R 0).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Drain 2 HP & Discard 1 Blue/any cards (R 0).
+									<br />
+									Attack 3 (R 1). Attack 3 (R 1).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP & Discard 1 Blue/any cards (R 0).
+									<br />
+									Attack 2 (Brust R 0-2).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Drain 2 HP & Discard 1 Red/any cards (R 0).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Drain 2 HP & Discard 1 Red/any cards (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 2 Immobolize to most green card (R 0-1)
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Drain 2 HP & Discard 1 Red/any cards (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 1 Immobolize to most green card (Brust R 0-2).
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Place a monster token onto closet player, then set aside
+									flyer&apos;s figure. Flyer is on the same space of marker.
+									<br />
+									If flyer is pushed/pulled or marked player dies, remove the
+									marker and return its figure to appropiate space.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Flyer',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-flyer.png',
+					hp: 30,
+					firstIntention: SPECIAL,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Drain 4 HP & Discard 2 Blue/any cards (R 0).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Drain 4 HP & Discard 2 Blue/any cards (R 0).
+									<br />
+									Attack 4 (R 1). Attack 4 (R 1).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Drain 4 HP & Discard 2 Blue/any cards (R 0).
+									<br />
+									Attack 2 (Brust R 0-2).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Drain 4 HP & Discard 2 Red/any cards (R 0).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Drain 4 HP & Discard 2 Red/any cards (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 2 Immobolize to most green card (R 0-1)
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Drain 4 HP & Discard 2 Red/any cards (R 0).
+									<br />
+									If figure exists: Jump 4 until fartest reachable player.
+									<br />
+									Inflict 1 Immobolize to most green card (Brust R 0-2).
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Place a monster token onto closet player, then set aside
+									flyer&apos;s figure. Flyer is on the same space of marker.
+									<br />
+									<span className='text-red-700 font-bold'>
+										If marked player dies
+									</span>
+									, remove the marker and return its figure to appropiate space.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Madman',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-madman.png',
+					hp: (
+						<p>
+							30 + <strong className='text-blue-700'>consumed</strong> values
+						</p>
+					),
+					firstIntention: OFFENSIVE,
+					specialRule: (
+						<p>
+							When any intention card is discarded, Madman{' '}
+							<strong className='text-blue-700'>Consume</strong> it.{' '}
+							<span className='text-xs thin-light italic'>
+								(set consumed cards aside)
+							</span>
+						</p>
+					),
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Move 1. Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+									<br />
+									If <strong className='text-blue-700'>consumed</strong> values
+									is 15 or more: Move 2.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Move 1. <br />
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard 2 Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Jump 2.</p>,
+						},
+					],
+				},
+				{
+					name: 'Madman',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-madman.png',
+					hp: (
+						<p>
+							40 + <strong className='text-blue-700'>consumed</strong> values
+						</p>
+					),
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Move 1. Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+									<br />
+									If <strong className='text-blue-700'>consumed</strong> values
+									is 15 or more: Move 2.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 1. <br />
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard 2 Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 1. <br />
+									All monsters gain Blocks equals to{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard 2 Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Jump 2.</p>,
+						},
+					],
+				},
+				{
+					name: 'Madman',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-madman.png',
+					hp: '65',
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 1. Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+									<br />
+									If <strong className='text-blue-700'>consumed</strong> values
+									is 15 or more: Move 2.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 1. Deal total X damages to players, distribute evenly. (X
+									= <strong className='text-blue-700'>consumed</strong> values).
+									<br />
+									If <strong className='text-blue-700'>consumed</strong> values
+									is 15 or more: Move 2.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 1. <br />
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard 2 Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 1. <br />
+									All monsters gain Blocks equals to{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard 2 Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B'],
+							content: <p>Jump 2.</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C', 'D'],
+							content: <p>Pull 2 (R 1-3).</p>,
+						},
+					],
+				},
+				{
+					name: 'Madman',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-madman.png',
+					hp: (
+						<p>
+							50 + <strong className='text-blue-700'>consumed</strong> values
+						</p>
+					),
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0, 1, 2, 3],
+							content: (
+								<p>
+									<span className='text-red-700'>
+										If <strong className='text-blue-700'>consumed</strong>{' '}
+										values is 8 or more: Move 2 and ignore Disarm.
+										<br />
+									</span>
+									Move 1. Attack X (R 1, X ={' '}
+									<strong className='text-blue-700'>consumed</strong> values).
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 1. Deal total X damages to players, distribute evenly. (X
+									= <strong className='text-blue-700'>consumed</strong> values).
+									<br />
+									If <strong className='text-blue-700'>consumed</strong> values
+									is <span className='text-red-700'>8 or more</span> : Move 2.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0, 1, 2, 3],
+							content: (
+								<p>
+									Move 1. <br />
+									Heal same amount of{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard <span className='text-red-700'>4</span>{' '}
+									Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 1. <br />
+									All monsters gain Blocks equals to{' '}
+									<strong className='text-blue-700'>consumed</strong> values.
+									<br />
+									Draw and discard <span className='text-red-700'>4</span>{' '}
+									Defensive intention cards.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A'],
+							content: <p>Jump 2</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['B'],
+							content: <p>Pull 2 (R 1-3)</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['C'],
+							content: <p>Jump 6 Until fartest reachable player</p>,
+						},
+						{
+							intention: SPECIAL,
+							values: ['D'],
+							content: <p>Pull 6 (R 7-1)</p>,
+						},
+					],
+				},
+				{
+					name: 'Master',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-master.png',
+					hp: '18',
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0, 1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster activate Offense X (X =
+									current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0, 1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster activate current Defense X (X
+									= current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Block 5. Another closet monster activate current Special X (X
+									= current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Master',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-master.png',
+					hp: '20',
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0, 1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster activate Offense X (X =
+									current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0, 1, 2, 3],
+							content: (
+								<p>
+									Block 5. Another closet monster activate current Defense X (X
+									= current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster prepare a Defense intention
+									card. If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Block 5. Another closet monster activate current Special X (X
+									= current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Master',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-master.png',
+					hp: '20',
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0, 1, 2, 3],
+							content: (
+								<p>
+									Block 5. Another closet monster activate Offense X (X =
+									current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster prepare a Offense intention
+									card. If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0, 1, 2, 3],
+							content: (
+								<p>
+									Block 5. Another closet monster activate current Defense X (X
+									= current intention value). If no other monster: Flee.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Block 5. Another closet monster prepare a Defense intention
+									card. If no other monster: Flee.
 								</p>
 							),
 						},
@@ -748,740 +1613,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B'],
 							content: (
 								<p>
-									Heal 5 (R 0-5, all monsters)
-									<br />
-									Each player discards 2 top cards from their library for each
-									status cards they owned.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: (
-								<p>
-									Heal 5 (R 0-5, all monsters)
-									<br />
-									Each player takes 1 piercing damages for each status cards
-									they owned.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Flyer',
-					lv: MINOR,
-					imageSrc: '/images/ks/monster-flyer.png',
-					hp: '20 (+1 Armor)',
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 2 (R 0-1). Piercing Attack 3 (R 0-1).
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Place this monster onto cloeset player. <br />
-									Until this monster is being pushed/pulled, it will keep in the
-									same space of that player, and do not actively move/jump by
-									other actions.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Flyer',
-					lv: NORMAL,
-					imageSrc: '/images/ks/monster-flyer.png',
-					hp: '20 (+1 Armor)',
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 3 (R 0-1). Piercing Attack 3 (R 0-1).
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Pull 1 (R 1-2)
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Place this monster onto cloeset player. <br />
-									Until this monster is being pushed/pulled, it will keep in the
-									same space of that player, and do not actively move/jump by
-									other actions.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Flyer',
-					lv: ADVANCED,
-					imageSrc: '/images/ks/monster-flyer.png',
-					hp: '20 (+1 Armor)',
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Attack 4 (R 0-1). Piercing Attack 4 (R 0-1).
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Attack 2 (R 1-5, all players).
-									<br />
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Pull 1 (R 1-2)
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Place this monster onto cloeset player. <br />
-									Until this monster is being pushed/pulled, it will keep in the
-									same space of that player, and do not actively move/jump by
-									other actions.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Flyer',
-					lv: ELITE,
-					imageSrc: '/images/ks/monster-flyer.png',
-					hp: '20 (+1 Armor)',
-					firstIntention: DEFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Attack 4 (R 0-1). Piercing Attack 4 (R 0-1).
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Attack 2 (R 1-5, all players).
-									<br />
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Lose armor until next intention card</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Face to fartest player, then Jump exactly 4, then face to
-									closest player.
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Pull 1 (R 1-2)
-									<br />
-									Inflict 1 Immobolize (R 1)
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Place this monster onto cloeset player. <br />
-									Until this monster is being pushed/pulled, it will keep in the
-									same space of that player, and do not actively move/jump by
-									other actions.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Mad man',
-					lv: MINOR,
-					imageSrc: '/images/ks/monster-madman.png',
-					hp: '65',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Move 1. Attack 3 (R 1).
-									<br />
-									Move 1. Piercing Attack X (R 1, X = number of died players and
-									monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Heal 5</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Heal 3 for each died player and monster in this combat. (R 0).
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Summon 1 Thug of same level 1 HP on cloeset empty spaces.
-									<br />
-									It activate its turn right after this monster&apos;s turn.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Mad man',
-					lv: NORMAL,
-					imageSrc: '/images/ks/monster-madman.png',
-					hp: '65',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Move 1. Attack 3 (R 1).
-									<br />
-									Move 1. Piercing Attack X (R 1, X = number of died players and
-									monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Heal 5</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Heal 3 for each died player and monster in this combat. (R 0).
-									<br />
-									Move 1.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Each player discards 2 cards from their play area.
-									<br />
-									Move 1.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Summon 1 Thug of same level with 1 HP on cloeset empty spaces.
-									<br />
-									It activate its turn right after this monster&apos;s turn.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Mad man',
-					lv: ADVANCED,
-					imageSrc: '/images/ks/monster-madman.png',
-					hp: '65',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1. Attack 3 (R 1).
-									<br />
-									Move 1. Piercing Attack X (R 1, X = number of died players and
-									monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Move 1. Attack 2+X (R 1-5, all players, X = number of died
-									players and monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Heal 5</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1.
-									<br />
-									Heal 3 for each died player and monster in this combat. (R 0).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Move 1.
-									<br />
-									Each player discards 2 cards from their play area.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Summon 1 Thug of same level with 1 HP on cloeset empty spaces.
-									<br />
-									It activate its turn right after this monster&apos;s turn.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Mad man',
-					lv: ELITE,
-					imageSrc: '/images/ks/monster-madman.png',
-					hp: '65',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Attack 3 (R 1)</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1. Attack 5 (R 1).
-									<br />
-									Move 1. Piercing Attack X (R 1, X = number of died players and
-									monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Move 1. Attack 4+X (R 1-5, all players, X = number of died
-									players and monsters in this combat).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Heal 5</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4],
-							content: (
-								<p>
-									Move 1.
-									<br />
-									Heal 3 for each died player and monster in this combat. (R 0).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [5, 6],
-							content: (
-								<p>
-									Move 1.
-									<br />
-									Each player discards 3 cards from their play area.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Summon 2 Thugs of same level with 1 HP on cloeset empty
-									spaces.
-									<br />
-									It activate its turn right after this monster&apos;s turn.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Master',
-					lv: MINOR,
-					imageSrc: '/images/ks/monster-master.png',
-					hp: '20',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Do nothing.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate Offense X (X =
-									current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Do nothing</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Defense X (X
-									= current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Special X (X
-									= current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Master',
-					lv: NORMAL,
-					imageSrc: '/images/ks/monster-master.png',
-					hp: '20',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Do nothing.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate Offense X (X =
-									current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Do nothing</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Defense X (X
-									= current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster prepare a Defense intention
-									card. If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B', 'C', 'D'],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Special X (X
-									= current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-					],
-				},
-				{
-					name: 'Master',
-					lv: ADVANCED,
-					imageSrc: '/images/ks/monster-master.png',
-					hp: '20',
-					firstIntention: OFFENSIVE,
-					actions: [
-						{
-							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Do nothing.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate Offense X (X =
-									current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster prepare a Offense intention
-									card. If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Do nothing</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Defense X (X
-									= current intention value). If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Block 5. Another cloeset monster prepare a Defense intention
-									card. If no other monster: Flee.
-								</p>
-							),
-						},
-						{
-							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: (
-								<p>
-									Block 5. Another cloeset monster activate current Special X (X
+									Block 5. Another closet monster activate current Special X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1491,7 +1623,7 @@ const KsMonstersPage = () => {
 							values: ['C', 'D'],
 							content: (
 								<p>
-									Block 5. Another cloeset monster prepare a Special intention
+									Block 5. Another closet monster prepare a Special intention
 									card. If no other monster: Flee.
 								</p>
 							),
@@ -1502,21 +1634,16 @@ const KsMonstersPage = () => {
 					name: 'Master',
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-master.png',
-					hp: '20',
+					hp: '25',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
-							values: [0],
-							content: <p>Do nothing.</p>,
-						},
-						{
-							intention: OFFENSIVE,
-							values: [1, 2, 3],
+							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and activate Offense
-									X (X = current intention value). If no other monster: Flee.
+									Block 5. Another closet monster heals 5 and activate Offense X
+									(X = current intention value). If no other monster: Flee.
 								</p>
 							),
 						},
@@ -1525,22 +1652,17 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and prepare a Offense
+									Block 5. Another closet monster heals 5 and prepare a Offense
 									intention card. If no other monster: Flee.
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Do nothing</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3],
+							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and activate current
+									Block 5. Another closet monster heals 5 and activate current
 									Defense X (X = current intention value). If no other monster:
 									Flee.
 								</p>
@@ -1551,7 +1673,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and prepare a Defense
+									Block 5. Another closet monster heals 5 and prepare a Defense
 									intention card. If no other monster: Flee.
 								</p>
 							),
@@ -1561,7 +1683,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B'],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and activate current
+									Block 5. Another closet monster heals 5 and activate current
 									Special X (X = current intention value). If no other monster:
 									Flee.
 								</p>
@@ -1572,7 +1694,7 @@ const KsMonstersPage = () => {
 							values: ['C', 'D'],
 							content: (
 								<p>
-									Block 5. Another cloeset monster heals 5 and prepare a Special
+									Block 5. Another closet monster heals 5 and prepare a Special
 									intention card. If no other monster: Flee.
 								</p>
 							),
@@ -1594,100 +1716,6 @@ const KsMonstersPage = () => {
 
 				return 1
 			}),
-		[]
-	)
-
-	const intentions = useMemo(
-		() => [
-			...[1, 2, 3, 4].map((num) => ({
-				frontType: OFFENSIVE,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: OFFENSIVE,
-				pileTypes: [OFFENSIVE],
-				backNum: '1-4',
-			})),
-			...[1, 2].map((num) => ({
-				frontType: OFFENSIVE,
-				frontNum: num,
-				nextType: SPECIAL,
-				backType: OFFENSIVE,
-				pileTypes: [OFFENSIVE],
-				backNum: '1-4',
-			})),
-			...[3, 4].map((num) => ({
-				frontType: OFFENSIVE,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: OFFENSIVE,
-				pileTypes: [OFFENSIVE],
-				backNum: '1-4',
-			})),
-			...[3, 4, 5, 6].map((num) => ({
-				frontType: OFFENSIVE,
-				frontNum: num,
-				nextType: DEFENSIVE,
-				backType: OFFENSIVE,
-				pileTypes: [OFFENSIVE],
-				backNum: '3-6',
-			})),
-			...[1, 2, 3, 4].map((num) => ({
-				frontType: DEFENSIVE,
-				frontNum: num,
-				nextType: SPECIAL,
-				backType: DEFENSIVE,
-				pileTypes: [DEFENSIVE],
-				backNum: '1-4',
-			})),
-			...[1, 2].map((num) => ({
-				frontType: DEFENSIVE,
-				frontNum: num,
-				nextType: SPECIAL,
-				backType: DEFENSIVE,
-				pileTypes: [DEFENSIVE],
-				backNum: '1-4',
-			})),
-			...[3, 4].map((num) => ({
-				frontType: DEFENSIVE,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: DEFENSIVE,
-				pileTypes: [DEFENSIVE],
-				backNum: '1-4',
-			})),
-			...[3, 4, 5, 6].map((num) => ({
-				frontType: DEFENSIVE,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: DEFENSIVE,
-				pileTypes: [DEFENSIVE],
-				backNum: '3-6',
-			})),
-			...['A', 'B', 'C', 'D'].map((num) => ({
-				frontType: SPECIAL,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: SPECIAL,
-				pileTypes: [SPECIAL],
-				backNum: 'Any',
-			})),
-			...['A', 'B', 'C', 'D'].map((num) => ({
-				frontType: SPECIAL,
-				frontNum: num,
-				nextType: OFFENSIVE,
-				backType: SPECIAL,
-				pileTypes: [SPECIAL],
-				backNum: 'Any',
-			})),
-			...['A', 'B', 'C', 'D'].map((num) => ({
-				frontType: SPECIAL,
-				frontNum: num,
-				nextType: DEFENSIVE,
-				backType: SPECIAL,
-				pileTypes: [SPECIAL],
-				backNum: 'Any',
-			})),
-		],
 		[]
 	)
 
@@ -1717,8 +1745,11 @@ const KsMonstersPage = () => {
 									}}
 								>
 									<div
-										className='flex-none text-center py-1 rounded-t'
-										style={{ background: 'rgba(255, 255, 255, 0.8)' }}
+										className='flex-none text-center py-1 rounded-t border-t-4 border-r-4 border-l-4'
+										style={{
+											background: 'rgba(255, 255, 255, 0.8)',
+											borderColor: RESOURCES[monster.lv].color,
+										}}
 									>
 										<h3>
 											<span style={{ color: RESOURCES[monster.lv].color }}>
@@ -1814,101 +1845,37 @@ const KsMonstersPage = () => {
 						</div>
 					))}
 				</div>
-				<div className='flex flex-wrap mb-16'>
-					{intentions.map((intention, i) => (
-						<div
-							key={i}
-							style={{
-								width: 375,
-								height: 212,
-								border: '12px solid #333',
-								borderRadius: 8,
-							}}
-						>
-							<div className='flex items-stretch h-full'>
-								<div className='flex-1 relative'>
-									<div
-										className='flex h-full w-full flex-col justify-center items-center'
-										style={{
-											background: RESOURCES[intention.backType].background,
-										}}
-									>
-										<div className='flex-none flex justify-center items-center'>
-											<div
-												style={{
-													backgroundColor: RESOURCES[intention.backType].color,
-													width: 96,
-													height: 96,
-													WebkitMaskImage: `url('${
-														RESOURCES[intention.backType].iconSrc
-													}')`,
-													WebkitMaskPosition: 'center',
-													WebkitMaskSize: 'cover',
-												}}
-											></div>
-											<span
-												style={{
-													fontSize: '96px',
-													lineHeight: '96px',
-													color: RESOURCES[intention.backType].color,
-												}}
-											>
-												{intention.backNum}
-											</span>
-										</div>
-										<div className='flex-none text-center leading-4 text-sm bg-white rounded-md bg-opacity-50 py-1 px-2 mt-2'>
-											{intention.backType === MORPH ? (
-												<p>
-													When prepare this morph card, also prepare next card
-													after this.
-												</p>
-											) : (
-												<p>
-													At the action phase of active monster&apos;s turn,
-													<br /> flip this card and follow any instruction.
-												</p>
-											)}
-											{intention.backType === SPECIAL && (
-												<p className='mt-1'>
-													<strong className='text-red-700'>ATTENTION!</strong>{' '}
-													Intention value cannot be changed!
-												</p>
-											)}
-										</div>
-									</div>
-									{/* 
-									<div
-										className='absolute bottom-1 right-1 flex flex-nowrap transform rotate-180'
-										style={{
-											background: RESOURCES[intention.frontType].background,
-										}}
-									>
-										<div
-											style={{
-												backgroundColor: RESOURCES[intention.frontType].color,
-												width: 32,
-												height: 32,
-												WebkitMaskImage: `url('${
-													RESOURCES[intention.frontType].iconSrc
-												}')`,
-												WebkitMaskPosition: 'center',
-												WebkitMaskSize: 'cover',
-											}}
-										></div>
-										<span
-											style={{
-												fontSize: '32px',
-												lineHeight: '32px',
-												color: RESOURCES[intention.frontType].color,
-											}}
-										>
-											{intention.frontNum}
-										</span>
-									</div> */}
-								</div>
-							</div>
-						</div>
-					))}
+
+				<div className='mt-8'>
+					<div
+						style={{
+							width: 442,
+							border: '12px solid #333',
+							borderRadius: 8,
+						}}
+						className='p-2'
+					>
+						<h3>Madman Special Rules:</h3>
+						<p>
+							When any intention card is discarded, Madman{' '}
+							<strong className='text-blue-700'>consumes</strong> it instead.
+							Set <strong className='text-blue-700'>consumed</strong> cards
+							aside.
+						</p>
+						<p>
+							When player deals damages to Madman, instead of reducing HP, it
+							may choose to return{' '}
+							<strong className='text-blue-700'>consumed</strong> card with same
+							value back to its pile, which that card is no longer being{' '}
+							<strong className='text-blue-700'>consumed</strong>.
+						</p>
+						<p>
+							<strong className='text-blue-700'>Consumed</strong> values = sum
+							of intention values of all{' '}
+							<strong className='text-blue-700'>consumed</strong> cards. Special
+							intention card value is counted as 6.
+						</p>
+					</div>
 				</div>
 			</div>
 		</>
