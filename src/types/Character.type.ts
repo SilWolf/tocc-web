@@ -9,6 +9,7 @@ import { Media } from './utils/Media.type'
 export type Character = Entity & {
 	// Essential
 	name: string
+	nickname?: string
 	code?: string
 	type?: string
 
@@ -58,6 +59,7 @@ export const DEFAULT_CHARACTER: Required<Character> = {
 	deletedBy: '',
 
 	name: '',
+	nickname: '',
 	code: '',
 	type: '',
 	portraitImage: {
@@ -84,7 +86,7 @@ export const DEFAULT_CHARACTER: Required<Character> = {
 	factCollectedGP: 0,
 	factTouchedCharacterCount: 0,
 
-	player: { id: '', username: '', name: '--' },
+	player: { id: '', username: '', name: '--', displayName: '--' },
 	race: { id: '', name: '--' },
 	clses: [{ id: '', name: '--' }],
 	city: { id: '', name: '--', code: '' },

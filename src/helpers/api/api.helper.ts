@@ -104,9 +104,16 @@ export const getApis = (config?: { jwt?: string }) => {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
-		getCharacterByName: async (name: string): Promise<Character> =>
-			api.get<Character>('/characters', {
-				params: { name },
+		getCharacterByName: async (name: string): Promise<Character | undefined> =>
+			api
+				.get<Character[]>('/characters', {
+					params: { name },
+					cache: { maxAge: 5 * 60 * 1000 },
+				})
+				.then((characters) => characters[0]),
+
+		getCharacterById: async (id: string): Promise<Character> =>
+			api.get<Character>(`/characters/${id}`, {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
@@ -130,6 +137,9 @@ export const getApis = (config?: { jwt?: string }) => {
 				},
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
+
+		getPlayerById: async (id: string): Promise<User> =>
+			api.get<User>(`/users/${id}`),
 
 		getPromotions: async (): Promise<Promotion> =>
 			api.get<Promotion>('/promotions', {

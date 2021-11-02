@@ -5,25 +5,25 @@ import apis from 'helpers/api/api.helper'
 import ReactHTML from 'src/components/ReactHTML'
 import { Character } from 'src/types'
 import { DEFAULT_CHARACTER } from 'src/types/Character.type'
+import React from 'react'
+import StrapiImg from 'src/widgets/StrapiImg'
 
 type PageProps = {
 	character: Required<Character>
 }
 
 const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
+	console.log(character)
 	return (
-		<div className='container py-24'>
+		<div className='container'>
 			<div className='grid grid-cols-3 gap-4'>
-				<div>
-					<div className='space-y-4'>
+				<div className='space-y-6'>
+					<div className='parchment space-y-4'>
 						<div className='w-2/3 mx-auto'>
 							<div className='aspect-w-1 aspect-h-1'>
-								<img
-									src={
-										character.portraitImage.formats?.small?.url ||
-										character.portraitImage.url
-									}
-									alt=''
+								<StrapiImg
+									image={character.portraitImage}
+									size='large'
 									className='rounded-full'
 								/>
 							</div>
@@ -39,70 +39,81 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 						<div className='text-center text-sm italic'>
 							{character.bioSaying}
 						</div>
-
-						<div className='py-4'>
-							<div className='h-px w-3/4 bg-gray-400 mx-auto'></div>
-						</div>
-
-						<table>
+					</div>
+					<div className='parchment space-y-4'>
+						<table className='table-character-meta'>
 							<tr>
-								<td className='w-8'>
+								<td>
 									<i className='ra ra-fw ra-lg ra-key-basic'></i>
 								</td>
-								<td className='text-sm'>編號: {character.code}</td>
+								<td>編號: </td>
+								<td>{character.code}</td>
 							</tr>
 							<tr>
-								<td className='w-8'>
+								<td>
 									<i className='ra ra-fw ra-lg ra-player'></i>
 								</td>
-								<td className='text-sm'>玩家: {character.player.name}</td>
+								<td>玩家: </td>
+								<td>
+									<div className='flex items-center gap-x-1'>
+										<div className='flex-none'>
+											<StrapiImg
+												image={character.player?.portraitImage}
+												size='thumbnail'
+												className='w-5 h-5'
+											/>
+										</div>
+										<div className='flex-1'>
+											{character.player?.displayName}
+										</div>
+									</div>
+								</td>
 							</tr>
-						</table>
-						<table>
 							<tr>
-								<td className='w-8'>
+								<td>
 									<i className='ra ra-fw ra-lg ra-bridge'></i>
 								</td>
-								<td className='text-sm'>所屬城市: {character.city.name}</td>
+								<td>所屬城市: </td>
+								<td>{character.city.name}</td>
 							</tr>
 							<tr>
-								<td className='w-8'>
+								<td>
 									<i className='ra ra-fw ra-lg ra-seagull'></i>
 								</td>
-								<td className='text-sm'>背景: {character.background.name}</td>
+								<td>背景: </td>
+								<td>{character.background.name}</td>
 							</tr>
-						</table>
-						<table>
 							<tr>
-								<td className='w-8'>
+								<td>
 									<i className='ra ra-fw ra-lg ra-crown'></i>
 								</td>
-								<td className='text-sm'>稱號: {character.bioTitle}</td>
+								<td>稱號: </td>
+								<td>{character.bioTitle}</td>
 							</tr>
 							<tr>
 								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-castle-flag'></i>
 								</td>
-								<td className='text-sm'>組織: {character.bioOrganization}</td>
+								<td>組織: </td>
+								<td>{character.bioOrganization}</td>
 							</tr>
 							<tr>
 								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-pawn'></i>
 								</td>
-								<td className='text-sm'>身分: {character.bioRole}</td>
+								<td>身分: </td>
+								<td>{character.bioRole}</td>
 							</tr>
 							<tr>
 								<td className='w-8'>
 									<i className='ra ra-fw ra-lg ra-pisces'></i>
 								</td>
-								<td className='text-sm'>信仰: {character.bioBelief}</td>
+								<td>信仰: </td>
+								<td>{character.bioBelief}</td>
 							</tr>
 						</table>
-
-						<div className='py-4'>
-							<div className='h-px w-3/4 bg-gray-400 mx-auto'></div>
-						</div>
-
+					</div>
+					<div className='parchment space-y-4'>
 						<div>
 							<h5 className='text-subtitle'>個性</h5>
 							<p>{character.bioPersonalityTrait}</p>
@@ -123,15 +134,11 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 							<p>{character.bioFlaw}</p>
 						</div>
 
-						<div className='py-4'>
-							<div className='h-px w-3/4 bg-gray-400 mx-auto'></div>
-						</div>
-
 						<div className='space-y-2'></div>
 					</div>
 				</div>
 				<div className='col-span-2'>
-					<div className='space-y-8'>
+					<div className='parchment space-y-8'>
 						{/* <div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
 								<i className='bi bi-share-fill mr-2'></i>
@@ -223,22 +230,32 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const [character] = await Promise.all([
+	const [characterByName] = await Promise.all([
 		apis.getCharacterByName(params?.name as string),
 	])
 
-	if (!character) {
+	if (!characterByName) {
 		return {
 			notFound: true,
 		}
 	}
 
+	const [character, player] = await Promise.all([
+		apis.getCharacterById(characterByName.id).then((_character) => ({
+			...DEFAULT_CHARACTER,
+			..._character,
+		})),
+		apis.getPlayerById(characterByName.id),
+	])
+
+	character.player = {
+		...character.player,
+		...player,
+	}
+
 	return {
 		props: {
-			character: {
-				...DEFAULT_CHARACTER,
-				...character,
-			},
+			character,
 		},
 	}
 }

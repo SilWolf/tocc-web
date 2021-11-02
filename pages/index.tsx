@@ -116,9 +116,7 @@ const HomePage: NextPage<PageProps> = ({
 						</div>
 					</div>
 					<div className='flex-none'>
-						<div className='parchment'>
-							<FacebookPageEmbed />
-						</div>
+						<FacebookPageEmbed />
 					</div>
 				</div>
 			</div>
