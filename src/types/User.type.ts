@@ -5,6 +5,7 @@ import { Media } from './utils/Media.type'
 export type User = Entity & {
 	username: string
 	name: string
+	displayName: string
 	email?: string
 	provider?: string
 	role?: UserRole

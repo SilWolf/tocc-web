@@ -1,14 +1,18 @@
 import NextLink from 'next/link'
 
 import React from 'react'
+import { useQuery } from 'react-query'
 
 import Dropdown from 'src/components/Dropdown'
-import { useUser } from 'src/hooks/auth.hook'
+import apis from 'src/helpers/api/api.helper'
 import { USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
+import StrapiImg from 'src/widgets/StrapiImg'
 
 const GeneralLayout: React.FC = ({ children }) => {
-	const user = useUser()
+	const { data: user } = useQuery(['user', 'me'], apis.getMe, {
+		staleTime: 5 * 60 * 1000, // 5mins
+	})
 
 	return (
 		<>
@@ -43,17 +47,18 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<Dropdown
 										header={
 											<div className='flex items-center gap-x-2'>
-												<img
-													className='h-8 w-8 bg-gray-800'
-													src={user.portraitImage?.formats?.thumbnail?.url}
-													alt=''
-												/>
 												<div>
-													<h6>{user.name}</h6>
-													<p className='text-white text-xs leading-3'>
+													<h5 className='leading-4 text-right'>{user.name}</h5>
+													<p className='text-white text-xs font-thin leading-4 text-right'>
 														{user.role?.name}
 													</p>
 												</div>
+												<StrapiImg
+													className='h-8 w-8 bg-gray-800'
+													image={user.portraitImage}
+													size='thumbnail'
+													alt=''
+												/>
 											</div>
 										}
 									>
@@ -88,7 +93,7 @@ const GeneralLayout: React.FC = ({ children }) => {
 				</div>
 
 				<div className='min-h-screen flex flex-col pt-24'>
-					<div className='flex-1'>{children}</div>
+					<div className='flex-1 pb-8'>{children}</div>
 
 					<div className='flex-none bg-yellow-900 text-white py-4'>
 						<div className='container'>

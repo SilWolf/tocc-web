@@ -54,15 +54,19 @@
 	[multiple],
 	textarea,
 	select {
-		@apply py-2 pl-4 w-full outline-none ring-0 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-500 dark:border-gray-800 text-sm;
+		background: #dbd1b2;
+		padding: 0.5rem 1rem;
+		width: 100%;
+		outline: none;
+		border-width: 0;
+		@apply ring-0;
 	}
 
 	.form-group .input-static {
-		@apply py-2 pl-4 w-full outline-none ring-0 text-sm;
+		@apply py-2 pl-4 w-full outline-none ring-0;
 	}
 
 	.form-group {
-		@apply text-sm text-gray-700;
 	}
 
 	.form-group-transparent [type='text'],
@@ -98,7 +102,6 @@
 	[multiple][readonly],
 	textarea[readonly],
 	select[readonly] {
-		@apply bg-gray-50;
 	}
 
 	[type='text']:focus,
@@ -116,7 +119,9 @@
 	[multiple]:focus,
 	textarea:focus,
 	select:focus {
-		@apply outline-none ring-0 border-gray-600;
+		outline: none;
+		background: #e1d19e;
+		@apply ring-0;
 	}
 
 	.form-group.has-error label {
@@ -146,7 +151,7 @@
 	}
 
 	.button {
-		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
+		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black;
 	}
 
 	a.button {
@@ -158,19 +163,19 @@
 	}
 
 	.button-primary {
-		@apply bg-primary border-primary text-white dark:bg-primary dark:text-white;
+		@apply bg-primary border-primary text-white;
 	}
 
 	.button.button-outline {
-		@apply bg-transparent text-gray-600 dark:text-white;
+		@apply bg-transparent text-gray-600;
 	}
 
 	.button.button-outline.button-primary {
-		@apply text-primary dark:text-primary;
+		@apply text-primary;
 	}
 
 	.button.button-text {
-		@apply bg-transparent border-transparent text-gray-600 dark:text-white;
+		@apply bg-transparent border-transparent text-gray-600;
 	}
 
 	.button:active,
@@ -188,7 +193,7 @@
 	}
 
 	table.table-default thead tr th {
-		@apply px-6 py-3 text-white dark:text-white;
+		@apply px-6 py-3 text-white;
 	}
 
 	table.table-default tbody {
@@ -236,7 +241,7 @@
 	}
 
 	.card {
-		@apply bg-white dark:bg-gray-800 rounded p-4 shadow;
+		@apply bg-white rounded p-4 shadow;
 	}
 }
 
@@ -262,7 +267,7 @@ ul li {
 }
 
 .text-subtitle {
-	@apply text-gray-600 dark:text-gray-400;
+	@apply text-gray-600;
 }
 
 .paragraph-ellipsis-3 {
@@ -291,5 +296,5 @@ ul li {
 .parchment h4,
 .parchment h5,
 .parchment h6 {
-	color: #d65b27;
+	/* color: #d65b27; */
 }

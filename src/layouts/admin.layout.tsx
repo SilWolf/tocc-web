@@ -11,43 +11,48 @@ import cns from 'classnames'
 
 const routes = [
 	{
+		label: '概覽',
+		path: '/',
+		icon: <i className='bi bi-speedometer2'></i>,
+	},
+	{
 		label: '玩家',
-		path: 'player',
+		path: '/player',
 		icon: <i className='bi bi-person-fill'></i>,
 	},
 	{
 		label: '玩家角色',
-		path: 'character',
+		path: '/character',
 		icon: <i className='ra ra-fedora'></i>,
 	},
 	{
 		label: '劇本',
-		path: 'game',
+		path: '/game',
 		icon: <i className='ra ra-perspective-dice-four'></i>,
 	},
 	{
 		label: '城市',
-		path: 'city',
+		path: '/city',
 		icon: <i className='ra ra-bridge'></i>,
 	},
 	{
 		label: 'NPC',
-		path: 'npc',
+		path: '/npc',
 		icon: <i className='ra ra-double-team'></i>,
 	},
 	{
 		label: '組織',
-		path: 'organization',
+		path: '/organization',
 		icon: <i className='ra ra-castle-flag'></i>,
 	},
 	{
 		label: '知識',
-		path: 'knowledge',
+		path: '/knowledge',
 		icon: <i className='ra ra-book'></i>,
 	},
 	{
 		label: '物品',
-		path: 'item',
+		path: '/item',
 		icon: <i className='ra ra-key-basic'></i>,
 	},
 ]
@@ -71,14 +76,14 @@ const AdminLayout: React.FC = ({ children }) => {
 								{routes.map((route) => (
 									<NextLink
 										key={route.path}
-										href={`/admin/${route.path}`}
+										href={`/admin${route.path}`}
 										passHref
 									>
 										<a
 											data-ripplet
 											className={cns(
 												'block w-full py-3 px-4 text-left bg-opacity-70 text-black hover:text-black',
-												pathname.startsWith(`/admin/${route.path}`)
+												pathname === `/admin${route.path}`
 													? 'bg-primary'
 													: 'bg-white'
 											)}
