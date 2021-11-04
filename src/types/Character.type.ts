@@ -1,6 +1,7 @@
 import { Background } from './Background.type'
 import { City } from './City.type'
 import { Cls } from './Cls.type'
+import { Deity } from './Deity.type'
 import { Race } from './Race.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
@@ -18,6 +19,7 @@ export type Character = Entity & {
 
 	// Improvements
 	level?: number
+	levelWithClsesString?: string
 	xp?: number
 	gp?: number
 
@@ -32,6 +34,8 @@ export type Character = Entity & {
 	bioBond?: string
 	bioFlaw?: string
 	bioDescription?: string
+	bioAppearance?: string
+	bioStory?: string
 
 	// Fact
 	factCompletedGameCount?: number
@@ -45,6 +49,7 @@ export type Character = Entity & {
 	clses?: Cls[]
 	city?: City
 	background?: Background
+	deity?: Deity
 }
 
 export const DEFAULT_CHARACTER: Required<Character> = {
@@ -67,6 +72,7 @@ export const DEFAULT_CHARACTER: Required<Character> = {
 		url: '',
 	},
 	level: 0,
+	levelWithClsesString: '',
 	xp: 0,
 	gp: 0,
 
@@ -80,6 +86,8 @@ export const DEFAULT_CHARACTER: Required<Character> = {
 	bioBond: '--',
 	bioFlaw: '--',
 	bioDescription: '--',
+	bioAppearance: '--',
+	bioStory: '--',
 
 	factCompletedGameCount: 0,
 	factCollectedXP: 0,
@@ -91,4 +99,5 @@ export const DEFAULT_CHARACTER: Required<Character> = {
 	clses: [{ id: '', name: '--' }],
 	city: { id: '', name: '--', code: '' },
 	background: { id: '', name: '--' },
+	deity: { id: '', name: '--' },
 }

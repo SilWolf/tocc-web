@@ -13,12 +13,11 @@ type PageProps = {
 }
 
 const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
-	console.log(character)
 	return (
 		<div className='container'>
 			<div className='grid grid-cols-3 gap-4'>
 				<div className='space-y-6'>
-					<div className='parchment space-y-4'>
+					<div className='parchment parchment-narrowed space-y-4'>
 						<div className='w-2/3 mx-auto'>
 							<div className='aspect-w-1 aspect-h-1'>
 								<StrapiImg
@@ -30,9 +29,10 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 						</div>
 						<div className='text-center'>
 							<h2>{character.name}</h2>
+							<p className='text-xs mb-4'>{character.nickname}</p>
 							<h5 className='text-subtitle text-sm'>
-								Lv {character.level}. {character.race?.name}
-								{character.clses?.[0]?.name}
+								{character.background?.name} {character.race?.name}{' '}
+								{character.levelWithClsesString}
 							</h5>
 						</div>
 
@@ -40,20 +40,21 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 							{character.bioSaying}
 						</div>
 					</div>
-					<div className='parchment space-y-4'>
+
+					<div className='parchment parchment-narrowed space-y-4'>
 						<table className='table-character-meta'>
 							<tr>
 								<td>
-									<i className='ra ra-fw ra-lg ra-key-basic'></i>
+									<i className='ra ra-key-basic'></i>
 								</td>
-								<td>編號: </td>
+								<td>編號</td>
 								<td>{character.code}</td>
 							</tr>
 							<tr>
 								<td>
-									<i className='ra ra-fw ra-lg ra-player'></i>
+									<i className='ra ra-player'></i>
 								</td>
-								<td>玩家: </td>
+								<td className='pr-3'>玩家</td>
 								<td>
 									<div className='flex items-center gap-x-1'>
 										<div className='flex-none'>
@@ -71,49 +72,49 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 							</tr>
 							<tr>
 								<td>
-									<i className='ra ra-fw ra-lg ra-bridge'></i>
+									<i className='ra ra-bridge'></i>
 								</td>
-								<td>所屬城市: </td>
+								<td>城市</td>
 								<td>{character.city.name}</td>
 							</tr>
 							<tr>
 								<td>
-									<i className='ra ra-fw ra-lg ra-seagull'></i>
+									<i className='ra ra-seagull'></i>
 								</td>
-								<td>背景: </td>
+								<td>背景</td>
 								<td>{character.background.name}</td>
 							</tr>
 							<tr>
 								<td>
-									<i className='ra ra-fw ra-lg ra-crown'></i>
+									<i className='ra ra-crown'></i>
 								</td>
-								<td>稱號: </td>
+								<td>稱號</td>
 								<td>{character.bioTitle}</td>
 							</tr>
 							<tr>
-								<td className='w-8'>
-									<i className='ra ra-fw ra-lg ra-castle-flag'></i>
+								<td>
+									<i className='ra ra-castle-flag'></i>
 								</td>
-								<td>組織: </td>
+								<td>組織</td>
 								<td>{character.bioOrganization}</td>
 							</tr>
 							<tr>
-								<td className='w-8'>
-									<i className='ra ra-fw ra-lg ra-pawn'></i>
+								<td>
+									<i className='ra ra-pawn'></i>
 								</td>
-								<td>身分: </td>
+								<td>身分</td>
 								<td>{character.bioRole}</td>
 							</tr>
 							<tr>
-								<td className='w-8'>
-									<i className='ra ra-fw ra-lg ra-pisces'></i>
+								<td>
+									<i className='ra ra-pisces'></i>
 								</td>
-								<td>信仰: </td>
-								<td>{character.bioBelief}</td>
+								<td>信仰</td>
+								<td>{character.deity?.name}</td>
 							</tr>
 						</table>
 					</div>
-					<div className='parchment space-y-4'>
+					<div className='parchment parchment-narrowed space-y-4'>
 						<div>
 							<h5 className='text-subtitle'>個性</h5>
 							<p>{character.bioPersonalityTrait}</p>
@@ -137,8 +138,12 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 						<div className='space-y-2'></div>
 					</div>
 				</div>
-				<div className='col-span-2'>
-					<div className='parchment space-y-8'>
+				<div className='col-span-2 space-y-8'>
+					<div className='parchment framed'>
+						<h3>關於角色</h3>
+						<ReactHTML>{character.bioAppearance}</ReactHTML>
+					</div>
+					<div className='parchment framed space-y-8'>
 						{/* <div className='text-right space-x-2'>
 							<button data-ripplet className='button button-outline text-sm'>
 								<i className='bi bi-share-fill mr-2'></i>
@@ -222,6 +227,10 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 								<h1>{character.factTouchedCharacterCount}</h1>
 							</div>
 						</div>
+					</div>
+					<div className='parchment framed'>
+						<h3>角色故事</h3>
+						<ReactHTML>{character.bioStory}</ReactHTML>
 					</div>
 				</div>
 			</div>

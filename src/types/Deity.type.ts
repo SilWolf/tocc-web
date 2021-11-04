@@ -1,8 +1,7 @@
 import { Entity } from './utils/Entity.type'
 
-export type Cls = Entity & {
+export type Deity = Entity & {
 	name: string
 	nameEn?: string
 	code?: string
-	level?: number
 }

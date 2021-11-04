@@ -284,6 +284,10 @@ ul li {
 	color: #461904;
 }
 
+.parchment.parchment-narrowed {
+	border-width: 16px 16px;
+}
+
 .parchment.framed {
 	border-width: 60px 60px;
 	border-image: url('/images/parchment-2.jpg') 80 80 fill round;
@@ -299,6 +303,10 @@ ul li {
 	/* color: #d65b27; */
 }
 
-.table-character-meta td + td {
-	@apply pr-2;
+.table-character-meta {
+	width: 100%;
+}
+
+.table-character-meta tr:nth-child(odd) {
+	background-color: rgba(255, 255, 255, 0.5);
 }
