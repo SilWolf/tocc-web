@@ -12,17 +12,19 @@ export const mock = (instance: AxiosInstance): void => {
 	mock
 		.onGet('/games')
 		.reply<Game[]>(200, [
-			gameJson,
-			{ ...gameJson, status: 'draft' },
-			{ ...gameJson, status: 'confirmed' },
-			{ ...gameJson, status: 'completed' },
-			{ ...gameJson, status: 'closed' },
-			{ ...gameJson, status: 'done' },
+			gameJson as Game,
+			{ ...(gameJson as Game), status: 'draft' },
+			{ ...(gameJson as Game), status: 'confirmed' },
+			{ ...(gameJson as Game), status: 'completed' },
+			{ ...(gameJson as Game), status: 'closed' },
+			{ ...(gameJson as Game), status: 'done' },
 		])
-	mock.onGet('/games?_pending=true').reply<Game[]>(200, [gameJson])
+	mock.onGet('/games?_pending=true').reply<Game[]>(200, [gameJson as Game])
 
-	mock.onGet(/\/games\/\w+/).reply<Game>(200, gameJson)
+	mock.onGet(/\/games\/\w+/).reply<Game>(200, gameJson as Game)
 
-	mock.onGet('/users?role.type=dungeon_master').reply<User[]>(200, dmsJson)
+	mock
+		.onGet('/users?role.type=dungeon_master')
+		.reply<User[]>(200, dmsJson as User[])
 	mock.onGet('/cities').reply<City[]>(200, citiesJson)
 }

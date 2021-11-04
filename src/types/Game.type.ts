@@ -43,7 +43,10 @@ export type Game = Entity & {
 	publishedAt?: string
 }
 
-export type Game_Req = Omit<Game, 'dm' | 'characters' | 'city'> & {
+export type Game_Req = Omit<
+	Game,
+	'dm' | 'characters' | 'city' | 'gameSignUps'
+> & {
 	dm?: string
 	characters?: string[]
 	city?: string

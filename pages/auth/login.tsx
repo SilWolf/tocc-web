@@ -1,13 +1,22 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 
+import Alert from 'src/components/Alert'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 
 import { AppContext } from '../_app'
 
 const LoginPage: NextPage = () => {
+	const { query } = useRouter()
+
+	const showGoogleConnectError = useMemo(
+		() => query['error'] && query['connect'] === 'google',
+		[query]
+	)
+
 	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
 
 	const handleClickRegister = useCallback(
@@ -54,6 +63,14 @@ const LoginPage: NextPage = () => {
 						className='h-16 mb-4 mx-auto'
 						alt='tocc logo'
 					/>
+
+					{showGoogleConnectError && (
+						<div className='text-center'>
+							<Alert type='danger' className='inline-block'>
+								錯誤: 在以Google登入時發生錯誤。
+							</Alert>
+						</div>
+					)}
 
 					<div className='flex items-stretch gap-x-8'>
 						<div className='flex-1 space-y-4 self-center'>

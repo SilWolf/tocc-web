@@ -24,7 +24,7 @@ type Props<T> = HTMLAttributes<HTMLDivElement> & {
 	onChangeOption?: (option: T) => void
 }
 
-const ButtonSelector = <T extends unknown>({
+const ButtonSelector = <T,>({
 	options,
 	onChangeOption,
 	...others

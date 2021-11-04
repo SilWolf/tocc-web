@@ -1,9 +1,9 @@
-import classNames from 'classnames'
 import { GetServerSideProps, NextPage } from 'next'
+
 import React from 'react'
+
 import { DateSpan } from 'src/components/Datetime'
 import { getApis } from 'src/helpers/api/api.helper'
-
 import {
 	GetServerSidePropsContextWithIronSession,
 	ProtectAdminPage,
@@ -12,6 +12,8 @@ import {
 import { Game } from 'src/types'
 import { SessionUser } from 'src/types/User.type'
 import StrapiImg from 'src/widgets/StrapiImg'
+
+import classNames from 'classnames'
 
 type Props = {
 	games: Game[]
@@ -24,11 +26,15 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 			<div className='grid laptop:grid-cols-2 gap-4'>
 				{games.map((game) => {
 					return (
-						<div className='parchment space-y-2'>
+						<div key={game.id} className='parchment space-y-2'>
 							<div className='flex items-center'>
 								<div className='flex-1'>
 									<h2>
-										<a href={`/admin/game/${game._id}`} target='_blank'>
+										<a
+											href={`/admin/game/${game._id}`}
+											target='_blank'
+											rel='noreferrer'
+										>
 											[{game.code}] {game.title}
 										</a>
 									</h2>
@@ -98,6 +104,7 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 											const { character, player } = gameSignUp
 											return (
 												<div
+													key={gameSignUp.id}
 													className={classNames(
 														'flex gap-x-1 items-center pl-1 pr-1',
 														gameSignUp.status === 'pending'
@@ -131,6 +138,7 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 															<a
 																href={`/admin/character/${character._id}`}
 																target='_blank'
+																rel='noreferrer'
 															>
 																{character.code} {character.name}
 															</a>
@@ -139,6 +147,7 @@ const AdminIndexPage: NextPage<Props> = ({ games }: Props) => {
 															<a
 																href={`/admin/player/${character._id}`}
 																target='_blank'
+																rel='noreferrer'
 															>
 																{player.code} {player.name}
 															</a>

@@ -108,7 +108,7 @@ export const getApis = (config?: { jwt?: string }) => {
 			api
 				.get<Character[]>('/characters', {
 					params: { name },
-					cache: { maxAge: 5 * 60 * 1000 },
+					// cache: { maxAge: 5 * 60 * 1000 },
 				})
 				.then((characters) => characters[0]),
 

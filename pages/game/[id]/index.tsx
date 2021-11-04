@@ -9,18 +9,18 @@ import Select, {
 	SingleValueProps as SelectSingleValueProps,
 } from 'react-select'
 
+import Alert from 'src/components/Alert'
 import { DateSpan } from 'src/components/Datetime'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
-import Alert from 'src/components/Alert'
 import apis, { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { Character, Game } from 'src/types'
-import { SessionUser } from 'src/types/User.type'
 import { GameSignUp } from 'src/types/Game.type'
+import { SessionUser } from 'src/types/User.type'
 
 type Props = {
 	game: Game

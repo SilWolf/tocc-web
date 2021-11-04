@@ -32,6 +32,10 @@ const GeneralLayout: React.FC = ({ children }) => {
 									<a>劇本</a>
 								</NextLink>
 
+								<NextLink href='/character' passHref>
+									<a>角色列表</a>
+								</NextLink>
+
 								<NextLink href='/map' passHref>
 									<a>世界地圖</a>
 								</NextLink>

@@ -16,6 +16,7 @@ export type Character = Entity & {
 
 	// Profile
 	portraitImage?: Media
+	coverImage?: Media
 
 	// Improvements
 	level?: number
@@ -52,7 +53,7 @@ export type Character = Entity & {
 	deity?: Deity
 }
 
-export const DEFAULT_CHARACTER: Required<Character> = {
+export const DEFAULT_CHARACTER: Character = {
 	id: '',
 	_id: '',
 	__v: 0,

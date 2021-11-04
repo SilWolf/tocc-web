@@ -44,13 +44,13 @@ export const getServerSideProps: GetServerSideProps =
 
 		try {
 			const provider = params?.provider as string | undefined
-
+			console.log(provider)
 			if (!provider) {
 				return RESPONSE_IF_FAIL
 			}
 
 			const accessToken = query?.access_token as string | undefined
-
+			console.log(accessToken)
 			if (!accessToken) {
 				return RESPONSE_IF_FAIL
 			}
