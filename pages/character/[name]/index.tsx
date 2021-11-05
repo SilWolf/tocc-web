@@ -13,16 +13,17 @@ import {
 } from 'src/hooks/withSession.hook'
 import { Character } from 'src/types'
 import { DEFAULT_CHARACTER } from 'src/types/Character.type'
-import { SessionUser } from 'src/types/User.type'
+import { SessionUser, User } from 'src/types/User.type'
 import StrapiImg from 'src/widgets/StrapiImg'
 
 import classNames from 'classnames'
 
 type PageProps = {
-	character: Required<Character>
+	character: Character
+	user: User | undefined
 }
 
-const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
+const CharacterProfilePage: NextPage<PageProps> = ({ character, user }) => {
 	return (
 		<>
 			{character.coverImage?.url && (
@@ -37,21 +38,43 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 					character.coverImage && 'mt-48'
 				)}
 			>
-				<div
-					className={classNames(
-						'mb-4 inline-block',
-						character.coverImage && 'px-4 py-2 bg-black bg-opacity-70'
-					)}
-				>
-					<Breadcrumb className='text-white'>
-						<NextLink href='/' passHref>
-							<a>TOCC</a>
-						</NextLink>
-						<NextLink href='/character' passHref>
-							<a>角色列表</a>
-						</NextLink>
-						<span>{character.name}</span>
-					</Breadcrumb>
+				<div className='flex items-center'>
+					<div className='flex-1'>
+						<div
+							className={classNames(
+								'mb-4 inline-block',
+								character.coverImage && 'px-4 py-2 bg-black bg-opacity-70'
+							)}
+						>
+							<Breadcrumb className='text-white'>
+								<NextLink href='/' passHref>
+									<a>TOCC</a>
+								</NextLink>
+								<NextLink href='/character' passHref>
+									<a>角色列表</a>
+								</NextLink>
+								<strong>{character.name}</strong>
+							</Breadcrumb>
+						</div>
+					</div>
+					<div className='flex-none space-x-2 text-sm text-gray-200'>
+						{/* {user?.id && character.player?.id === user.id && (
+							<NextLink href={`/character/${character.name}/edit`} passHref>
+								<a
+									data-ripplet
+									className='inline-block leading-8 h-8 px-2 border border-gray-200 bg-black'
+								>
+									<i className='bi bi-pencil-fill'></i> 修改角色
+								</a>
+							</NextLink>
+						)} */}
+						<button
+							data-ripplet
+							className='h-8 w-8 border border-gray-200 bg-black'
+						>
+							<i className='bi bi-link-45deg'></i>
+						</button>
+					</div>
 				</div>
 
 				<div className='grid grid-cols-1 tablet:grid-cols-3 laptop:grid-cols-3 tablet:gap-6 laptop:gap-6'>
@@ -114,14 +137,14 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character }) => {
 										<i className='ra ra-bridge'></i>
 									</td>
 									<td>城市</td>
-									<td>{character.city.name}</td>
+									<td>{character.city?.name}</td>
 								</tr>
 								<tr>
 									<td>
 										<i className='ra ra-seagull'></i>
 									</td>
 									<td>背景</td>
-									<td>{character.background.name}</td>
+									<td>{character.background?.name}</td>
 								</tr>
 								<tr>
 									<td>
@@ -317,6 +340,7 @@ export const getServerSideProps: GetServerSideProps =
 			return {
 				props: {
 					character,
+					user: sessionUser?.user,
 				},
 			}
 		}

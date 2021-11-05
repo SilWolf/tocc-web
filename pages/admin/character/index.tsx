@@ -66,7 +66,7 @@ const AdminCharacterPage: NextPage = () => {
 				accessor: ({ id }) => {
 					return (
 						<div className='space-x-2'>
-							<NextLink href={`/character/${id}/profile`} passHref>
+							<NextLink href={`/character/${id}`} passHref>
 								<a target='_blank'>
 									<i className='bi bi-person-badge'></i>
 								</a>

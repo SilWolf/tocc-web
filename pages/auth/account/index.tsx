@@ -50,29 +50,36 @@ const AuthAccountPage: NextPage<Props> = ({ user, characters }: Props) => {
 							</div>
 						</div>
 
-						<div className='parchment'>
-							{characters.map((character) => (
-								<NextLink
-									key={character.id}
-									href={`/character/${character.name}/profile`}
-									passHref
-								>
-									<a href=''>
-										<div className='flex items-center gap-x-2'>
-											<div className='flex-none'>
-												<StrapiImg
-													image={character.portraitImage}
-													size='thumbnail'
-													className='w-8 h-8'
-												/>
+						<div className='parchment parchment-narrowed'>
+							<h5 className='mb-2'>擁有角色</h5>
+							<div className='space-y-2'>
+								{characters.map((character) => (
+									<NextLink
+										key={character.id}
+										href={`/character/${character.name}`}
+										passHref
+									>
+										<a href=''>
+											<div className='flex items-center gap-x-2'>
+												<div className='flex-none'>
+													<StrapiImg
+														image={character.portraitImage}
+														size='thumbnail'
+														className='w-10 h-10'
+													/>
+												</div>
+												<div className='flex-1'>
+													<strong>{character.name}</strong>
+													<p className='text-xs'>
+														{character.background?.name} {character.race?.name}{' '}
+														{character.levelWithClsesString}
+													</p>
+												</div>
 											</div>
-											<div className='flex-1'>
-												<p>{character.name}</p>
-											</div>
-										</div>
-									</a>
-								</NextLink>
-							))}
+										</a>
+									</NextLink>
+								))}
+							</div>
 						</div>
 					</div>
 					<div className='flex-1 space-y-6'>

@@ -42,7 +42,7 @@ const CharactersPage: NextPage<PageProps> = ({ myCharacters }) => {
 							return (
 								<NextLink
 									key={character.id}
-									href={`/character/${character.name}/profile`}
+									href={`/character/${character.name}`}
 									passHref
 								>
 									<a href=''>
