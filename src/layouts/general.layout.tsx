@@ -17,7 +17,7 @@ const GeneralLayout: React.FC = ({ children }) => {
 	return (
 		<>
 			<div>
-				<div className='bg-yellow-900 py-3 shadow fixed top-0 left-0 right-0 z-10'>
+				<div className='layout-topbar py-3 fixed top-0 left-0 right-0 z-10'>
 					<div className='container'>
 						<div className='flex items-center gap-x-6 text-white'>
 							<div className='flex-none'>
@@ -99,7 +99,7 @@ const GeneralLayout: React.FC = ({ children }) => {
 				<div className='min-h-screen flex flex-col pt-24'>
 					<div className='flex-1 pb-8'>{children}</div>
 
-					<div className='flex-none bg-yellow-900 text-white py-4'>
+					<div className='layout-footer flex-none pb-4 pt-12'>
 						<div className='container'>
 							<Footer />
 						</div>

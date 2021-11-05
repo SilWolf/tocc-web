@@ -30,11 +30,11 @@ const HomePage: NextPage<PageProps> = ({
 	return (
 		<>
 			<div
-				className='h-64 bg-center bg-cover'
+				className='absolute top-10 left-0 right-0 h-80 bg-cover bg-center'
 				style={{ backgroundImage: 'url("/images/homepage-bg.jpg")' }}
 			></div>
 
-			<div className='container py-12 flex-1 space-y-8'>
+			<div className='container mt-56 flex-1 space-y-8'>
 				{pendingGames.map((game) => (
 					<div key={game.id}>
 						<div className='parchment framed'>

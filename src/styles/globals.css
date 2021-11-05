@@ -10,9 +10,9 @@
 
 @layer base {
 	body {
-		background-image: url('/images/bg-1.jpg');
-		background-size: cover;
-		background-repeat: repeat-y;
+		background-image: url('/images/bg-2.jpg');
+		background-position: center;
+		background-repeat: repeat;
 	}
 
 	h1 {
@@ -317,4 +317,16 @@ ul li {
 
 .table-character-meta tr:nth-child(odd) {
 	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.layout-topbar {
+	background-color: #27160f;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 2px 2px;
+	color: #fff;
+}
+
+.layout-footer {
+	background-color: #27160f;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 -2px 2px;
+	color: #fff;
 }

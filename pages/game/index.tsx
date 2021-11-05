@@ -19,7 +19,7 @@ type Props = {
 
 const GamesPage: NextPage<Props> = ({ pendingGames }) => {
 	return (
-		<>
+		<div className='container'>
 			{pendingGames.map((game) => (
 				<div key={game.id}>
 					<div className='parchment framed'>
@@ -75,7 +75,7 @@ const GamesPage: NextPage<Props> = ({ pendingGames }) => {
 					</div>
 				</div>
 			))}
-		</>
+		</div>
 	)
 }
 
