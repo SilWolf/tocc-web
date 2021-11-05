@@ -213,7 +213,7 @@
 	}
 
 	table.table-default tbody tr td {
-		@apply py-3 px-6 whitespace-nowrap;
+		@apply py-2 px-2 whitespace-nowrap;
 	}
 
 	table.table-bordered {

@@ -11,7 +11,7 @@ import apis, {
 	convertDataTableStateToApiParams,
 } from 'helpers/api/api.helper'
 
-import { DateSpan } from 'components/Datetime'
+import { DateSpan, WeekdaySpan } from 'components/Datetime'
 
 import DataTable, {
 	DataTableColumnProps,
@@ -36,14 +36,19 @@ const AdminGamePage: NextPage = () => {
 			{
 				id: 'startAt',
 				Header: '現實時間',
-				accessor: ({ startAt }) => <DateSpan>{startAt}</DateSpan>,
+				accessor: ({ startAt }) => (
+					<>
+						<DateSpan format='yyyy年MM月dd日'>{startAt}</DateSpan> (
+						<WeekdaySpan>{startAt}</WeekdaySpan>)
+					</>
+				),
 			},
 			{
 				id: 'worldStartAt',
 				Header: '世界觀時間',
 				accessor: ({ worldStartAt }) => (
 					<span>
-						第三紀元<DateSpan>{worldStartAt}</DateSpan>
+						<DateSpan format='第三紀元 yyyy年MM月dd日'>{worldStartAt}</DateSpan>
 					</span>
 				),
 			},

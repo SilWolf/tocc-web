@@ -10,7 +10,7 @@ const PLACEHOLDER_AVATAR_DWARF = '/images/avatar/avatar-dwarf.png'
 
 const StrapiImg = ({ image, size, src, ...others }: Props): JSX.Element => {
 	const { _src, _width, _height } = useMemo(() => {
-		if (!image) {
+		if (!image || !image.url) {
 			return {
 				_src: PLACEHOLDER_AVATAR_DWARF,
 				_width: 0,

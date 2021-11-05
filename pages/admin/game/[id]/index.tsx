@@ -7,7 +7,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { City, Game, User } from 'types'
 import { Game_Req } from 'types/Game.type'
 
-import { getApis } from 'helpers/api/api.helper'
+import apis, { getApis } from 'helpers/api/api.helper'
 
 import Breadcrumb from 'components/Breadcrumb'
 import { Input } from 'components/Form'
@@ -21,6 +21,7 @@ import { SessionUser } from 'src/types/User.type'
 
 import cns from 'classnames'
 import lightFormat from 'date-fns/lightFormat'
+import { useQuery } from 'react-query'
 
 type FormProps = Game_Req
 
@@ -100,10 +101,14 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	cities = [],
 	dms = [],
 }) => {
+	const { data: user } = useQuery(['user', 'me'], apis.getMe, {
+		staleTime: 5 * 60 * 1000, // 5mins
+	})
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
 		reset,
+		setValue,
 		control,
 	} = useForm<FormProps>({
 		defaultValues: {
@@ -147,8 +152,10 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				worldStartAt: game.worldStartAt?.substring(0, 10) || '',
 				worldEndAt: game.worldEndAt?.substring(0, 10) || '',
 			})
+		} else if (isNew) {
+			setValue('dm', user?.id)
 		}
-	}, [game, reset])
+	}, [game, reset, isNew, user])
 
 	const [submitButtonText, flowStepIndex] = useMemo<[string, number]>(() => {
 		switch (_formStatus) {
@@ -456,13 +463,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 	serverSidePropsWithSession(async ({ params, req: { session } }) => {
-		if (params?.id === 'new') {
-			return {
-				props: {
-					isNew: true,
-				},
-			}
-		}
+		const sessionUser = session.get<SessionUser>('sessionUser')
+		const apis = getApis({ jwt: sessionUser?.jwt })
 
 		if (!params?.id) {
 			return {
@@ -470,14 +472,14 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 			}
 		}
 
-		const sessionUser = session.get<SessionUser>('sessionUser')
-		const apis = getApis({ jwt: sessionUser?.jwt })
+		const [game] = await Promise.all([apis.getGameById(params.id as string)])
 
-		const [game, cities, dms] = await Promise.all([
-			apis.getGameById(params.id as string),
-			apis.getCities(),
-			apis.getDMs(),
-		])
+		if (!game) {
+			return {
+				notFound: true,
+			}
+		}
+		const [cities, dms] = await Promise.all([apis.getCities(), apis.getDMs()])
 
 		return {
 			props: {
