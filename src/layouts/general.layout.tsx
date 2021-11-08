@@ -5,13 +5,18 @@ import { useQuery } from 'react-query'
 
 import Dropdown from 'src/components/Dropdown'
 import apis from 'src/helpers/api/api.helper'
-import { USER_ROLE } from 'src/types/User.type'
+import { useUser } from 'src/hooks/auth.hook'
+import { User, USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
 import StrapiImg from 'src/widgets/StrapiImg'
 
 const GeneralLayout: React.FC = ({ children }) => {
-	const { data: user } = useQuery(['user', 'me'], apis.getMe, {
+	const { user: storedUser } = useUser()
+
+	const { data: user } = useQuery<User | null>(['user', 'me'], apis.getMe, {
 		staleTime: 5 * 60 * 1000, // 5mins
+		enabled: !!storedUser,
+		initialData: storedUser,
 	})
 
 	return (

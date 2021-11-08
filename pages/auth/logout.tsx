@@ -10,12 +10,14 @@ import {
 } from 'src/hooks/withSession.hook'
 
 const AuthLogoutPage: NextPage = () => {
-	useUser(null)
+	const { clearUser } = useUser()
+
 	useEffect(() => {
+		clearUser()
 		if (typeof window !== 'undefined') {
 			window.location.href = '/'
 		}
-	}, [])
+	}, [clearUser])
 	return <></>
 }
 

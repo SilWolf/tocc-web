@@ -87,32 +87,41 @@ export const useSessionUserForProtectedPages = () =>
 		redirectTo: '/auth/login',
 	})
 
-export const useUser = (user?: User | null): User | null => {
-	const refreshRef = useRef<boolean>(false)
+export const useUser = (): {
+	user: User | null
+	setUser: (_user: User) => void
+	clearUser: () => void
+	isLogined: boolean
+} => {
+	const userRef = useRef<User | null>(null)
+
+	const setUser = useCallback((_user: User) => {
+		if (typeof window !== 'undefined') {
+			localStorage.setItem('tocc-user', JSON.stringify(_user))
+			userRef.current = _user
+		}
+	}, [])
+
+	const clearUser = useCallback(() => {
+		if (typeof window !== 'undefined') {
+			localStorage.removeItem('tocc-user')
+			userRef.current = null
+		}
+	}, [])
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
-			if (user) {
-				localStorage.setItem('tocc-user', JSON.stringify(user))
-			} else if (user === null) {
-				localStorage.removeItem('tocc-user')
-			}
-			refreshRef.current = !refreshRef.current
-		}
-	}, [user])
-
-	const storedUser = useMemo(() => {
-		if (typeof window !== 'undefined') {
 			const stored = localStorage.getItem('tocc-user')
-
 			if (stored) {
-				return JSON.parse(stored)
+				userRef.current = JSON.parse(stored)
 			}
 		}
+	}, [])
 
-		return undefined
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [refreshRef.current])
-
-	return storedUser
+	return {
+		user: userRef.current,
+		setUser,
+		clearUser,
+		isLogined: !!userRef.current,
+	}
 }

@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
+import { useQuery } from 'react-query'
 
 import { City, Game, User } from 'types'
 import { Game_Req } from 'types/Game.type'
@@ -21,7 +22,6 @@ import { SessionUser } from 'src/types/User.type'
 
 import cns from 'classnames'
 import lightFormat from 'date-fns/lightFormat'
-import { useQuery } from 'react-query'
 
 type FormProps = Game_Req
 

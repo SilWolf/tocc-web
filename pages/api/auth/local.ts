@@ -26,8 +26,7 @@ export default withSession(
 
 			res.json(sessionUser)
 		} catch (error: any) {
-			const { response: fetchResponse } = error
-			res.status(fetchResponse?.status || 500).json(error.message)
+			res.status(error.response.status).json(error.response.data)
 		}
 	}
 )

@@ -18,8 +18,9 @@ type Props = {
 
 const AuthConnectGoogleCallbackPage: NextPage<Props> = ({ user }: Props) => {
 	const router = useRouter()
+	const { setUser } = useUser()
 
-	useUser(user)
+	setUser(user)
 	useEffect(() => {
 		router.replace('/')
 	})

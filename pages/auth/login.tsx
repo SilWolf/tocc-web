@@ -2,19 +2,37 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import React, { useCallback, useContext, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 
 import Alert from 'src/components/Alert'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
+import apis from 'src/helpers/api/api.helper'
 
 import { AppContext } from '../_app'
 
+type LoginFormProps = {
+	identity: string
+	password: string
+}
+
 const LoginPage: NextPage = () => {
-	const { query } = useRouter()
+	const router = useRouter()
+	const {
+		register,
+		handleSubmit: rhfHandleSubmit,
+		formState: { errors },
+		setError,
+	} = useForm<LoginFormProps>({
+		defaultValues: {
+			identity: '',
+			password: '',
+		},
+	})
 
 	const showGoogleConnectError = useMemo(
-		() => query['error'] && query['connect'] === 'google',
-		[query]
+		() => router.query['error'] && router.query['connect'] === 'google',
+		[router]
 	)
 
 	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
@@ -47,6 +65,30 @@ const LoginPage: NextPage = () => {
 			})
 		},
 		[openDialog, closeDialog]
+	)
+
+	const handleSubmit = useCallback(
+		(value) => {
+			apis
+				.postLogin(value.identity, value.password)
+				.then(() => {
+					router.push('/')
+				})
+				.catch((err) => {
+					console.log(err.response)
+					if (err.response?.data?.data?.[0]?.messages?.[0]?.id) {
+						if (
+							err.response.data.data[0].messages[0].id ===
+							'Auth.form.error.invalid'
+						) {
+							setError('identity', {
+								message: '無法登入，帳號或密碼錯誤!',
+							})
+						}
+					}
+				})
+		},
+		[router, setError]
 	)
 
 	return (
@@ -92,9 +134,22 @@ const LoginPage: NextPage = () => {
 							<div className='h-full w-px bg-yellow-600'></div>
 						</div>
 						<div className='flex-1 space-y-6 py-8'>
-							<form className='space-y-6'>
-								<Input label='Email' type='email' />
-								<Input label='密碼' type='password' />
+							<form
+								className='space-y-6'
+								onSubmit={rhfHandleSubmit(handleSubmit)}
+							>
+								<Input
+									label='Email'
+									type='email'
+									{...register('identity', { required: true })}
+									error={errors['identity']}
+								/>
+								<Input
+									label='密碼'
+									type='password'
+									{...register('password', { required: true })}
+									error={errors['password']}
+								/>
 
 								<div className='text-center'>
 									<MedievalButton type='submit'>登入</MedievalButton>
