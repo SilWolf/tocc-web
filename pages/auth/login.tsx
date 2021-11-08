@@ -8,6 +8,7 @@ import Alert from 'src/components/Alert'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 import apis from 'src/helpers/api/api.helper'
+import { useUser } from 'src/hooks/auth.hook'
 
 import { AppContext } from '../_app'
 
@@ -18,6 +19,7 @@ type LoginFormProps = {
 
 const LoginPage: NextPage = () => {
 	const router = useRouter()
+	const { setUser } = useUser()
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
@@ -71,7 +73,8 @@ const LoginPage: NextPage = () => {
 		(value) => {
 			apis
 				.postLogin(value.identity, value.password)
-				.then(() => {
+				.then((res) => {
+					setUser(res.user)
 					router.push('/')
 				})
 				.catch((err) => {
@@ -88,7 +91,7 @@ const LoginPage: NextPage = () => {
 					}
 				})
 		},
-		[router, setError]
+		[router, setError, setUser]
 	)
 
 	return (

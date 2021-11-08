@@ -1,6 +1,6 @@
 import NextLink from 'next/link'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
 import Dropdown from 'src/components/Dropdown'
@@ -13,11 +13,21 @@ import StrapiImg from 'src/widgets/StrapiImg'
 const GeneralLayout: React.FC = ({ children }) => {
 	const { user: storedUser } = useUser()
 
-	const { data: user } = useQuery<User | null>(['user', 'me'], apis.getMe, {
-		staleTime: 5 * 60 * 1000, // 5mins
-		enabled: !!storedUser,
-		initialData: storedUser,
-	})
+	const { data: user, refetch } = useQuery<User | null>(
+		['user', 'me'],
+		apis.getMe,
+		{
+			staleTime: 5 * 60 * 1000, // 5mins
+			enabled: !!storedUser,
+			initialData: storedUser,
+		}
+	)
+
+	useEffect(() => {
+		if (storedUser && refetch) {
+			refetch()
+		}
+	}, [refetch, storedUser])
 
 	return (
 		<>

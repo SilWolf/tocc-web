@@ -1,17 +1,18 @@
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 
 import Dropdown from 'src/components/Dropdown'
+import apis from 'src/helpers/api/api.helper'
+import { useUser } from 'src/hooks/auth.hook'
+import { User } from 'src/types'
 import Footer from 'src/widgets/Footer'
+import StrapiImg from 'src/widgets/StrapiImg'
+import styles from './admin.layout.module.css'
 
 import cns from 'classnames'
-
-import styles from './admin.layout.module.css'
-import StrapiImg from 'src/widgets/StrapiImg'
-import { useQuery } from 'react-query'
-import apis from 'src/helpers/api/api.helper'
 
 const routes = [
 	{
@@ -63,9 +64,23 @@ const routes = [
 
 const AdminLayout: React.FC = ({ children }) => {
 	const { pathname } = useRouter()
-	const { data: user } = useQuery(['user', 'me'], apis.getMe, {
-		staleTime: 5 * 60 * 1000, // 5mins
-	})
+	const { user: storedUser } = useUser()
+
+	const { data: user, refetch } = useQuery<User | null>(
+		['user', 'me'],
+		apis.getMe,
+		{
+			staleTime: 5 * 60 * 1000, // 5mins
+			enabled: !!storedUser,
+			initialData: storedUser,
+		}
+	)
+
+	useEffect(() => {
+		if (storedUser && refetch) {
+			refetch()
+		}
+	}, [refetch, storedUser])
 
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true)
 

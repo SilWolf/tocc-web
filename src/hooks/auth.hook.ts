@@ -93,19 +93,19 @@ export const useUser = (): {
 	clearUser: () => void
 	isLogined: boolean
 } => {
-	const userRef = useRef<User | null>(null)
+	const [storedUser, setStoredUser] = useState<User | null>(null)
 
 	const setUser = useCallback((_user: User) => {
 		if (typeof window !== 'undefined') {
 			localStorage.setItem('tocc-user', JSON.stringify(_user))
-			userRef.current = _user
+			setStoredUser(_user)
 		}
 	}, [])
 
 	const clearUser = useCallback(() => {
 		if (typeof window !== 'undefined') {
 			localStorage.removeItem('tocc-user')
-			userRef.current = null
+			setStoredUser(null)
 		}
 	}, [])
 
@@ -113,15 +113,15 @@ export const useUser = (): {
 		if (typeof window !== 'undefined') {
 			const stored = localStorage.getItem('tocc-user')
 			if (stored) {
-				userRef.current = JSON.parse(stored)
+				setStoredUser(JSON.parse(stored))
 			}
 		}
 	}, [])
 
 	return {
-		user: userRef.current,
+		user: storedUser,
 		setUser,
 		clearUser,
-		isLogined: !!userRef.current,
+		isLogined: !!storedUser,
 	}
 }
