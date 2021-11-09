@@ -11,6 +11,7 @@ import Dialog, { DialogProps } from 'components/Dialog'
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import 'swiper/css'
 import 'src/styles/globals.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const queryClient = new QueryClient({
 	defaultOptions: {

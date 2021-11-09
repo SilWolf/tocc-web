@@ -1,9 +1,10 @@
 import { GetServerSideProps, NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 
-import { useCallback, useEffect, useMemo } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
-import { useQuery } from 'react-query'
+import { useCallback, useMemo } from 'react'
+import { Controller as RHFController, useForm, useWatch } from 'react-hook-form'
 
 import { City, Game, User } from 'types'
 import { Game_Req } from 'types/Game.type'
@@ -11,6 +12,8 @@ import { Game_Req } from 'types/Game.type'
 import apis, { getApis } from 'helpers/api/api.helper'
 
 import Breadcrumb from 'components/Breadcrumb'
+import DateRangePicker from 'components/DateRangePicker'
+import DateTimePicker from 'components/DateTimePicker'
 import { Input } from 'components/Form'
 import Stepper from 'components/Stepper'
 
@@ -21,12 +24,50 @@ import {
 import { SessionUser } from 'src/types/User.type'
 
 import cns from 'classnames'
-import lightFormat from 'date-fns/lightFormat'
 
-type FormProps = Game_Req
+const RichTextEditor = dynamic(
+	() => import('../../../../src/components/RichTextEditor'),
+	{
+		ssr: false,
+	}
+)
+
+type FormProps = Omit<Game_Req, 'endAt' | 'worldStartAt' | 'worldEndAt'> & {
+	worldDateRange: [string | null, string | null]
+	computedCode: string
+}
+
+const gameToFormProps = (game: Game): FormProps => {
+	return {
+		...game,
+		city: game.city?.id,
+		dm: game.dm?.id,
+		worldDateRange: [game.worldStartAt || null, game.worldEndAt || null],
+		characters: [],
+		computedCode: '',
+	}
+}
+
+const formPropsToGameReq = (game: FormProps): Game_Req => {
+	const result: Game_Req = {
+		...game,
+		worldStartAt: game.worldDateRange[0],
+		worldEndAt: game.worldDateRange[1],
+		code: game.code || game.computedCode,
+		status: game.status === 'new' ? 'draft' : game.status,
+	}
+
+	if (game.startAt && game.timeLengthInMin) {
+		const endAt = new Date(game.startAt)
+		endAt.setMinutes(endAt.getMinutes() + game.timeLengthInMin)
+		result.endAt = endAt.toISOString()
+	}
+
+	return result
+}
 
 type PageProps = {
-	game?: Game | undefined
+	game: Game
 	cities: City[]
 	dms: User[]
 	isNew?: boolean
@@ -101,61 +142,43 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	cities = [],
 	dms = [],
 }) => {
-	const { data: user } = useQuery(['user', 'me'], apis.getMe, {
-		staleTime: 5 * 60 * 1000, // 5mins
-	})
+	const router = useRouter()
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
-		reset,
-		setValue,
 		control,
+		formState,
+		setValue,
+		reset: rhfReset,
 	} = useForm<FormProps>({
-		defaultValues: {
-			id: '',
-			title: '',
-			code: '',
-			description: '',
-			startAt: '',
-			endAt: '',
-			worldStartAt: '',
-			worldEndAt: '',
-			lvMin: 1,
-			lvMax: 1,
-			capacityMin: 3,
-			capacityMax: 6,
-			tags: '',
-			remark: '',
-			status: 'new',
-			city: undefined,
-			dm: undefined,
-			characters: [],
-		},
+		defaultValues: gameToFormProps(game),
 	})
 	const _formStatus = useWatch({ control, name: 'status' })
 
-	useEffect(() => {
-		if (game && reset) {
-			reset({
-				...game,
-				dm: game.dm?.id,
-				city: game.city?.id,
-				characters: game.characters?.map((character) => character?.id) || [],
-				startAt: lightFormat(
-					game.startAt ? new Date(game.startAt) : new Date(),
-					"yyyy-MM-dd'T'HH:mm"
-				),
-				endAt: lightFormat(
-					game.endAt ? new Date(game.endAt) : new Date(),
-					"yyyy-MM-dd'T'HH:mm"
-				),
-				worldStartAt: game.worldStartAt?.substring(0, 10) || '',
-				worldEndAt: game.worldEndAt?.substring(0, 10) || '',
-			})
-		} else if (isNew) {
-			setValue('dm', user?.id)
+	const preGenerateCodeWatch = useWatch({
+		control,
+		name: ['city', 'dm', 'startAt'],
+	})
+	const computedCode = useMemo(() => {
+		const [_cityId, _dmId, _startAt] = preGenerateCodeWatch
+		if (_cityId && _dmId && _startAt) {
+			const [_city, _dm] = [
+				cities.find((item) => item.id === preGenerateCodeWatch[0]),
+				dms.find((item) => item.id === preGenerateCodeWatch[1]),
+			]
+			const weekCount = Math.floor(
+				(new Date(_startAt).getTime() - new Date('2020-02-16').getTime()) /
+					(7 * 24 * 60 * 60 * 1000)
+			)
+
+			const code = `${_city?.code || 'XX'}-${weekCount
+				.toString()
+				.padStart(4, '0')}${_dm?.code || 'X'}`
+			setValue('computedCode', code)
+
+			return code
 		}
-	}, [game, reset, isNew, user])
+	}, [cities, dms, preGenerateCodeWatch, setValue])
 
 	const [submitButtonText, flowStepIndex] = useMemo<[string, number]>(() => {
 		switch (_formStatus) {
@@ -177,13 +200,37 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		return ['儲存', 0]
 	}, [_formStatus])
 
-	const handleSubmit = useCallback((data) => {
-		console.log(data)
-	}, [])
+	const handleSubmit = useCallback(
+		(value) => {
+			console.log(value)
+			apis.createOrUpdateGame(formPropsToGameReq(value)).then((newGame) => {
+				if (!value.id) {
+					router.replace(`/admin/game/${newGame.id}`, undefined, {
+						shallow: false,
+					})
+					rhfReset(gameToFormProps(newGame))
+				} else {
+					alert('成功更新')
+				}
+			})
+		},
+		[router, rhfReset]
+	)
 
 	return (
 		<>
 			<form className='form' onSubmit={rhfHandleSubmit(handleSubmit)}>
+				<Input
+					type='hidden'
+					{...register('id')}
+					error={formState.errors['id']}
+				/>
+				<Input
+					type='hidden'
+					{...register('status')}
+					error={formState.errors['status']}
+				/>
+
 				<div className='space-y-4'>
 					<Breadcrumb>
 						<span>DM後台</span>
@@ -196,19 +243,30 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					<div className='flex gap-x-4 justify-between items-center'>
 						<div className='flex-1'>
 							<div className='form-group form-group-transparent'>
+								<Input type='hidden' {...register('computedCode')} />
 								<Input
 									type='text'
-									placeholder='編號 (選擇日期,城市,GM後會自動填入)'
+									label='劇本編號'
+									labelProps={{
+										className: 'hidden',
+									}}
+									placeholder={computedCode}
 									{...register('code')}
+									error={formState.errors['code']}
 								/>
 							</div>
 
 							<div className='form-group form-group-transparent'>
 								<Input
 									type='text'
+									label='劇本標題'
+									labelProps={{
+										className: 'hidden',
+									}}
 									className='text-xl font-semibold'
 									placeholder='未命名的劇本'
-									{...register('title')}
+									{...register('title', { required: true })}
+									error={formState.errors['title']}
 								/>
 							</div>
 						</div>
@@ -231,12 +289,13 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 
 					<div className='grid grid-cols-3 gap-x-4'>
 						<div className='col-span-2 space-y-6'>
-							<div className='grid grid-cols-2 gap-x-4 gap-y-6'>
+							<div className='grid grid-cols-2 gap-x-6 gap-y-6'>
 								<Input
 									type='select'
 									label='城市 (店舖)'
 									wrapperProps={{ className: 'flex-1' }}
-									{...register('city')}
+									{...register('city', { required: true })}
+									error={formState.errors['city']}
 								>
 									{cities.map((city) => (
 										<option key={city.id} value={city.id}>
@@ -248,7 +307,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									type='select'
 									label='DM'
 									wrapperProps={{ className: 'flex-1' }}
-									{...register('dm')}
+									{...register('dm', { required: true })}
+									error={formState.errors['dm']}
 								>
 									{dms.map((dm) => (
 										<option key={dm.id} value={dm.id}>
@@ -256,30 +316,62 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 										</option>
 									))}
 								</Input>
-								<Input
-									type='datetime-local'
-									label='開始時間'
-									wrapperProps={{ className: 'flex-1' }}
-									{...register('startAt')}
-								/>
-								<Input
-									type='datetime-local'
-									label='結束時間'
-									wrapperProps={{ className: 'flex-1' }}
-									{...register('endAt')}
-								/>
-								<Input
-									type='date'
-									label='世界觀開始時間'
-									wrapperProps={{ className: 'flex-1' }}
-									{...register('worldStartAt')}
-								/>
-								<Input
-									type='date'
-									label='世界觀結束時間'
-									wrapperProps={{ className: 'flex-1' }}
-									{...register('worldEndAt')}
-								/>
+
+								<div className='grid grid-cols-3 gap-x-2'>
+									<div className='col-span-2'>
+										<div className='form-group'>
+											<div className='form-group-label'>劇本時間</div>
+
+											<RHFController
+												name='startAt'
+												control={control}
+												rules={{ required: true }}
+												render={({ field }) => (
+													<DateTimePicker
+														dateFormat='yyyy年MM月dd日 hh:mm a'
+														{...field}
+													/>
+												)}
+											/>
+										</div>
+									</div>
+									<Input
+										type='select'
+										label='時長'
+										wrapperProps={{ className: 'flex-1' }}
+										{...register('timeLengthInMin', {
+											valueAsNumber: true,
+											required: true,
+										})}
+										error={formState.errors['timeLengthInMin']}
+									>
+										<option value={180}>3小時</option>
+										<option value={210}>3.5小時</option>
+										<option value={240}>4小時</option>
+										<option value={270}>4.5小時</option>
+										<option value={300}>5小時</option>
+										<option value={330}>5.5小時</option>
+										<option value={360}>6小時</option>
+									</Input>
+								</div>
+
+								<div className='form-group'>
+									<div className='form-group-label'>世界觀時間(第三紀元)</div>
+
+									<RHFController
+										name='worldDateRange'
+										control={control}
+										rules={{ required: true }}
+										render={({ field: { onChange, value } }) => (
+											<DateRangePicker
+												dateFormat='yyyy年MM月dd日'
+												onChange={onChange}
+												value={value}
+											/>
+										)}
+									/>
+								</div>
+
 								<div className='space-x-4'>
 									<Input
 										label='人數下限'
@@ -309,20 +401,33 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									/>
 								</div>
 
-								<Input
-									type='textarea'
-									label='劇本簡介'
-									rows={6}
-									wrapperProps={{ className: 'col-span-2' }}
-									{...register('description')}
-								/>
-								<Input
-									type='textarea'
-									label='備註'
-									rows={6}
-									wrapperProps={{ className: 'col-span-2' }}
-									{...register('remark')}
-								/>
+								<div className='col-span-2'>
+									<div className='form-group'>
+										<div className='form-group-label'>劇本簡介</div>
+
+										<RHFController
+											name='description'
+											control={control}
+											render={({ field: { onChange, value } }) => (
+												<RichTextEditor onChange={onChange} value={value} />
+											)}
+										/>
+									</div>
+								</div>
+
+								<div className='col-span-2'>
+									<div className='form-group'>
+										<div className='form-group-label'>備註</div>
+
+										<RHFController
+											name='remark'
+											control={control}
+											render={({ field: { onChange, value } }) => (
+												<RichTextEditor onChange={onChange} value={value} />
+											)}
+										/>
+									</div>
+								</div>
 							</div>
 
 							<div className='h-px bg-gray-400'></div>

@@ -102,7 +102,7 @@ const AdminLayout: React.FC = ({ children }) => {
 									data-ripplet
 									className={cns(
 										'route-link',
-										pathname === `/admin/${route.path}` ? 'active' : ''
+										pathname.startsWith(`/admin/${route.path}`) ? 'active' : ''
 									)}
 								>
 									<span className='route-link-icon'>{route.icon}</span>

@@ -17,10 +17,11 @@ export type Game = Entity & {
 	title: string
 	code: string
 	description?: string
-	startAt?: string
-	endAt?: string
-	worldStartAt?: string
-	worldEndAt?: string
+	startAt?: string | null
+	endAt?: string | null
+	timeLengthInMin?: number
+	worldStartAt?: string | null
+	worldEndAt?: string | null
 	lvMin?: number
 	lvMax?: number
 	capacityMin?: number
@@ -71,6 +72,7 @@ export const gameDefaultValue: Game = {
 	description: '',
 	startAt: '',
 	endAt: '',
+	timeLengthInMin: 0,
 	worldStartAt: '',
 	worldEndAt: '',
 	lvMin: 1,

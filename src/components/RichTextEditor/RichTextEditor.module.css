@@ -1,0 +1,9 @@
+.RichTextEditor :global() {
+	min-height: 250px;
+	--ck-color-base-background: #dbd1b2;
+	--ck-color-toolbar-background: #dbd1b2;
+}
+
+.RichTextEditor :global(.ck-editor__editable) {
+	min-height: 250px;
+}

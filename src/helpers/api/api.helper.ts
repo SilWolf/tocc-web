@@ -1,5 +1,5 @@
 import { City } from 'types/City.type'
-import { Game, GameSignUp, GameSignUp_Req } from 'types/Game.type'
+import { Game, Game_Req, GameSignUp, GameSignUp_Req } from 'types/Game.type'
 import { User } from 'types/User.type'
 
 import { DataTableState } from 'src/components/DataTable'
@@ -168,6 +168,14 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		getDMPendingGames: async (): Promise<Game[]> =>
 			api.get(`/dms/me/games?_pending=true`),
+
+		createOrUpdateGame: async (game: Game_Req): Promise<Game> => {
+			if (!game.id) {
+				return api.post(`/games`, game)
+			} else {
+				return api.put(`/games/${game.id}`, game)
+			}
+		},
 	}
 }
 
