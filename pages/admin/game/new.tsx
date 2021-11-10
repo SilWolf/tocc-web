@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 			capacityMax: 6,
 			lvMin: 2,
 			lvMax: 4,
+			outline: [],
 			status: 'new',
 		}
 

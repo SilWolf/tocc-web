@@ -70,8 +70,11 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		dmGetGames: async (config: ExtendedAxiosRequestConfig): Promise<Game[]> =>
 			api.get<Game[]>('/games', {
-				cache: { maxAge: 5 * 60 * 1000 },
 				...config,
+				params: {
+					_sort: 'updatedAt:DESC',
+					...config.params,
+				},
 			}),
 
 		getGamesCount: async (): Promise<number> =>

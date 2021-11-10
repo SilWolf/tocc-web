@@ -9,6 +9,7 @@ import { useUser } from 'src/hooks/auth.hook'
 import { User, USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
 import StrapiImg from 'src/widgets/StrapiImg'
+import styles from './general.layout.module.css'
 
 const GeneralLayout: React.FC = ({ children }) => {
 	const { user: storedUser } = useUser()
@@ -31,7 +32,7 @@ const GeneralLayout: React.FC = ({ children }) => {
 
 	return (
 		<>
-			<div>
+			<div className={styles.generalLayout}>
 				<div className='layout-topbar py-3 fixed top-0 left-0 right-0 z-10'>
 					<div className='container'>
 						<div className='flex items-center gap-x-6 text-white'>

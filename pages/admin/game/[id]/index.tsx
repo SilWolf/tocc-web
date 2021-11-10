@@ -4,7 +4,12 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 import { useCallback, useMemo } from 'react'
-import { Controller as RHFController, useForm, useWatch } from 'react-hook-form'
+import {
+	Controller as RHFController,
+	useFieldArray,
+	useForm,
+	useWatch,
+} from 'react-hook-form'
 
 import { City, Game, User } from 'types'
 import { Game_Req } from 'types/Game.type'
@@ -155,6 +160,27 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	})
 	const _formStatus = useWatch({ control, name: 'status' })
 
+	const gameOutlineArray = useFieldArray({
+		control: control,
+		name: 'outline',
+	})
+	const watchedOutline = useWatch({
+		control: control,
+		name: 'outline',
+	})
+	const [outlineTotalXpEach, outlineTotalGpEach, outlineTotalMiGp] =
+		useMemo(() => {
+			return (watchedOutline || []).reduce<[number, number]>(
+				(prev, curr) => {
+					prev[0] += curr.xpEach
+					prev[1] += curr.gpEach
+					prev[2] += curr.miGp
+					return prev
+				},
+				[0, 0, 0]
+			)
+		}, [watchedOutline])
+
 	const preGenerateCodeWatch = useWatch({
 		control,
 		name: ['city', 'dm', 'startAt'],
@@ -217,6 +243,30 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		[router, rhfReset]
 	)
 
+	const handleClickOutlineAppend = useCallback(() => {
+		gameOutlineArray.append({
+			description: '',
+			mi: '',
+			miGp: 0,
+			xpEach: 0,
+			gpEach: 0,
+		})
+	}, [gameOutlineArray])
+
+	const handleClickOutlineRemove = useCallback(
+		(index: number) => () => {
+			gameOutlineArray.remove(index)
+		},
+		[gameOutlineArray]
+	)
+
+	const handleClickOutlineMove = useCallback(
+		(index: number, direction: -1 | 1) => () => {
+			gameOutlineArray.move(index, index + direction)
+		},
+		[gameOutlineArray]
+	)
+
 	return (
 		<>
 			<form className='form' onSubmit={rhfHandleSubmit(handleSubmit)}>
@@ -231,62 +281,60 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					error={formState.errors['status']}
 				/>
 
-				<div className='space-y-4'>
-					<Breadcrumb>
-						<span>DM後台</span>
-						<NextLink href='/admin/game' passHref>
-							<a>劇本</a>
-						</NextLink>
-						<span>{game?.title || '新劇本'}</span>
-					</Breadcrumb>
+				<Breadcrumb>
+					<span>DM後台</span>
+					<NextLink href='/admin/game' passHref>
+						<a>劇本</a>
+					</NextLink>
+					<span>{game?.title || '新劇本'}</span>
+				</Breadcrumb>
 
-					<div className='flex gap-x-4 justify-between items-center'>
-						<div className='flex-1'>
-							<div className='form-group form-group-transparent'>
-								<Input type='hidden' {...register('computedCode')} />
-								<Input
-									type='text'
-									label='劇本編號'
-									labelProps={{
-										className: 'hidden',
-									}}
-									placeholder={computedCode}
-									{...register('code')}
-									error={formState.errors['code']}
-								/>
-							</div>
-
-							<div className='form-group form-group-transparent'>
-								<Input
-									type='text'
-									label='劇本標題'
-									labelProps={{
-										className: 'hidden',
-									}}
-									className='text-xl font-semibold'
-									placeholder='未命名的劇本'
-									{...register('title', { required: true })}
-									error={formState.errors['title']}
-								/>
-							</div>
+				<div className='flex gap-x-4 justify-between items-center sticky left-0 right-0 top-0 py-4 bg-gray-50 z-50 shadow'>
+					<div className='flex-1'>
+						<div className='form-group form-group-transparent'>
+							<Input type='hidden' {...register('computedCode')} />
+							<Input
+								type='text'
+								label='劇本編號'
+								labelProps={{
+									className: 'hidden',
+								}}
+								placeholder={computedCode}
+								{...register('code')}
+								error={formState.errors['code']}
+							/>
 						</div>
-						<div className='space-x-2'>
-							{!isNew && (
-								<button
-									type='submit'
-									className={cns('button button-primary button-outline')}
-								>
-									儲存
-								</button>
-							)}
-							<button type='submit' className='button button-primary'>
-								{submitButtonText}
-							</button>
+
+						<div className='form-group form-group-transparent'>
+							<Input
+								type='text'
+								label='劇本標題'
+								labelProps={{
+									className: 'hidden',
+								}}
+								className='text-xl font-semibold'
+								placeholder='未命名的劇本'
+								{...register('title', { required: true })}
+								error={formState.errors['title']}
+							/>
 						</div>
 					</div>
+					<div className='space-x-2'>
+						{!isNew && (
+							<button
+								type='submit'
+								className={cns('button button-primary button-outline')}
+							>
+								儲存
+							</button>
+						)}
+						<button type='submit' className='button button-primary'>
+							{submitButtonText}
+						</button>
+					</div>
+				</div>
 
-					<div className='h-px bg-gray-400'></div>
-
+				<div className='mt-4 space-y-4'>
 					<div className='grid grid-cols-3 gap-x-4'>
 						<div className='col-span-2 space-y-6'>
 							<div className='grid grid-cols-2 gap-x-6 gap-y-6'>
@@ -345,6 +393,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 										})}
 										error={formState.errors['timeLengthInMin']}
 									>
+										<option value={120}>2小時</option>
+										<option value={150}>2.5小時</option>
 										<option value={180}>3小時</option>
 										<option value={210}>3.5小時</option>
 										<option value={240}>4小時</option>
@@ -430,10 +480,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 								</div>
 							</div>
 
-							<div className='h-px bg-gray-400'></div>
-
-							<h4>玩家XP、金錢獎勵、獲得物品</h4>
-
 							<div className='form-group'>
 								{flowStepIndex < 4 && (
 									<div className='text-center text-gray-400 mt-4 mb-16'>
@@ -499,66 +545,147 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 											</tr>
 										</tbody>
 									</table>
-								)}{' '}
+								)}
 							</div>
 						</div>
 
 						<div>
-							<div className='space-y-6 sticky top-8'>
-								<div className='form-group'>
-									<div className='flex gap-x-2 justify-between items-center'>
-										<label>報名玩家 (以報名順序排列)</label>
-										<a className='text-xs' href='#'>
-											隱藏候補玩家
-										</a>
-									</div>
-
-									<div className='space-y-1'>
-										<AdminGameDetailCharacterBox
-											title='卡洛特'
-											info='Lv.6 戰士'
-											playerName='SilWolf'
-											isSelected
-										/>
-										<AdminGameDetailCharacterBox
-											title='卡洛特'
-											info='Lv.6 戰士'
-											playerName='SilWolf'
-										/>
-										<AdminGameDetailCharacterBox
-											title='卡洛特'
-											info='Lv.6 戰士'
-											playerName='SilWolf'
-										/>
-									</div>
+							<Stepper activeStep={flowStepIndex}>
+								<div>
+									<p className='font-semibold'>劇本草稿</p>
+									<p className='text-sm'>
+										填寫城市、DM、開始/結束時間、人數、等級、簡介
+									</p>
 								</div>
-
-								<Stepper activeStep={flowStepIndex}>
-									<div>
-										<p className='font-semibold'>劇本草稿</p>
-										<p className='text-sm'>
-											填寫城市、DM、開始/結束時間、人數、等級、簡介
-										</p>
-									</div>
-									<div>
-										<p className='font-semibold'>發佈劇本</p>
-										<p className='text-sm'>發佈劇本至城市聊天群中</p>
-									</div>
-									<div>
-										<p className='font-semibold'>等待及確認玩家的報名</p>
-										<p className='text-sm'></p>
-									</div>
-									<div>
-										<p className='font-semibold'>跑團！</p>
-										<p className='text-sm'></p>
-									</div>
-									<div>
-										<p className='font-semibold'>跑團後續</p>
-										<p className='text-sm'>派發獎勵、後記、記錄玩家角色變化</p>
-									</div>
-								</Stepper>
-							</div>
+								<div>
+									<p className='font-semibold'>發佈劇本</p>
+									<p className='text-sm'>發佈劇本至城市聊天群中</p>
+								</div>
+								<div>
+									<p className='font-semibold'>等待及確認玩家的報名</p>
+									<p className='text-sm'></p>
+								</div>
+								<div>
+									<p className='font-semibold'>跑團！</p>
+									<p className='text-sm'></p>
+								</div>
+								<div>
+									<p className='font-semibold'>跑團後續</p>
+									<p className='text-sm'>派發獎勵、後記、記錄玩家角色變化</p>
+								</div>
+							</Stepper>
 						</div>
+					</div>
+
+					<div>
+						<h4>劇本大綱</h4>
+
+						<p>
+							劇本大綱會作為派發獎勵的依據，在劇本結束後會向玩家方公開。
+							<br />
+							每個項目均可設定相應的獎勵(XP, GP, MI)，可作為獎勵派發的依據。
+						</p>
+
+						<table className='table-bordered'>
+							<thead>
+								<tr>
+									<th className='w-6'></th>
+									<th className='w-6'></th>
+									<th>劇本情節</th>
+									<th className='w-72'>MI/情報/其他</th>
+									<th className='w-32'>MI/情報/其他總值 (GP)</th>
+									<th className='w-32'>人均GP</th>
+									<th className='w-32'>人均XP</th>
+								</tr>
+							</thead>
+							<tbody>
+								{gameOutlineArray.fields.map((field, index) => (
+									<tr key={field.id}>
+										<td className='w-8'>
+											<div>
+												<button
+													type='button'
+													onClick={handleClickOutlineRemove(index)}
+												>
+													x
+												</button>
+											</div>
+										</td>
+										<td className='w-8'>
+											<div>
+												<button
+													type='button'
+													onClick={handleClickOutlineMove(index, -1)}
+													disabled={index === 0}
+												>
+													up
+												</button>
+											</div>
+											<div>
+												<button
+													type='button'
+													onClick={handleClickOutlineMove(index, 1)}
+													disabled={
+														index === gameOutlineArray.fields.length - 1
+													}
+												>
+													down
+												</button>
+											</div>
+										</td>
+										<td>
+											<Input
+												type='text'
+												{...register(`outline.${index}.description`, {
+													required: true,
+												})}
+												placeholder='例: 與委託人見面得到起始資金 / 困難戰鬥:獸人+戰狼 / 發現了寶庫 / 完成任務'
+											/>
+										</td>
+										<td>
+											<Input type='text' {...register(`outline.${index}.mi`)} />
+										</td>
+										<td>
+											<Input
+												type='number'
+												{...register(`outline.${index}.miGp`, {
+													valueAsNumber: true,
+												})}
+											/>
+										</td>
+										<td>
+											<Input
+												type='number'
+												{...register(`outline.${index}.gpEach`, {
+													valueAsNumber: true,
+												})}
+											/>
+										</td>
+										<td>
+											<Input
+												type='number'
+												{...register(`outline.${index}.xpEach`, {
+													valueAsNumber: true,
+												})}
+											/>
+										</td>
+									</tr>
+								))}
+							</tbody>
+							<tfoot>
+								<th colSpan={2}>
+									<button type='button' onClick={handleClickOutlineAppend}>
+										新增一行
+									</button>
+								</th>
+								<th colSpan={2}></th>
+								<th>MI總{outlineTotalMiGp}GP</th>
+								<th>人均{outlineTotalGpEach}GP</th>
+								<th>+人均{outlineTotalXpEach}XP</th>
+							</tfoot>
+						</table>
+
+						<div></div>
 					</div>
 				</div>
 			</form>

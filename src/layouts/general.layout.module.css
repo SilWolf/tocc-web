@@ -1,0 +1,44 @@
+.generalLayout {
+	--ck-color-base-background: #dbd1b2;
+	--ck-color-toolbar-background: #dbd1b2;
+}
+
+.generalLayout :global([type='text']),
+.generalLayout :global([type='email']),
+.generalLayout :global([type='url']),
+.generalLayout :global([type='password']),
+.generalLayout :global([type='number']),
+.generalLayout :global([type='date']),
+.generalLayout :global([type='datetime-local']),
+.generalLayout :global([type='month']),
+.generalLayout :global([type='search']),
+.generalLayout :global([type='tel']),
+.generalLayout :global([type='time']),
+.generalLayout :global([type='week']),
+.generalLayout :global([multiple]),
+.generalLayout :global(textarea),
+.generalLayout :global(select) {
+	background: #dbd1b2;
+	padding: 0.5rem 1rem;
+	outline: none;
+	border-width: 0;
+}
+
+.generalLayout :global([type='text']:focus),
+.generalLayout :global([type='email']:focus),
+.generalLayout :global([type='url']:focus),
+.generalLayout :global([type='password']:focus),
+.generalLayout :global([type='number']:focus),
+.generalLayout :global([type='date']:focus),
+.generalLayout :global([type='datetime-local']:focus),
+.generalLayout :global([type='month']:focus),
+.generalLayout :global([type='search']:focus),
+.generalLayout :global([type='tel']:focus),
+.generalLayout :global([type='time']:focus),
+.generalLayout :global([type='week']:focus),
+.generalLayout :global([multiple]:focus),
+.generalLayout :global(textarea:focus),
+.generalLayout :global(select:focus) {
+	background: #e1d19e;
+	outline: none;
+}

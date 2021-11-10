@@ -41,6 +41,14 @@ export type Game = Entity & {
 	journals?: string[]
 	city?: City
 
+	outline?: {
+		description: string
+		xpEach: number
+		gpEach: number
+		mi: string
+		miGp: number
+	}[]
+
 	publishedAt?: string
 }
 

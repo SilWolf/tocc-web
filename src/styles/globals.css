@@ -54,12 +54,8 @@
 	[multiple],
 	textarea,
 	select {
-		background: #dbd1b2;
-		padding: 0.5rem 1rem;
-		width: 100%;
-		outline: none;
-		border-width: 0;
 		@apply ring-0;
+		width: 100%;
 	}
 
 	.form-group .input-static {
@@ -119,8 +115,6 @@
 	[multiple]:focus,
 	textarea:focus,
 	select:focus {
-		outline: none;
-		background: #e1d19e;
 		@apply ring-0;
 	}
 
@@ -329,4 +323,8 @@ ul li {
 	background-color: #27160f;
 	box-shadow: rgba(0, 0, 0, 0.35) 0 -2px 2px;
 	color: #fff;
+}
+
+.react-datepicker-popper.react-datepicker-popper {
+	z-index: 30;
 }
