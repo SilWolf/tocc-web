@@ -115,6 +115,11 @@ const AdminGamePage: NextPage = () => {
 				accessor: ({ id }) => {
 					return (
 						<>
+							<NextLink href={`/admin/game/new?clone=${id}`} passHref>
+								<a>
+									<i className='bi bi-files'></i>
+								</a>
+							</NextLink>
 							<NextLink href={`/admin/game/${id}`} passHref>
 								<a>
 									<i className='bi bi-pencil-fill'></i>
