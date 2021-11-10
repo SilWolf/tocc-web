@@ -3,16 +3,17 @@ import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
 	Controller as RHFController,
 	useFieldArray,
 	useForm,
 	useWatch,
 } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { City, Game, User } from 'types'
-import { Game_Req } from 'types/Game.type'
+import { Game_Req, GAME_STATUS } from 'types/Game.type'
 
 import apis, { getApis } from 'helpers/api/api.helper'
 
@@ -22,6 +23,8 @@ import DateTimePicker from 'components/DateTimePicker'
 import { Input } from 'components/Form'
 import Stepper from 'components/Stepper'
 
+import { DateSpan } from 'src/components/Datetime'
+import Modal from 'src/components/Modal'
 import {
 	ProtectAdminPage,
 	serverSidePropsWithSession,
@@ -59,7 +62,7 @@ const formPropsToGameReq = (game: FormProps): Game_Req => {
 		worldStartAt: game.worldDateRange[0],
 		worldEndAt: game.worldDateRange[1],
 		code: game.code || game.computedCode,
-		status: game.status === 'new' ? 'draft' : game.status,
+		status: game.status === GAME_STATUS.NEW ? GAME_STATUS.DRAFT : game.status,
 	}
 
 	if (game.startAt && game.timeLengthInMin) {
@@ -154,11 +157,9 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		control,
 		formState,
 		setValue,
-		reset: rhfReset,
 	} = useForm<FormProps>({
 		defaultValues: gameToFormProps(game),
 	})
-	const _formStatus = useWatch({ control, name: 'status' })
 
 	const gameOutlineArray = useFieldArray({
 		control: control,
@@ -170,7 +171,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	})
 	const [outlineTotalXpEach, outlineTotalGpEach, outlineTotalMiGp] =
 		useMemo(() => {
-			return (watchedOutline || []).reduce<[number, number]>(
+			return (watchedOutline || []).reduce<[number, number, number]>(
 				(prev, curr) => {
 					prev[0] += curr.xpEach
 					prev[1] += curr.gpEach
@@ -206,41 +207,54 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		}
 	}, [cities, dms, preGenerateCodeWatch, setValue])
 
-	const [submitButtonText, flowStepIndex] = useMemo<[string, number]>(() => {
-		switch (_formStatus) {
-			case 'new':
+	const [, flowStepIndex] = useMemo<[string, number]>(() => {
+		switch (game.status) {
+			case GAME_STATUS.NEW:
 				return ['儲存', 0]
-			case 'draft':
+			case GAME_STATUS.DRAFT:
 				return ['發佈劇本', 1]
-			case 'published':
+			case GAME_STATUS.PUBLISHED:
 				return ['確認玩家的報名', 2]
-			case 'confirmed':
+			case GAME_STATUS.CONFIRMED:
 				return ['跑完團了！', 3]
-			case 'completed':
+			case GAME_STATUS.COMPLETED:
 				return ['派發獎勵', 4]
-			case 'done':
-			case 'closed':
+			case GAME_STATUS.DONE:
+			case GAME_STATUS.CLOSED:
 				return ['已鎖定', 5]
 		}
 
 		return ['儲存', 0]
-	}, [_formStatus])
+	}, [game])
+
+	const [showPublishModal, setShowPublishModal] = useState<boolean>(false)
+	const handleClickPublish = useCallback(() => {
+		setShowPublishModal(true)
+	}, [])
+	const handleConfirmPublish = useCallback(() => {
+		apis.patchGameToPublishById(game.id).then(() => {
+			router.replace(`/admin/game/${game.id}`, undefined, {
+				shallow: false,
+			})
+			toast.success('成功發佈劇本')
+			setShowPublishModal(false)
+		})
+	}, [game, router])
 
 	const handleSubmit = useCallback(
 		(value) => {
-			console.log(value)
-			apis.createOrUpdateGame(formPropsToGameReq(value)).then((newGame) => {
-				if (!value.id) {
-					router.replace(`/admin/game/${newGame.id}`, undefined, {
-						shallow: false,
-					})
-					rhfReset(gameToFormProps(newGame))
+			apis.createOrUpdateGame(formPropsToGameReq(value)).then((_game) => {
+				router.replace(`/admin/game/${_game.id}`, undefined, {
+					shallow: false,
+				})
+				if (isNew) {
+					toast.success('成功新增劇本')
 				} else {
-					alert('成功更新')
+					toast.success('成功更新劇本')
 				}
 			})
 		},
-		[router, rhfReset]
+		[isNew, router]
 	)
 
 	const handleClickOutlineAppend = useCallback(() => {
@@ -286,7 +300,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					<NextLink href='/admin/game' passHref>
 						<a>劇本</a>
 					</NextLink>
-					<span>{game?.title || '新劇本'}</span>
+					<span>{isNew ? '新劇本' : `[${game.code}] ${game.title}`}</span>
 				</Breadcrumb>
 
 				<div className='flex gap-x-4 justify-between items-center sticky left-0 right-0 top-0 py-4 bg-gray-50 z-50 shadow'>
@@ -320,23 +334,23 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 						</div>
 					</div>
 					<div className='space-x-2'>
-						{!isNew && (
-							<button
-								type='submit'
-								className={cns('button button-primary button-outline')}
-							>
-								儲存
-							</button>
-						)}
+						<button
+							type='button'
+							className={cns('button button-primary button-outline')}
+							disabled={game.status !== GAME_STATUS.DRAFT}
+							onClick={handleClickPublish}
+						>
+							發佈劇本
+						</button>
 						<button type='submit' className='button button-primary'>
-							{submitButtonText}
+							儲存
 						</button>
 					</div>
 				</div>
 
 				<div className='mt-4 space-y-4'>
-					<div className='grid grid-cols-3 gap-x-4'>
-						<div className='col-span-2 space-y-6'>
+					<div className='flex items-start gap-x-4'>
+						<div className='flex-1 space-y-6'>
 							<div className='grid grid-cols-2 gap-x-6 gap-y-6'>
 								<Input
 									type='select'
@@ -451,7 +465,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									/>
 								</div>
 
-								<div className='col-span-2'>
+								<div>
 									<div className='form-group'>
 										<div className='form-group-label'>劇本簡介</div>
 
@@ -465,9 +479,9 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									</div>
 								</div>
 
-								<div className='col-span-2'>
+								<div>
 									<div className='form-group'>
-										<div className='form-group-label'>備註</div>
+										<div className='form-group-label'>DM內部備註</div>
 
 										<RHFController
 											name='remark'
@@ -479,82 +493,14 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									</div>
 								</div>
 							</div>
-
-							<div className='form-group'>
-								{flowStepIndex < 4 && (
-									<div className='text-center text-gray-400 mt-4 mb-16'>
-										你要先跑完團才能派發獎勵。
-									</div>
-								)}
-								{flowStepIndex >= 4 && (
-									<table className='table-bordered'>
-										<thead>
-											<tr>
-												<th></th>
-												<th>獲得XP</th>
-												<th>獲得GP</th>
-												<th>增減物品/知識/人際關係/稱號...</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th className='w-28 text-right'>隊伍總和</th>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td></td>
-											</tr>
-											<tr className='align-top'>
-												<th className='w-28 text-right pt-5'>卡洛特</th>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td>
-													<Input type='textarea' rows={2} />
-												</td>
-											</tr>
-											<tr className='align-top'>
-												<th className='w-28 text-right pt-5'>卡洛特</th>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td>
-													<Input type='textarea' rows={2} />
-												</td>
-											</tr>
-											<tr className='align-top'>
-												<th className='w-28 text-right pt-5'>卡洛特</th>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td className='w-28'>
-													<Input type='number' />
-												</td>
-												<td>
-													<Input type='textarea' rows={2} />
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								)}
-							</div>
 						</div>
 
-						<div>
+						<div className='w-64'>
 							<Stepper activeStep={flowStepIndex}>
 								<div>
 									<p className='font-semibold'>劇本草稿</p>
 									<p className='text-sm'>
-										填寫城市、DM、開始/結束時間、人數、等級、簡介
+										填寫城市、DM、開始/結束時間、人數、等級、簡介、劇本大綱
 									</p>
 								</div>
 								<div>
@@ -689,6 +635,81 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					</div>
 				</div>
 			</form>
+
+			<Modal open={showPublishModal}>
+				<div className='space-y-4'>
+					<p>你即將發佈劇本，請再次確認劇本內容是否正確。</p>
+					<div className='parchment framed space-y-6 mb-8'>
+						<p className='text-right'>
+							第三紀元{' '}
+							<DateSpan format='yyyy年MM月dd日'>{game.worldStartAt}</DateSpan>
+						</p>
+
+						<h1 className='text-center'>{game.title}</h1>
+
+						<p className='text-center italic'>{game.description}</p>
+
+						<div className='text-center pt-8 pb-8'>
+							<img
+								src='/images/divider-1.png'
+								alt='divider'
+								className='opacity-30 w-1/2 mx-auto'
+							/>
+						</div>
+
+						<div className='flex justify-center gap-12'>
+							<div className='flex-none'>
+								<p className='text-2xl'>
+									<DateSpan format='yyyy/MM/dd HH:mm'>{game.startAt}</DateSpan>
+								</p>
+								<p className='text-sm font-light text-gray-500'>時間日期</p>
+							</div>
+
+							<div className='flex-none'>
+								<p className='text-2xl'>
+									{game.city?.name || ''} ({game.city?.code || ''})
+								</p>
+								<p className='text-sm font-light text-gray-500'>場地</p>
+							</div>
+						</div>
+
+						<div className='flex justify-center gap-12'>
+							<div className='flex-none'>
+								<p className='text-2xl'>{game.dm?.name || ''}</p>
+								<p className='text-sm font-light text-gray-500'>DM</p>
+							</div>
+
+							<div className='flex-none'>
+								<p className='text-2xl'>
+									Lv. {game.lvMin}-{game.lvMax}
+								</p>
+								<p className='text-sm font-light text-gray-500'>等級範圍</p>
+							</div>
+
+							<div className='flex-none'>
+								<p className='text-2xl'>
+									{game.capacityMin}-{game.capacityMax}人
+								</p>
+								<p className='text-sm font-light text-gray-500'>人數</p>
+							</div>
+						</div>
+					</div>
+					<p>
+						在發佈後，系統會向玩家們發出公告及報名連結。你可取消勾選不想發佈的途徑，也可在之後再手動公告。
+					</p>
+					<div className='grid grid-cols-3 gap-x-4'>
+						<div>發送Telegram群組公告</div>
+						<div>發送Email公告</div>
+						<div>在Google Calendar上發佈活動</div>
+					</div>
+					<p className='text-center'>我確認劇本內容無誤</p>
+					<div className='text-center'>
+						<button type='button' onClick={handleConfirmPublish}>
+							發佈劇本
+						</button>
+					</div>
+				</div>
+			</Modal>
 		</>
 	)
 }

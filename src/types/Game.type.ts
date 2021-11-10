@@ -3,15 +3,15 @@ import { City } from './City.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
-export type GameStatus =
-	| string
-	| 'new'
-	| 'draft'
-	| 'published'
-	| 'confirmed'
-	| 'completed'
-	| 'done'
-	| 'closed'
+export enum GAME_STATUS {
+	NEW = 'new',
+	DRAFT = 'draft',
+	PUBLISHED = 'published',
+	CONFIRMED = 'confirmed',
+	COMPLETED = 'completed',
+	DONE = 'done',
+	CLOSED = 'closed',
+}
 
 export type Game = Entity & {
 	title: string
@@ -36,7 +36,7 @@ export type Game = Entity & {
 		rejected: number
 		pending: number
 	}
-	status?: GameStatus
+	status?: GAME_STATUS
 
 	journals?: string[]
 	city?: City
@@ -89,7 +89,7 @@ export const gameDefaultValue: Game = {
 	capacityMax: 6,
 	tags: '',
 	remark: '',
-	status: 'new',
+	status: GAME_STATUS.NEW,
 	city: undefined,
 	dm: undefined,
 	characters: [],

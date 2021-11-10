@@ -4,6 +4,8 @@
 	min-width: 0;
 	height: 100vh;
 	background: #fff;
+
+	--color-primary: #2a587d;
 }
 
 .adminLayout :global(.sidebar) {

@@ -179,6 +179,9 @@ export const getApis = (config?: { jwt?: string }) => {
 				return api.put(`/games/${game.id}`, game)
 			}
 		},
+
+		patchGameToPublishById: async (id: string) =>
+			api.patch(`/games/${id}/publish`, {}),
 	}
 }
 

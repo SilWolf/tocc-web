@@ -119,40 +119,43 @@ const GameDetailPage: NextPage<Props> = ({
 	})
 	const selectedCharacter = useWatch({ control: rhfControl, name: 'character' })
 
-	const handleSubmit = useCallback((value) => {
-		setErrorMsg('')
-		apis
-			.postSignUp(game.id, value)
-			.then(() => {
-				console.log('done')
-				alert('已成功報名。當DM確認你的報名後，就會發出通知。')
-			})
-			.catch((res) => {
-				const data = res.response.data
-				if (data.message) {
-					switch (data.message.errorCode) {
-						case 'NOT_AUTHORIZED':
-							setErrorMsg('錯誤: 你未登入。')
-							break
-						case 'ALREADY_SIGN_UP':
-							setErrorMsg('錯誤: 你已經報名過了！')
-							break
-						case 'GAME_NOT_FOUND':
-							setErrorMsg('錯誤: 找不到劇本，有可能它被刪除了。')
-							break
-						case 'NOT_PUBLISHED':
-							setErrorMsg('錯誤: 劇本的報名已經截止。')
-							break
-						case 'MISSING_CHARACTER':
-							setErrorMsg('錯誤: 你必須選擇報名的角色。')
-							break
-						case 'CHARACTER_NOT_FOUND':
-							setErrorMsg('錯誤: 找不到你選擇的角色。')
-							break
+	const handleSubmit = useCallback(
+		(value) => {
+			setErrorMsg('')
+			apis
+				.postSignUp(game.id, value)
+				.then(() => {
+					console.log('done')
+					alert('已成功報名。當DM確認你的報名後，就會發出通知。')
+				})
+				.catch((res) => {
+					const data = res.response.data
+					if (data.message) {
+						switch (data.message.errorCode) {
+							case 'NOT_AUTHORIZED':
+								setErrorMsg('錯誤: 你未登入。')
+								break
+							case 'ALREADY_SIGN_UP':
+								setErrorMsg('錯誤: 你已經報名過了！')
+								break
+							case 'GAME_NOT_FOUND':
+								setErrorMsg('錯誤: 找不到劇本，有可能它被刪除了。')
+								break
+							case 'NOT_PUBLISHED':
+								setErrorMsg('錯誤: 劇本的報名已經截止。')
+								break
+							case 'MISSING_CHARACTER':
+								setErrorMsg('錯誤: 你必須選擇報名的角色。')
+								break
+							case 'CHARACTER_NOT_FOUND':
+								setErrorMsg('錯誤: 找不到你選擇的角色。')
+								break
+						}
 					}
-				}
-			})
-	}, [])
+				})
+		},
+		[game]
+	)
 
 	return (
 		<div className='container'>

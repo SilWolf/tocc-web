@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { createContext, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ToastContainer } from 'react-toastify'
 
 import AdminLayout from 'layouts/admin.layout'
 import GeneralLayout from 'layouts/general.layout'
@@ -10,8 +11,9 @@ import Dialog, { DialogProps } from 'components/Dialog'
 
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import 'swiper/css'
-import 'src/styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import 'src/styles/globals.css'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -90,6 +92,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 							<Dialog {...dialogOptions} />
 						</div>
 					</div>
+
+					<ToastContainer />
 				</QueryClientProvider>
 			</AppContext.Provider>
 		</>
