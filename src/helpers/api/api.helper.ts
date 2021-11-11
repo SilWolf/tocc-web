@@ -1,5 +1,11 @@
 import { City } from 'types/City.type'
-import { Game, Game_Req, GameSignUp, GameSignUp_Req } from 'types/Game.type'
+import {
+	Game,
+	Game_Req,
+	GameCheckItem,
+	GameSignUp,
+	GameSignUp_Req,
+} from 'types/Game.type'
 import { User } from 'types/User.type'
 
 import { DataTableState } from 'src/components/DataTable'
@@ -82,6 +88,9 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		getGameById: async (id: string): Promise<Game> =>
 			api.get<Game>(`/games/${id}`),
+
+		getGameChecklistsById: async (id: string): Promise<GameCheckItem[]> =>
+			api.get<GameCheckItem[]>(`/games/${id}/checklists`),
 
 		getCities: async (): Promise<City[]> =>
 			api.get<City[]>('/cities', { cache: { maxAge: 5 * 60 * 1000 } }),

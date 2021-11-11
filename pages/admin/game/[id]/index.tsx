@@ -13,7 +13,7 @@ import {
 import { toast } from 'react-toastify'
 
 import { City, Game, User } from 'types'
-import { Game_Req, GAME_STATUS } from 'types/Game.type'
+import { Game_Req, GAME_STATUS, GameChecklist } from 'types/Game.type'
 
 import apis, { getApis } from 'helpers/api/api.helper'
 
@@ -31,7 +31,7 @@ import {
 } from 'src/hooks/withSession.hook'
 import { SessionUser } from 'src/types/User.type'
 
-import cns from 'classnames'
+import classNames from 'classnames'
 
 const RichTextEditor = dynamic(
 	() => import('../../../../src/components/RichTextEditor'),
@@ -76,6 +76,7 @@ const formPropsToGameReq = (game: FormProps): Game_Req => {
 
 type PageProps = {
 	game: Game
+	gameChecklists?: GameChecklist[]
 	cities: City[]
 	dms: User[]
 	isNew?: boolean
@@ -107,7 +108,7 @@ const AdminGameDetailCharacterBox = ({
 
 	return (
 		<div
-			className={cns(
+			className={classNames(
 				'px-2 py-1 flex gap-x-2 items-center',
 				isSelected ? 'bg-green-200' : ' bg-white'
 			)}
@@ -147,6 +148,7 @@ const AdminGameDetailCharacterBox = ({
 const AdminGameDetailPage: NextPage<PageProps> = ({
 	isNew,
 	game,
+	gameChecklists = [],
 	cities = [],
 	dms = [],
 }) => {
@@ -336,7 +338,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					<div className='space-x-2'>
 						<button
 							type='button'
-							className={cns('button button-primary button-outline')}
+							className={classNames('button button-primary button-outline')}
 							disabled={game.status !== GAME_STATUS.DRAFT}
 							onClick={handleClickPublish}
 						>
@@ -496,7 +498,44 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 						</div>
 
 						<div className='w-64'>
-							<Stepper activeStep={flowStepIndex}>
+							{gameChecklists.map((gameChecklist) => (
+								<div key={gameChecklist.id}>
+									<div className='flex gap-x-2 items-center pl-1 border-b border-gray-200 mb-1'>
+										<div className='flex-none text-2xl'>
+											<i className='bi bi-list-check'></i>
+										</div>
+										<div className='flex-1'>
+											<h4>{gameChecklist.name}</h4>
+										</div>
+									</div>
+									<div className='space-y-1'>
+										{gameChecklist.checkItems.map((checkItem) => (
+											<div
+												key={checkItem.id}
+												className={classNames(
+													'flex items-center gap-x-3 px-2 py-2 rounded',
+													checkItem.state === 'complete'
+														? 'text-green-600 line-through opacity-40'
+														: 'bg-gray-200'
+												)}
+											>
+												<div className='flex-none'>
+													<i
+														className={classNames(
+															'bi',
+															checkItem.state === 'complete'
+																? 'bi-check'
+																: 'bi-exclamation'
+														)}
+													></i>
+												</div>
+												<div className='flex-1'>{checkItem.name}</div>
+											</div>
+										))}
+									</div>
+								</div>
+							))}
+							{/* <Stepper activeStep={flowStepIndex}>
 								<div>
 									<p className='font-semibold'>劇本草稿</p>
 									<p className='text-sm'>
@@ -519,7 +558,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									<p className='font-semibold'>跑團後續</p>
 									<p className='text-sm'>派發獎勵、後記、記錄玩家角色變化</p>
 								</div>
-							</Stepper>
+							</Stepper> */}
 						</div>
 					</div>
 
@@ -732,11 +771,16 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				notFound: true,
 			}
 		}
-		const [cities, dms] = await Promise.all([apis.getCities(), apis.getDMs()])
+		const [gameChecklists, cities, dms] = await Promise.all([
+			apis.getGameChecklistsById(game.id),
+			apis.getCities(),
+			apis.getDMs(),
+		])
 
 		return {
 			props: {
 				game,
+				gameChecklists,
 				cities,
 				dms,
 			},

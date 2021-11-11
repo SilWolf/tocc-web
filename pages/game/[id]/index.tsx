@@ -125,7 +125,6 @@ const GameDetailPage: NextPage<Props> = ({
 			apis
 				.postSignUp(game.id, value)
 				.then(() => {
-					console.log('done')
 					alert('已成功報名。當DM確認你的報名後，就會發出通知。')
 				})
 				.catch((res) => {
@@ -306,8 +305,6 @@ export const getServerSideProps: GetServerSideProps =
 				apis.getMyCharacters(),
 				apis.getMyGameSignUpsByGameId(game.id),
 			])
-
-			console.log(gameSignUps)
 
 			return {
 				props: {

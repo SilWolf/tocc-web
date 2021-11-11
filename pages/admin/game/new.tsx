@@ -55,8 +55,8 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				game = {
 					...game,
 					title: _clonedGame.title,
-					description: _clonedGame.description,
-					remark: _clonedGame.remark,
+					description: _clonedGame.description || '',
+					remark: _clonedGame.remark || '',
 					capacityMin: _clonedGame.capacityMin,
 					capacityMax: _clonedGame.capacityMax,
 					lvMin: _clonedGame.lvMin,

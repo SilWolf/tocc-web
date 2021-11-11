@@ -116,3 +116,22 @@ export type GameSignUp_Req = {
 	game: string
 	remarks: string
 }
+
+export type GameChecklist = {
+	id: string
+	name: string
+	idCard: string
+	pos: number
+	idBoard: string
+	checkItems: GameCheckItem[]
+}
+
+export type GameCheckItem = {
+	idChecklist: string
+	state: 'complete' | 'incomplete'
+	id: string
+	name: string
+	pos: number
+	due?: string
+	idMember?: string
+}
