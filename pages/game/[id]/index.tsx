@@ -13,6 +13,7 @@ import Alert from 'src/components/Alert'
 import { DateSpan } from 'src/components/Datetime'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
+import ReactHTML from 'src/components/ReactHTML'
 import apis, { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
@@ -167,7 +168,9 @@ const GameDetailPage: NextPage<Props> = ({
 
 					<h1 className='text-center'>{game.title}</h1>
 
-					<p className='text-center italic'>{game.description}</p>
+					<p className='text-center italic'>
+						<ReactHTML>{game.description}</ReactHTML>
+					</p>
 
 					<div className='text-center pt-8 pb-8'>
 						<img

@@ -10,6 +10,7 @@ import {
 	useForm,
 	useWatch,
 } from 'react-hook-form'
+import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 
 import { City, Game, User } from 'types'
@@ -19,17 +20,18 @@ import apis, { getApis } from 'helpers/api/api.helper'
 
 import Breadcrumb from 'components/Breadcrumb'
 import DateRangePicker from 'components/DateRangePicker'
+import { DateSpan } from 'components/Datetime'
 import DateTimePicker from 'components/DateTimePicker'
 import { Input } from 'components/Form'
+import Modal from 'components/Modal'
 import Stepper from 'components/Stepper'
 
-import { DateSpan } from 'src/components/Datetime'
-import Modal from 'src/components/Modal'
 import {
 	ProtectAdminPage,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { SessionUser } from 'src/types/User.type'
+import StrapiImg from 'src/widgets/StrapiImg'
 
 import classNames from 'classnames'
 
@@ -243,6 +245,21 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		})
 	}, [game, router])
 
+	const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false)
+	const handleClickSignUp = useCallback(() => {
+		setShowSignUpModal(true)
+	}, [])
+	const handleConfirmSignUp = useCallback(() => {
+		setShowSignUpModal(false)
+	}, [])
+	const signUpsQuery = useQuery(
+		['game', game.id, 'signUps'],
+		() => apis.getGameSignUpsByGameId(game.id),
+		{
+			enabled: game.status === GAME_STATUS.PUBLISHED,
+		}
+	)
+
 	const handleSubmit = useCallback(
 		(value) => {
 			apis.createOrUpdateGame(formPropsToGameReq(value)).then((_game) => {
@@ -335,15 +352,39 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							/>
 						</div>
 					</div>
+					{game.publishedAt && (
+						<div>
+							<p className='text-green-700 text-sm text-right'>
+								劇本已於{' '}
+								<DateSpan format='yyyy年MM月dd日 HH:mm:ss'>
+									{game.publishedAt}
+								</DateSpan>{' '}
+								發佈
+							</p>
+							<p className='text-right text-xs'>
+								<span>取消發佈</span>
+							</p>
+						</div>
+					)}
 					<div className='space-x-2'>
-						<button
-							type='button'
-							className={classNames('button button-primary button-outline')}
-							disabled={game.status !== GAME_STATUS.DRAFT}
-							onClick={handleClickPublish}
-						>
-							發佈劇本
-						</button>
+						{game.status === GAME_STATUS.DRAFT && (
+							<button
+								type='button'
+								className={classNames('button button-primary button-outline')}
+								onClick={handleClickPublish}
+							>
+								發佈劇本
+							</button>
+						)}
+						{game.status === GAME_STATUS.PUBLISHED && (
+							<button
+								type='button'
+								className={classNames('button button-primary button-outline')}
+								onClick={handleClickSignUp}
+							>
+								確認報名及截止
+							</button>
+						)}
 						<button type='submit' className='button button-primary'>
 							儲存
 						</button>
@@ -745,6 +786,85 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					<div className='text-center'>
 						<button type='button' onClick={handleConfirmPublish}>
 							發佈劇本
+						</button>
+					</div>
+				</div>
+			</Modal>
+
+			<Modal open={showSignUpModal}>
+				<div className='space-y-4'>
+					<p>
+						你即將選定玩家，及截止報名。
+						<br />
+						以下玩家以報名順序排列，請打勾選上的玩家，並按確認。
+					</p>
+					<p>
+						選上的玩家會收到報名被確認的通知，其餘玩家則會收到劇本名額已滿而報名失敗的通知。
+					</p>
+
+					<div className='grid grid-cols-4'>
+						{signUpsQuery.data?.map((gameSignUp) => {
+							const { character, player } = gameSignUp
+							return (
+								<div
+									key={gameSignUp.id}
+									className={classNames(
+										'flex gap-x-1 items-center pl-1 pr-1',
+										gameSignUp.status === 'pending'
+											? 'bg-pending-light'
+											: gameSignUp.status === 'accepted'
+											? 'bg-accepted-light'
+											: 'bg-rejected-light'
+									)}
+								>
+									<div className='flex-none text-xs text-black opacity-40'>
+										<i
+											className={classNames(
+												gameSignUp.status === 'pending'
+													? 'bi bi-hourglass-split'
+													: gameSignUp.status === 'accepted'
+													? 'bi bi-check-lg'
+													: 'bi bi-x-lg'
+											)}
+										></i>
+									</div>
+									<div>
+										<StrapiImg
+											className={classNames('w-10 h-10')}
+											image={character.portraitImage}
+											size='thumbnail'
+											alt=''
+										/>
+									</div>
+									<div className='flex-1'>
+										<p className='text-normal leading-4'>
+											<a
+												href={`/admin/character/${character._id}`}
+												target='_blank'
+												rel='noreferrer'
+											>
+												{character.code} {character.name}
+											</a>
+										</p>
+										<p className='text-xs leading-3 opacity-80'>
+											<a
+												href={`/admin/player/${character._id}`}
+												target='_blank'
+												rel='noreferrer'
+											>
+												{player.code} {player.name}
+											</a>
+										</p>
+									</div>
+								</div>
+							)
+						})}
+					</div>
+
+					<p className='text-center'>我確認玩家名單無誤</p>
+					<div className='text-center'>
+						<button type='button' onClick={handleConfirmSignUp}>
+							確認報名及截止
 						</button>
 					</div>
 				</div>

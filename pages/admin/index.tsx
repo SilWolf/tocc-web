@@ -7,9 +7,7 @@ import {
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 
-type Props = {}
-
-const AdminDashboardPage: NextPage<Props> = () => {
+const AdminDashboardPage: NextPage = () => {
 	return <></>
 }
 

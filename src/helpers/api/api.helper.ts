@@ -92,6 +92,14 @@ export const getApis = (config?: { jwt?: string }) => {
 		getGameChecklistsById: async (id: string): Promise<GameCheckItem[]> =>
 			api.get<GameCheckItem[]>(`/games/${id}/checklists`),
 
+		getGameSignUpsByGameId: async (id: string): Promise<GameSignUp[]> =>
+			api.get<GameSignUp[]>(`/game-sign-ups`, {
+				params: {
+					game: id,
+					_sort: 'createdAt:ASC',
+				},
+			}),
+
 		getCities: async (): Promise<City[]> =>
 			api.get<City[]>('/cities', { cache: { maxAge: 5 * 60 * 1000 } }),
 

@@ -6,6 +6,7 @@ import React from 'react'
 import BgImage from 'src/components/BgImage'
 import { DateSpan } from 'src/components/Datetime'
 import MedievalButton from 'src/components/MedievalButton'
+import ReactHTML from 'src/components/ReactHTML'
 import { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
@@ -39,16 +40,17 @@ const HomePage: NextPage<PageProps> = ({
 					<div key={game.id}>
 						<div className='parchment framed'>
 							<div className='flex gap-x-4 items-start'>
-								<div className='flex-none w-24 text-center'>
-									<p className='text-4xl font-thin'>10</p>
-									<p className='text-3xl font-thin'>Oct</p>
+								<div className='flex-none w-32 text-center'>
+									<p className='text-3xl font-thin'>
+										<DateSpan format='MM月dd日'>{game.startAt}</DateSpan>
+									</p>
 								</div>
 								<div className='flex-1'>
 									<h2>{game.title}</h2>
-									<p className='text-gray-400'>{game.description}</p>
+									<ReactHTML>{game.description}</ReactHTML>
 
-									<div className='flex gap-x-8 text-2xl mt-8 mb-8'>
-										<div className='flex-1'>
+									<div className='grid grid-cols-2 gap-x-8 text-2xl mt-8 mb-8'>
+										<div>
 											<div className='flex gap-x-4'>
 												<div className='flex-none'>
 													<i className='bi bi-clock'></i>
@@ -61,7 +63,7 @@ const HomePage: NextPage<PageProps> = ({
 											</div>
 										</div>
 
-										<div className='flex-1'>
+										<div>
 											<div className='flex gap-x-4'>
 												<div className='flex-none'>
 													<i className='ra ra-fw ra-bridge'></i>
@@ -72,12 +74,25 @@ const HomePage: NextPage<PageProps> = ({
 											</div>
 										</div>
 
-										<div className='flex-1'>
+										<div>
 											<div className='flex gap-x-4'>
 												<div className='flex-none'>
 													<i className='bi bi-people-fill'></i>
 												</div>
-												<div className='flex-1'>3/6</div>
+												<div className='flex-1'>
+													{game.capacityMin}至{game.capacityMax}人
+												</div>
+											</div>
+										</div>
+
+										<div>
+											<div className='flex gap-x-4'>
+												<div className='flex-none'>
+													<i className='bi bi-people-fill'></i>
+												</div>
+												<div className='flex-1'>
+													Lv. {game.lvMin}-{game.lvMax}
+												</div>
 											</div>
 										</div>
 									</div>
