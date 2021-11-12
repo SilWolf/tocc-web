@@ -35,7 +35,7 @@ const Modal = ({ open, className, ...others }: ModalProps): JSX.Element => {
 		<ModalBackdrop open={open} style={{ margin: 0 }}>
 			<div
 				className={classNames(
-					'm-4 p-4 bg-white rounded max-h-full overflow-y-auto',
+					'm-4 p-4 bg-white rounded max-h-full overflow-y-auto mx-auto',
 					className
 				)}
 				{...others}

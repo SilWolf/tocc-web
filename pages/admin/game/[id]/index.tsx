@@ -36,6 +36,7 @@ import {
 } from 'src/hooks/withSession.hook'
 import { SessionUser } from 'src/types/User.type'
 import AdminGameSignUpModal from 'src/widgets/AdminGameSignUpModal'
+import GameOutlineTable from 'src/widgets/GameOutlineTable'
 
 import classNames from 'classnames'
 
@@ -169,27 +170,6 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		defaultValues: gameToFormProps(game),
 	})
 
-	const gameOutlineArray = useFieldArray({
-		control: control,
-		name: 'outline',
-	})
-	const watchedOutline = useWatch({
-		control: control,
-		name: 'outline',
-	})
-	const [outlineTotalXpEach, outlineTotalGpEach, outlineTotalMiGp] =
-		useMemo(() => {
-			return (watchedOutline || []).reduce<[number, number, number]>(
-				(prev, curr) => {
-					prev[0] += curr.xpEach
-					prev[1] += curr.gpEach
-					prev[2] += curr.miGp
-					return prev
-				},
-				[0, 0, 0]
-			)
-		}, [watchedOutline])
-
 	const preGenerateCodeWatch = useWatch({
 		control,
 		name: ['city', 'dm', 'startAt'],
@@ -286,28 +266,11 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		[isNew, router]
 	)
 
-	const handleClickOutlineAppend = useCallback(() => {
-		gameOutlineArray.append({
-			description: '',
-			mi: '',
-			miGp: 0,
-			xpEach: 0,
-			gpEach: 0,
-		})
-	}, [gameOutlineArray])
-
-	const handleClickOutlineRemove = useCallback(
-		(index: number) => () => {
-			gameOutlineArray.remove(index)
+	const handleChangeOutlineTable = useCallback(
+		(value) => {
+			setValue('outline', value)
 		},
-		[gameOutlineArray]
-	)
-
-	const handleClickOutlineMove = useCallback(
-		(index: number, direction: -1 | 1) => () => {
-			gameOutlineArray.move(index, index + direction)
-		},
-		[gameOutlineArray]
+		[setValue]
 	)
 
 	return (
@@ -612,119 +575,22 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							</Stepper> */}
 						</div>
 					</div>
-
-					<div>
-						<h4>劇本大綱</h4>
-
-						<p>
-							劇本大綱會作為派發獎勵的依據，在劇本結束後會向玩家方公開。
-							<br />
-							每個項目均可設定相應的獎勵(XP, GP, MI)，可作為獎勵派發的依據。
-						</p>
-
-						<table className='table-bordered'>
-							<thead>
-								<tr>
-									<th className='w-6'></th>
-									<th className='w-6'></th>
-									<th>劇本情節</th>
-									<th className='w-72'>MI/情報/其他</th>
-									<th className='w-32'>MI/情報/其他總值 (GP)</th>
-									<th className='w-32'>人均GP</th>
-									<th className='w-32'>人均XP</th>
-								</tr>
-							</thead>
-							<tbody>
-								{gameOutlineArray.fields.map((field, index) => (
-									<tr key={field.id}>
-										<td className='w-8'>
-											<div>
-												<button
-													type='button'
-													onClick={handleClickOutlineRemove(index)}
-												>
-													x
-												</button>
-											</div>
-										</td>
-										<td className='w-8'>
-											<div>
-												<button
-													type='button'
-													onClick={handleClickOutlineMove(index, -1)}
-													disabled={index === 0}
-												>
-													up
-												</button>
-											</div>
-											<div>
-												<button
-													type='button'
-													onClick={handleClickOutlineMove(index, 1)}
-													disabled={
-														index === gameOutlineArray.fields.length - 1
-													}
-												>
-													down
-												</button>
-											</div>
-										</td>
-										<td>
-											<Input
-												type='text'
-												{...register(`outline.${index}.description`, {
-													required: true,
-												})}
-												placeholder='例: 與委託人見面得到起始資金 / 困難戰鬥:獸人+戰狼 / 發現了寶庫 / 完成任務'
-											/>
-										</td>
-										<td>
-											<Input type='text' {...register(`outline.${index}.mi`)} />
-										</td>
-										<td>
-											<Input
-												type='number'
-												{...register(`outline.${index}.miGp`, {
-													valueAsNumber: true,
-												})}
-											/>
-										</td>
-										<td>
-											<Input
-												type='number'
-												{...register(`outline.${index}.gpEach`, {
-													valueAsNumber: true,
-												})}
-											/>
-										</td>
-										<td>
-											<Input
-												type='number'
-												{...register(`outline.${index}.xpEach`, {
-													valueAsNumber: true,
-												})}
-											/>
-										</td>
-									</tr>
-								))}
-							</tbody>
-							<tfoot>
-								<th colSpan={2}>
-									<button type='button' onClick={handleClickOutlineAppend}>
-										新增一行
-									</button>
-								</th>
-								<th colSpan={2}></th>
-								<th>MI總{outlineTotalMiGp}GP</th>
-								<th>人均{outlineTotalGpEach}GP</th>
-								<th>+人均{outlineTotalXpEach}XP</th>
-							</tfoot>
-						</table>
-
-						<div></div>
-					</div>
 				</div>
 			</form>
+
+			<div>
+				<h4>劇本大綱</h4>
+
+				<p>
+					劇本大綱會作為派發獎勵的依據，在劇本結束後會向玩家方公開。
+					<br />
+					每個項目均可設定相應的獎勵(XP, GP, MI)，可作為獎勵派發的依據。
+				</p>
+				<GameOutlineTable
+					value={game.outline || []}
+					onChange={handleChangeOutlineTable}
+				/>
+			</div>
 
 			<Modal open={showPublishModal}>
 				<div className='space-y-4'>

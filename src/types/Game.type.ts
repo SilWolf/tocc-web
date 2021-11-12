@@ -13,6 +13,19 @@ export enum GAME_STATUS {
 	CLOSED = 'closed',
 }
 
+export type GameOutlineItem = {
+	description: string
+	rewards: GameOutlineReward[]
+	remark: string
+}
+
+export type GameOutlineReward = {
+	type: 'gp' | 'xp' | 'others'
+	othersName: string
+	amount: number
+	isPerPlayer: boolean
+}
+
 export type Game = Entity & {
 	title: string
 	code: string
@@ -41,13 +54,7 @@ export type Game = Entity & {
 	journals?: string[]
 	city?: City
 
-	outline?: {
-		description: string
-		xpEach: number
-		gpEach: number
-		mi: string
-		miGp: number
-	}[]
+	outline?: GameOutlineItem[]
 
 	publishedAt?: string
 }
