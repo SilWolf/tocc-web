@@ -103,13 +103,24 @@ export const gameDefaultValue_Req: Game_Req = {
 	characters: [],
 }
 
+export enum GAME_SIGN_UP_STATUS {
+	ACCEPTED = 'accepted',
+	PENDING = 'pending',
+	REJECTED_FULL = 'rejected_full',
+	REJECTED_INVALID_LEVEL = 'rejected_invalidLevel',
+	REJECTED_INVALID_CITY = 'rejected_invalidCity',
+	REJECTED_NOT_PRIORITIZE = 'rejected_notPrioritize',
+}
+
 export type GameSignUp = Entity & {
 	game: Game
 	character: Character
 	player: User
-	status: 'pending' | 'accepted' | 'rejected'
+	status: GAME_SIGN_UP_STATUS
 	remarks: string
 }
+
+export type GameSignUpIdAndStatus = Pick<GameSignUp, 'id' | 'status'>
 
 export type GameSignUp_Req = {
 	character: string

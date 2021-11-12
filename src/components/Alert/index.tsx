@@ -6,7 +6,7 @@ import styles from './Alert.module.css'
 import classNames from 'classnames'
 
 type Props = HTMLAttributes<HTMLDivElement> & {
-	type?: 'default' | 'success' | 'danger'
+	type?: 'default' | 'success' | 'danger' | 'warning'
 }
 
 const Alert = ({ type = 'default', className, children, ...others }: Props) => {

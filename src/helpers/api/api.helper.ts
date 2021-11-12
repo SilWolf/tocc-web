@@ -5,6 +5,7 @@ import {
 	GameCheckItem,
 	GameSignUp,
 	GameSignUp_Req,
+	GameSignUpIdAndStatus,
 } from 'types/Game.type'
 import { User } from 'types/User.type'
 
@@ -199,6 +200,14 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		patchGameToPublishById: async (id: string) =>
 			api.patch(`/games/${id}/publish`, {}),
+
+		patchGameToConfirmedById: async (
+			id: string,
+			gameSignUps: GameSignUpIdAndStatus[]
+		) =>
+			api.patch(`/games/${id}/confirm`, {
+				gameSignUps,
+			}),
 	}
 }
 
