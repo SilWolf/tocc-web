@@ -6,28 +6,30 @@ import { GameOutlineItem, GameOutlineReward } from 'src/types/Game.type'
 import styles from './GameOutlineTable.module.css'
 
 import classNames from 'classnames'
+import { nanoid } from 'nanoid'
 
 const GameOutlineRewardSpan = React.memo(
 	({ reward }: { reward: GameOutlineReward }) => {
 		return (
-			<p>
+			<span>
 				{[
 					reward.isPerPlayer ? '每人' : '平分',
 					reward.amount,
 					reward.type === 'others' ? reward.othersName : reward.type,
 				].join(' ')}
-			</p>
+			</span>
 		)
 	}
 )
 
 type GameOutlineItemModalProps = Omit<ModalProps, 'onChange'> & {
-	value: GameOutlineItem
+	outlineItem: GameOutlineItem
 	onChange: (value: GameOutlineItem) => void
 	onCancel: () => void
 }
+
 const GameOutlineItemModal = ({
-	value,
+	outlineItem,
 	onChange,
 	onCancel,
 	...others
@@ -36,7 +38,7 @@ const GameOutlineItemModal = ({
 		handleSubmit: rhfHandleSubmit,
 		control: rhfControl,
 		register,
-	} = useForm<GameOutlineItem>({ defaultValues: value })
+	} = useForm<GameOutlineItem>({ defaultValues: outlineItem })
 
 	const rewardFA = useFieldArray({
 		control: rhfControl,
@@ -52,6 +54,7 @@ const GameOutlineItemModal = ({
 
 	const handleClickAppendRewardItem = useCallback(() => {
 		rewardFA.append({
+			id: nanoid(12),
 			type: 'gp',
 			othersName: '',
 			amount: 0,
@@ -76,6 +79,7 @@ const GameOutlineItemModal = ({
 			className={classNames(others.className, styles.gameOutlineModal)}
 		>
 			<form onSubmit={rhfHandleSubmit(handleSubmit)}>
+				<input type='hidden' {...register('id')} />
 				<table className='outline-rewards-table'>
 					<tr>
 						<th>情節</th>
@@ -100,6 +104,10 @@ const GameOutlineItemModal = ({
 									{rewardFA.fields.map((field, fieldI) => (
 										<tr key={fieldI}>
 											<td>
+												<input
+													type='hidden'
+													{...register(`rewards.${fieldI}.id`)}
+												/>
 												<select
 													{...register(`rewards.${fieldI}.isPerPlayer`, {
 														setValueAs: (value) => value === 'true',
@@ -186,19 +194,20 @@ const GameOutlineItemModal = ({
 }
 
 type Props = {
-	value: GameOutlineItem[]
-	onChange: (value: GameOutlineItem[]) => void
+	outline: GameOutlineItem[]
+	onChange: (outline: GameOutlineItem[]) => void
 }
 
-const GameOutlineTable = ({ value, onChange }: Props) => {
-	const [outline, setOutline] = useState<GameOutlineItem[]>(value || [])
+const GameOutlineTable = ({ outline: _outline, onChange }: Props) => {
+	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
+
 	const [activeOutlineItem, setActiveOutlineItem] = useState<
-		[GameOutlineItem, number] | undefined
+		{ current: GameOutlineItem; index: number } | undefined
 	>(undefined)
 
 	const handleClickEditOutlineItem = useCallback(
 		(outlineItem: GameOutlineItem, index: number) => () => {
-			setActiveOutlineItem([outlineItem, index])
+			setActiveOutlineItem({ current: outlineItem, index })
 		},
 		[]
 	)
@@ -207,7 +216,7 @@ const GameOutlineTable = ({ value, onChange }: Props) => {
 		(value: GameOutlineItem) => {
 			if (activeOutlineItem) {
 				const newPrev = [...outline]
-				newPrev[activeOutlineItem[1]] = value
+				newPrev[activeOutlineItem.index] = value
 
 				setOutline(newPrev)
 				onChange(newPrev)
@@ -252,14 +261,15 @@ const GameOutlineTable = ({ value, onChange }: Props) => {
 	)
 
 	const handleClickAppendOutlineItem = useCallback(() => {
-		setActiveOutlineItem([
-			{
+		setActiveOutlineItem({
+			current: {
+				id: nanoid(16),
 				description: '',
 				rewards: [],
 				remark: '',
 			},
-			outline.length,
-		])
+			index: outline.length,
+		})
 	}, [outline])
 
 	return (
@@ -274,60 +284,72 @@ const GameOutlineTable = ({ value, onChange }: Props) => {
 					</tr>
 				</thead>
 				<tbody>
-					{outline.map((outlineItem, outlineItemI) => (
-						<tr key={outlineItemI}>
-							<td>{outlineItem.description}</td>
-							<td>
-								{outlineItem.rewards.map((reward, rewardI) => (
-									<GameOutlineRewardSpan key={rewardI} reward={reward} />
-								))}
-							</td>
-							<td>{outlineItem.remark}</td>
-							<td className='text-center'>
-								<div className='space-x-3'>
-									<button
-										type='button'
-										onClick={handleClickEditOutlineItem(
-											outlineItem,
-											outlineItemI
-										)}
-									>
-										修改
-									</button>
-									<button
-										type='button'
-										onClick={handleClickMoveUpOutlineItem(
-											outlineItem,
-											outlineItemI
-										)}
-										disabled={outlineItemI <= 0}
-									>
-										移上
-									</button>
-									<button
-										type='button'
-										onClick={handleClickMoveDownOutlineItem(
-											outlineItem,
-											outlineItemI
-										)}
-										disabled={outlineItemI >= outline.length - 1}
-									>
-										移下
-									</button>
-									<button
-										type='button'
-										className='text-red-500'
-										onClick={handleClickRemoveOutlineItem(
-											outlineItem,
-											outlineItemI
-										)}
-									>
-										刪除
-									</button>
-								</div>
-							</td>
-						</tr>
-					))}
+					{outline.map((outlineItem, outlineItemI) =>
+						outlineItem.rewards.map(
+							(outlineItemReward, outlineItemRewardIndex) => (
+								<tr key={outlineItemReward.id}>
+									{outlineItemRewardIndex === 0 && (
+										<td rowSpan={outlineItem.rewards.length}>
+											{outlineItem.description}
+										</td>
+									)}
+									<td>
+										<GameOutlineRewardSpan reward={outlineItemReward} />
+									</td>
+									<td>{outlineItem.remark}</td>
+
+									{outlineItemRewardIndex === 0 && (
+										<td
+											rowSpan={outlineItem.rewards.length}
+											className='text-center'
+										>
+											<div className='space-x-3'>
+												<button
+													type='button'
+													onClick={handleClickEditOutlineItem(
+														outlineItem,
+														outlineItemI
+													)}
+												>
+													修改
+												</button>
+												<button
+													type='button'
+													onClick={handleClickMoveUpOutlineItem(
+														outlineItem,
+														outlineItemI
+													)}
+													disabled={outlineItemI <= 0}
+												>
+													移上
+												</button>
+												<button
+													type='button'
+													onClick={handleClickMoveDownOutlineItem(
+														outlineItem,
+														outlineItemI
+													)}
+													disabled={outlineItemI >= outline.length - 1}
+												>
+													移下
+												</button>
+												<button
+													type='button'
+													className='text-red-500'
+													onClick={handleClickRemoveOutlineItem(
+														outlineItem,
+														outlineItemI
+													)}
+												>
+													刪除
+												</button>
+											</div>
+										</td>
+									)}
+								</tr>
+							)
+						)
+					)}
 				</tbody>
 				<tfoot>
 					<tr>
@@ -340,10 +362,10 @@ const GameOutlineTable = ({ value, onChange }: Props) => {
 				</tfoot>
 			</table>
 
-			{activeOutlineItem?.[0] && (
+			{activeOutlineItem?.current && (
 				<GameOutlineItemModal
 					open={true}
-					value={activeOutlineItem[0]}
+					outlineItem={activeOutlineItem.current}
 					onChange={handleChangeOutlineItem}
 					onCancel={handleCancelOutlineItem}
 				/>

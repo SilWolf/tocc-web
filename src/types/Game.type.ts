@@ -14,12 +14,14 @@ export enum GAME_STATUS {
 }
 
 export type GameOutlineItem = {
+	id: string
 	description: string
 	rewards: GameOutlineReward[]
 	remark: string
 }
 
 export type GameOutlineReward = {
+	id: string
 	type: 'gp' | 'xp' | 'others'
 	othersName: string
 	amount: number
