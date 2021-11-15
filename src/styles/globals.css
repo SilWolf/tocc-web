@@ -154,10 +154,6 @@
 	}
 
 	a.button {
-		@apply block text-center;
-	}
-
-	a.button {
 		@apply no-underline;
 	}
 
@@ -332,4 +328,17 @@ ul li {
 
 .react-datepicker-popper.react-datepicker-popper {
 	z-index: 30;
+}
+
+.general-table th,
+.general-table td {
+	border-collapse: collapse;
+	border: 1px solid #000;
+	padding: 2px 4px;
+}
+
+.general-table tr.general-table-tr-empty th,
+.general-table tr.general-table-tr-empty td {
+	border-left-color: transparent;
+	border-right-color: transparent;
 }

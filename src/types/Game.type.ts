@@ -1,4 +1,4 @@
-import { Character } from './Character.type'
+import { Character, Character_Simple } from './Character.type'
 import { City } from './City.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
@@ -76,6 +76,18 @@ export type GameReward = Entity & {
 	character: Character
 }
 
+export type GameRecord = Entity & {
+	game: Game
+	player: User
+	character: Character
+	xp: number
+	gp: number
+	status: 'pending' | 'done'
+	description: string
+	remark: string
+	gameSignUp: GameSignUp
+}
+
 export type GameReward_Req = Omit<GameReward, 'character'> & {
 	character: string
 }
@@ -121,7 +133,7 @@ export enum GAME_SIGN_UP_STATUS {
 
 export type GameSignUp = Entity & {
 	game: Game
-	character: Character
+	character: Character_Simple
 	player: User
 	status: GAME_SIGN_UP_STATUS
 	remarks: string

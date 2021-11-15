@@ -89,7 +89,7 @@ const AdminGameSignUpModal = ({
 				}
 			}
 
-			if (character.city?.id !== game.city?.id) {
+			if (character.city !== game.city?.id) {
 				warnings.push(WARNING_KEY.CITY_NOT_MATCH)
 			}
 

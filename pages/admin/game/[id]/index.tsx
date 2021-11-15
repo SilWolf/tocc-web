@@ -245,9 +245,13 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		(gameSignUps: GameSignUpIdAndStatus[]) => {
 			apis.patchGameToConfirmedById(game.id, gameSignUps).then(() => {
 				setShowSignUpModal(false)
+				toast.success('已確認玩家名單，報名截止。')
+				router.replace(`/admin/game/${game.id}`, undefined, {
+					shallow: false,
+				})
 			})
 		},
-		[game.id]
+		[game.id, router]
 	)
 
 	const handleSubmit = useCallback(
@@ -357,6 +361,17 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							>
 								確認報名及截止
 							</button>
+						)}
+						{game.status === GAME_STATUS.CONFIRMED && (
+							<NextLink href={`/admin/game/${game.id}/applyRewards`} passHref>
+								<a
+									className={classNames(
+										'inline-block button button-primary button-outline'
+									)}
+								>
+									完成劇本及派發獎勵
+								</a>
+							</NextLink>
 						)}
 						<button type='submit' className='button button-primary'>
 							儲存

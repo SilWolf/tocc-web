@@ -208,6 +208,9 @@ export const getApis = (config?: { jwt?: string }) => {
 			api.patch(`/games/${id}/confirm`, {
 				gameSignUps,
 			}),
+
+		getGameRecordsByGameId: async (gameId: string) =>
+			api.get(`/games/${gameId}/records`),
 	}
 }
 

@@ -53,6 +53,18 @@ export type Character = Entity & {
 	deity?: Deity
 }
 
+export type Character_Simple = Omit<
+	Character,
+	'player' | 'race' | 'clses' | 'city' | 'background' | 'deity'
+> & {
+	player: string
+	race: string
+	clses: string[]
+	city: string
+	background: string
+	deity: string
+}
+
 export const DEFAULT_CHARACTER: Character = {
 	id: '',
 	_id: '',
