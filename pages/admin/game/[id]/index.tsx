@@ -594,12 +594,10 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			</form>
 
 			<div>
-				<h4>劇本大綱</h4>
+				<h4>劇本大綱及獎勵</h4>
 
 				<p>
-					劇本大綱會作為派發獎勵的依據，在劇本結束後會向玩家方公開。
-					<br />
-					每個項目均可設定相應的獎勵(XP, GP, MI)，可作為獎勵派發的依據。
+					劇本大綱會在劇本結束後向玩家方公開，請填寫每個劇本環節所給予的獎勵，以及勾選各玩家可得到的獎勵。
 				</p>
 				<GameOutlineTable
 					value={game.outline || []}

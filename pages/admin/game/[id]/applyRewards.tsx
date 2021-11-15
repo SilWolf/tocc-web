@@ -62,10 +62,13 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 	const rewardDistributionDisplay = useMemo(() => {
 		const result: Record<
 			string,
-			Record<
-				string,
-				{ amount: number; displayAmount: string; unit: string } | undefined
-			>
+			{
+				unit: string
+				characterMap: Record<
+					string,
+					{ amount: number; displayAmount: string } | undefined
+				>
+			}
 		> = {}
 
 		for (const itemId in rewardDistributeMap) {
@@ -88,29 +91,68 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 				continue
 			}
 
-			result[itemId] = Object.keys(rewardDistributeMap[itemId]).reduce<
-				Record<
-					string,
-					{ amount: number; displayAmount: string; unit: string } | undefined
-				>
-			>((prev, characterId) => {
-				const innerValue = rewardDistributeMap[itemId][characterId]
+			result[itemId] = {
+				unit: item.reward.typeDisplay,
+				characterMap: Object.keys(rewardDistributeMap[itemId]).reduce<
+					Record<string, { amount: number; displayAmount: string } | undefined>
+				>((prev, characterId) => {
+					const innerValue = rewardDistributeMap[itemId][characterId]
 
-				if (innerValue !== undefined) {
-					const _amount = (item.reward.amount * innerValue) / sum
-					prev[characterId] = {
-						amount: _amount,
-						displayAmount: _amount.toFixed(0),
-						unit: item.reward.typeDisplay,
+					if (innerValue !== undefined) {
+						const _amount = (item.reward.amount * innerValue) / sum
+						prev[characterId] = {
+							amount: _amount,
+							displayAmount: _amount.toFixed(0),
+						}
 					}
-				}
 
-				return prev
-			}, {})
+					return prev
+				}, {}),
+			}
 		}
 
 		return result
 	}, [items, rewardDistributeMap])
+
+	const [rewardSummaryUnits, reawrdSummaryCharacterMap] = useMemo(() => {
+		const summaryUnits: string[] = ['gp', 'xp']
+		const summaryCharacterMap: Record<
+			string,
+			Record<string, { amount: number; amountDisplay: string }>
+		> = {}
+
+		for (const distribution of Object.values(rewardDistributionDisplay)) {
+			if (!distribution) {
+				continue
+			}
+			const { characterMap, unit } = distribution
+			if (summaryUnits.indexOf(unit) === -1) {
+				summaryUnits.push(unit)
+			}
+
+			if (characterMap) {
+				for (const characterId in characterMap) {
+					if (!summaryCharacterMap[characterId]) {
+						summaryCharacterMap[characterId] = {}
+					}
+
+					if (!summaryCharacterMap[characterId][unit]) {
+						summaryCharacterMap[characterId][unit] = {
+							amount: 0,
+							amountDisplay: '0',
+						}
+					}
+
+					summaryCharacterMap[characterId][unit].amount +=
+						characterMap[characterId]?.amount || 0
+					summaryCharacterMap[characterId][unit].amountDisplay =
+						summaryCharacterMap[characterId][unit].amount.toFixed(0)
+				}
+			}
+		}
+
+		return [summaryUnits, summaryCharacterMap]
+	}, [rewardDistributionDisplay])
 
 	const handleClickDistributeItem = useCallback(
 		(itemId: string, characterId: string) => () => {
@@ -141,8 +183,13 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 						[{game.code}] {game.title}
 					</a>
 				</NextLink>
-				<span>派發獎勵</span>
+				<span>完成劇本</span>
 			</Breadcrumb>
+
+			<h3>派發獎勵</h3>
+			<p>
+				請勾選各玩家角色可以得到的獎勵，並確認內容正確。如果項目不齊全，請先返回上一頁，將劇本大綱填好。
+			</p>
 
 			<table className='w-full general-table'>
 				<thead>
@@ -181,7 +228,9 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 							<td>{item.reward.display}</td>
 							{gameRecords.map((record) => {
 								const distributionItem =
-									rewardDistributionDisplay[item.id]?.[record.character.id]
+									rewardDistributionDisplay[item.id]?.characterMap[
+										record.character.id
+									]
 
 								return (
 									<td
@@ -193,7 +242,9 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 										)}
 									>
 										{distributionItem
-											? `${distributionItem.displayAmount} ${distributionItem.unit}`
+											? `${distributionItem.displayAmount} ${
+													rewardDistributionDisplay[item.id].unit
+											  }`
 											: '-'}
 									</td>
 								)
@@ -201,7 +252,9 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 							<td className='text-xs text-center'>全選</td>
 						</tr>
 					))}
-					<tr className='general-table-tr-empty'>
+				</tbody>
+				<tfoot>
+					<tr className='general-table-tr-empty h-4'>
 						<td></td>
 						<td></td>
 						{gameRecords.map((record) => (
@@ -210,14 +263,41 @@ const AdminGameDetailApplyRewardsPage: NextPage<PageProps> = ({
 						<td></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
+						<th></th>
+						<th></th>
 						{gameRecords.map((record) => (
-							<td className='' key={record.id}></td>
+							<th key={record.id} className='text-center'>
+								<div>
+									<StrapiImg
+										className='w-8 h-8 mx-auto'
+										size='thumbnail'
+										image={record.character.portraitImage}
+									/>
+								</div>
+								<span>{record.character.name[0]}</span>
+							</th>
 						))}
-						<td></td>
+						<th></th>
 					</tr>
-				</tbody>
+					{rewardSummaryUnits.map((summaryUnit) => (
+						<tr key={summaryUnit}>
+							<td></td>
+							<td className='text-right'>{summaryUnit}</td>
+							{gameRecords.map((record) => (
+								<td className='text-center font-bold' key={record.id}>
+									{reawrdSummaryCharacterMap[record.character.id]?.[summaryUnit]
+										? `${
+												reawrdSummaryCharacterMap[record.character.id][
+													summaryUnit
+												].amountDisplay
+										  } ${summaryUnit}`
+										: ''}
+								</td>
+							))}
+							<td></td>
+						</tr>
+					))}
+				</tfoot>
 			</table>
 		</>
 	)
