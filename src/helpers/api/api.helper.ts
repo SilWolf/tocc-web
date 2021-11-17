@@ -3,6 +3,7 @@ import {
 	Game,
 	Game_Req,
 	GameCheckItem,
+	GameRecord,
 	GameSignUp,
 	GameSignUp_Req,
 	GameSignUpIdAndStatus,
@@ -209,7 +210,7 @@ export const getApis = (config?: { jwt?: string }) => {
 				gameSignUps,
 			}),
 
-		getGameRecordsByGameId: async (gameId: string) =>
+		getGameRecordsByGameId: async (gameId: string): Promise<GameRecord[]> =>
 			api.get(`/games/${gameId}/records`),
 	}
 }

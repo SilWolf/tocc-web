@@ -3,12 +3,35 @@
 }
 
 .gameOutlineTable :global(tr:nth-child(even)) {
-	background: #eee;
 }
 
+.gameOutlineTable :global(th),
 .gameOutlineTable :global(td) {
-	padding: 0.5rem;
-	border-bottom: 1px solid #bbb;
+	padding: 0.25rem 0.5rem;
+}
+
+.gameOutlineTable :global(thead th),
+.gameOutlineTable :global(thead td),
+.gameOutlineTable :global(tbody th),
+.gameOutlineTable :global(tbody td) {
+	border: 1px solid #bbb;
+}
+
+.gameOutlineTable :global(.reward-td) {
+	text-align: right;
+}
+
+.gameOutlineTable :global(.character-reward-map-td) {
+	text-align: center;
+}
+
+.gameOutlineTable :global(.character-reward-summary-unit-td) {
+	text-align: right;
+}
+
+.gameOutlineTable :global(.character-reward-summary-td) {
+	text-align: center;
+	border: 1px solid #bbb;
 }
 
 .gameOutlineModal :global() {
@@ -20,7 +43,7 @@
 	width: 100%;
 }
 
-.gameOutlineModal :global(table.outline-rewards-table > tr > th) {
+.gameOutlineModal :global(table.outline-rewards-table > tbody > tr > th) {
 	vertical-align: top;
 	text-align: right;
 	padding-top: 1rem;
@@ -28,7 +51,7 @@
 	width: 4rem;
 }
 
-.gameOutlineModal :global(table.outline-rewards-table > tr > td) {
+.gameOutlineModal :global(table.outline-rewards-table > tbody > tr > td) {
 	vertical-align: top;
 	padding: 1rem 0;
 }

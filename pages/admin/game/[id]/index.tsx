@@ -13,7 +13,7 @@ import {
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 
-import { City, Game, User } from 'types'
+import { Character, City, Game, User } from 'types'
 import {
 	Game_Req,
 	GAME_STATUS,
@@ -36,7 +36,7 @@ import {
 } from 'src/hooks/withSession.hook'
 import { SessionUser } from 'src/types/User.type'
 import AdminGameSignUpModal from 'src/widgets/AdminGameSignUpModal'
-import GameOutlineTable from 'src/widgets/GameOutlineTable'
+import GameOutlineAndRewardTable from 'src/widgets/GameOutlineAndRewardTable'
 
 import classNames from 'classnames'
 
@@ -86,6 +86,7 @@ type PageProps = {
 	gameChecklists?: GameChecklist[]
 	cities: City[]
 	dms: User[]
+	characters: Character[]
 	isNew?: boolean
 }
 
@@ -158,6 +159,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	gameChecklists = [],
 	cities = [],
 	dms = [],
+	characters = [],
 }) => {
 	const router = useRouter()
 	const {
@@ -599,8 +601,9 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				<p>
 					劇本大綱會在劇本結束後向玩家方公開，請填寫每個劇本環節所給予的獎勵，以及勾選各玩家可得到的獎勵。
 				</p>
-				<GameOutlineTable
-					value={game.outline || []}
+				<GameOutlineAndRewardTable
+					outline={game.outline || []}
+					characters={characters}
 					onChange={handleChangeOutlineTable}
 				/>
 			</div>
@@ -708,16 +711,19 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 		}
 
 		const [game] = await Promise.all([apis.getGameById(params.id as string)])
-
 		if (!game) {
 			return {
 				notFound: true,
 			}
 		}
-		const [gameChecklists, cities, dms] = await Promise.all([
+
+		const [gameChecklists, cities, dms, characters] = await Promise.all([
 			apis.getGameChecklistsById(game.id),
 			apis.getCities(),
 			apis.getDMs(),
+			apis
+				.getGameRecordsByGameId(game.id)
+				.then((records) => records.map((record) => record.character)),
 		])
 
 		return {
@@ -726,6 +732,7 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				gameChecklists,
 				cities,
 				dms,
+				characters,
 			},
 		}
 	})
