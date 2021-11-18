@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 import Modal, { ModalProps } from 'src/components/Modal'
@@ -190,13 +190,15 @@ const GameOutlineItemModal = ({
 type Props = {
 	outline: GameOutlineItem[]
 	gameRecords: GameRecord[]
-	onChange: (outline: GameOutlineItem[]) => void
+	onChangeOutline: (outline: GameOutlineItem[]) => void
+	onChangeRecords: (records: GameRecord[]) => void
 }
 
 const GameOutlineTable = ({
 	outline: _outline,
 	gameRecords,
-	onChange,
+	onChangeOutline,
+	onChangeRecords,
 }: Props) => {
 	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
 	const rewardMap = useMemo(() => {
@@ -392,11 +394,11 @@ const GameOutlineTable = ({
 				newPrev[activeOutlineItem.index] = value
 
 				setOutline(newPrev)
-				onChange(newPrev)
+				onChangeOutline(newPrev)
 			}
 			setActiveOutlineItem(undefined)
 		},
-		[activeOutlineItem, onChange, outline]
+		[activeOutlineItem, onChangeOutline, outline]
 	)
 
 	const handleCancelOutlineItem = useCallback(() => {
@@ -444,6 +446,19 @@ const GameOutlineTable = ({
 			index: outline.length,
 		})
 	}, [outline])
+
+	useEffect(() => {
+		if (onChangeRecords) {
+			onChangeRecords(
+				gameRecords.map((gameRecord) => ({
+					...gameRecord,
+					rewardRatioMap: characterRewardRatioMap[
+						gameRecord.character.id
+					] as Record<string, number>,
+				}))
+			)
+		}
+	})
 
 	return (
 		<>

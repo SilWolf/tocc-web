@@ -3,13 +3,8 @@ import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useCallback, useMemo, useState } from 'react'
-import {
-	Controller as RHFController,
-	useFieldArray,
-	useForm,
-	useWatch,
-} from 'react-hook-form'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { Controller as RHFController, useForm, useWatch } from 'react-hook-form'
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 
@@ -90,69 +85,6 @@ type PageProps = {
 	isNew?: boolean
 }
 
-const AdminGameDetailCharacterBox = ({
-	title,
-	info,
-	playerName,
-	isSelected = false,
-	onClick,
-}: {
-	title: string
-	info: string
-	playerName: string
-	isSelected?: boolean
-	onClick?: (action: 'select' | 'unselect') => void
-}): JSX.Element => {
-	const handleClick = useCallback(
-		(
-				action: 'select' | 'unselect'
-			): React.MouseEventHandler<HTMLButtonElement> =>
-			(e) => {
-				e.preventDefault()
-				onClick?.(action)
-			},
-		[onClick]
-	)
-
-	return (
-		<div
-			className={classNames(
-				'px-2 py-1 flex gap-x-2 items-center',
-				isSelected ? 'bg-green-200' : ' bg-white'
-			)}
-		>
-			<p className='flex-1'>
-				<p className='flex-none'>{title}</p>
-				<p className='flex-1 text-xs leading-3 text-gray-400 space-x-1'>
-					<span>{info}</span>
-					<span>@{playerName}</span>
-				</p>
-			</p>
-			<div className='flex-none space-x-2'>
-				{isSelected ? (
-					<>
-						<button
-							className='button button-text px-1'
-							onClick={handleClick('unselect')}
-						>
-							<i className='bi bi-x-lg'></i>
-						</button>
-					</>
-				) : (
-					<>
-						<button
-							className='button button-text px-1'
-							onClick={handleClick('select')}
-						>
-							<i className='bi bi-check-lg'></i>
-						</button>
-					</>
-				)}
-			</div>
-		</div>
-	)
-}
-
 const AdminGameDetailPage: NextPage<PageProps> = ({
 	isNew,
 	game,
@@ -162,6 +94,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	gameRecords = [],
 }) => {
 	const router = useRouter()
+	const modifiedGameRecords = useRef<GameRecord[]>(gameRecords)
+
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
@@ -197,25 +131,25 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		}
 	}, [cities, dms, preGenerateCodeWatch, setValue])
 
-	const [, flowStepIndex] = useMemo<[string, number]>(() => {
-		switch (game.status) {
-			case GAME_STATUS.NEW:
-				return ['儲存', 0]
-			case GAME_STATUS.DRAFT:
-				return ['發佈劇本', 1]
-			case GAME_STATUS.PUBLISHED:
-				return ['確認玩家的報名', 2]
-			case GAME_STATUS.CONFIRMED:
-				return ['跑完團了！', 3]
-			case GAME_STATUS.COMPLETED:
-				return ['派發獎勵', 4]
-			case GAME_STATUS.DONE:
-			case GAME_STATUS.CLOSED:
-				return ['已鎖定', 5]
-		}
+	// const [, flowStepIndex] = useMemo<[string, number]>(() => {
+	// 	switch (game.status) {
+	// 		case GAME_STATUS.NEW:
+	// 			return ['儲存', 0]
+	// 		case GAME_STATUS.DRAFT:
+	// 			return ['發佈劇本', 1]
+	// 		case GAME_STATUS.PUBLISHED:
+	// 			return ['確認玩家的報名', 2]
+	// 		case GAME_STATUS.CONFIRMED:
+	// 			return ['跑完團了！', 3]
+	// 		case GAME_STATUS.COMPLETED:
+	// 			return ['派發獎勵', 4]
+	// 		case GAME_STATUS.DONE:
+	// 		case GAME_STATUS.CLOSED:
+	// 			return ['已鎖定', 5]
+	// 	}
 
-		return ['儲存', 0]
-	}, [game])
+	// 	return ['儲存', 0]
+	// }, [game])
 
 	const [showPublishModal, setShowPublishModal] = useState<boolean>(false)
 	const handleClickPublish = useCallback(() => {
@@ -272,11 +206,18 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		[isNew, router]
 	)
 
-	const handleChangeOutlineTable = useCallback(
+	const handleChangeOutlineTableOutline = useCallback(
 		(value) => {
 			setValue('outline', value)
 		},
 		[setValue]
+	)
+
+	const handleChangeOutlineTableRecords = useCallback(
+		(value) => {
+			modifiedGameRecords.current = value
+		},
+		[modifiedGameRecords]
 	)
 
 	return (
@@ -604,7 +545,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				<GameOutlineAndRewardTable
 					outline={game.outline || []}
 					gameRecords={gameRecords}
-					onChange={handleChangeOutlineTable}
+					onChangeOutline={handleChangeOutlineTableOutline}
+					onChangeRecords={handleChangeOutlineTableRecords}
 				/>
 			</div>
 

@@ -121,7 +121,6 @@ export const gameDefaultValue_Req: Game_Req = {
 	...gameDefaultValue,
 	city: '',
 	dm: '',
-	characters: [],
 }
 
 export enum GAME_SIGN_UP_STATUS {
