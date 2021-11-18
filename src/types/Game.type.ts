@@ -66,7 +66,6 @@ export type Game_Req = Omit<
 	'dm' | 'characters' | 'city' | 'gameSignUps'
 > & {
 	dm?: string
-	characters?: string[]
 	city?: string
 }
 
@@ -88,6 +87,7 @@ export type GameRecord = Entity & {
 	description: string
 	remark: string
 	gameSignUp: GameSignUp
+	rewardRatioMap: Record<string, number>
 }
 
 export type GameReward_Req = Omit<GameReward, 'character'> & {

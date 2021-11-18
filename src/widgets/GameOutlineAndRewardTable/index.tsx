@@ -2,8 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 import Modal, { ModalProps } from 'src/components/Modal'
-import { Character } from 'src/types'
-import { GameOutlineItem, GameOutlineReward } from 'src/types/Game.type'
+import {
+	GameOutlineItem,
+	GameOutlineReward,
+	GameRecord,
+} from 'src/types/Game.type'
 import styles from './GameOutlineAndRewardTable.module.css'
 
 import StrapiImg from '../StrapiImg'
@@ -186,13 +189,13 @@ const GameOutlineItemModal = ({
 
 type Props = {
 	outline: GameOutlineItem[]
-	characters: Character[]
+	gameRecords: GameRecord[]
 	onChange: (outline: GameOutlineItem[]) => void
 }
 
 const GameOutlineTable = ({
 	outline: _outline,
-	characters,
+	gameRecords,
 	onChange,
 }: Props) => {
 	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
@@ -218,30 +221,38 @@ const GameOutlineTable = ({
 		}, {})
 	}, [outline])
 
-	const [rewardCharacterRatioMap, setRewardCharacterRatioMap] = useState<
+	const [characterRewardRatioMap, setCharacterRewardRatioMap] = useState<
 		Record<string, Record<string, number | undefined>>
-	>({})
+	>(
+		gameRecords.reduce<Record<string, Record<string, number | undefined>>>(
+			(prev, { character, rewardRatioMap }) => {
+				prev[character.id] = rewardRatioMap || {}
+				return prev
+			},
+			{}
+		)
+	)
 
-	const handleClickRewardCharacterRatio = useCallback(
-		(rewardId, characterId) => () => {
-			setRewardCharacterRatioMap((prev) => {
-				if (!prev[rewardId]) {
-					prev[rewardId] = {}
+	const handleClickCharacterRewardRatio = useCallback(
+		(characterId, rewardId) => () => {
+			setCharacterRewardRatioMap((prev) => {
+				if (!prev[characterId]) {
+					prev[characterId] = {}
 				}
-				if (!prev[rewardId][characterId]) {
-					prev[rewardId][characterId] = 1
+				if (!prev[characterId][rewardId]) {
+					prev[characterId][rewardId] = 1
 				} else {
-					prev[rewardId][characterId] = undefined
+					prev[characterId][rewardId] = undefined
 				}
 
 				return { ...prev }
 			})
 		},
-		[setRewardCharacterRatioMap]
+		[]
 	)
 
-	const [detailMap, summaryMap] = useMemo(() => {
-		const detailMap: Record<
+	const [characterRewardDetailMap, unitSummaryDetailMap] = useMemo(() => {
+		const characterRewardDetailMap: Record<
 			string,
 			Record<
 				string,
@@ -252,7 +263,7 @@ const GameOutlineTable = ({
 				}
 			>
 		> = {}
-		const summaryMap: Record<
+		const unitSummaryDetailMap: Record<
 			string,
 			{
 				amount: number
@@ -282,87 +293,86 @@ const GameOutlineTable = ({
 			},
 		}
 
-		for (const rewardId in rewardCharacterRatioMap) {
+		for (const rewardId in rewardMap) {
 			const reward = rewardMap[rewardId].reward
-
-			if (
-				Object.values(rewardCharacterRatioMap[rewardId]).findIndex(
-					(item) => item !== undefined
-				) === -1
-			) {
-				continue
-			}
-
-			const denominator = reward.isPerPlayer
-				? 1
-				: Object.values(rewardCharacterRatioMap[rewardId]).reduce<number>(
-						(prev, curr) => {
-							prev += curr !== undefined && !isNaN(curr) ? Math.abs(curr) : 0
-							return prev
-						},
-						0
-				  )
-
-			if (denominator === 0) {
-				continue
-			}
-
-			if (!detailMap[rewardId]) {
-				detailMap[rewardId] = {}
-			}
-
 			const unit = reward.type === 'others' ? reward.othersName : reward.type
-			if (!summaryMap[unit]) {
-				summaryMap[unit] = {
-					amount: 0,
-					display: '',
-					unit: unit,
-					characterMap: {},
-				}
+
+			const characterHasThisRewardCount = Object.values(
+				characterRewardRatioMap
+			).reduce<number>((prev, curr) => {
+				prev +=
+					curr[rewardId] !== undefined && !isNaN(curr[rewardId] as number)
+						? Math.abs(curr[rewardId] as number)
+						: 0
+				return prev
+			}, 0)
+
+			if (characterHasThisRewardCount === 0) {
+				continue
 			}
 
-			const characterMap = rewardCharacterRatioMap[rewardId]
-			for (const characterId in characterMap) {
+			const denominator = rewardMap[rewardId].reward.isPerPlayer
+				? 1
+				: characterHasThisRewardCount
+
+			for (const characterId in characterRewardRatioMap) {
 				if (
-					characterMap[characterId] !== undefined &&
-					!isNaN(characterMap[characterId] as number)
+					isNaN(characterRewardRatioMap[characterId][rewardId] as number) ||
+					characterRewardRatioMap[characterId][rewardId] === 0
 				) {
-					const amount =
-						(reward.amount * (characterMap[characterId] as number)) /
-						denominator
-					detailMap[rewardId][characterId] = {
-						amount,
-						display: amount.toFixed(0),
+					continue
+				}
+
+				if (!characterRewardDetailMap[characterId]) {
+					characterRewardDetailMap[characterId] = {}
+				}
+				const amount =
+					(reward.amount *
+						(characterRewardRatioMap[characterId][rewardId] as number)) /
+					denominator
+
+				characterRewardDetailMap[characterId][rewardId] = {
+					amount,
+					display: amount.toFixed(0),
+					unit: unit,
+				}
+
+				if (!unitSummaryDetailMap[unit]) {
+					unitSummaryDetailMap[unit] = {
+						amount: 0,
+						display: '',
+						unit: unit,
+						characterMap: {},
+					}
+				}
+				unitSummaryDetailMap[unit].amount += amount
+
+				if (!unitSummaryDetailMap[unit].characterMap[characterId]) {
+					unitSummaryDetailMap[unit].characterMap[characterId] = {
+						amount: 0,
+						display: '',
 						unit: unit,
 					}
-
-					if (summaryMap[unit].characterMap[characterId] === undefined) {
-						summaryMap[unit].characterMap[characterId] = {
-							amount: 0,
-							display: '',
-							unit: unit,
-						}
-					}
-
-					summaryMap[unit].characterMap[characterId].amount += amount
-					summaryMap[unit].amount += amount
 				}
-			}
-
-			summaryMap[unit].display = summaryMap[unit].amount.toFixed(0)
-		}
-
-		for (const rewardId in summaryMap) {
-			for (const characterId in summaryMap[rewardId].characterMap) {
-				if (summaryMap[rewardId]?.characterMap[characterId]) {
-					summaryMap[rewardId].characterMap[characterId].display =
-						summaryMap[rewardId].characterMap[characterId].amount.toFixed()
-				}
+				unitSummaryDetailMap[unit].characterMap[characterId].amount += amount
 			}
 		}
 
-		return [detailMap, summaryMap]
-	}, [rewardCharacterRatioMap, rewardMap])
+		for (const unit in unitSummaryDetailMap) {
+			for (const characterId in unitSummaryDetailMap[unit].characterMap) {
+				if (unitSummaryDetailMap[unit]?.characterMap[characterId]) {
+					unitSummaryDetailMap[unit].characterMap[characterId].display =
+						unitSummaryDetailMap[unit].characterMap[characterId].amount.toFixed(
+							0
+						)
+				}
+			}
+			unitSummaryDetailMap[unit].display =
+				unitSummaryDetailMap[unit].amount.toFixed()
+		}
+
+		return [characterRewardDetailMap, unitSummaryDetailMap]
+	}, [characterRewardRatioMap, rewardMap])
 
 	const [activeOutlineItem, setActiveOutlineItem] = useState<
 		{ current: GameOutlineItem; index: number } | undefined
@@ -442,7 +452,7 @@ const GameOutlineTable = ({
 					<tr>
 						<th>情節</th>
 						<th className='reward-td'>獎勵</th>
-						{characters.map((character) => (
+						{gameRecords.map(({ character }) => (
 							<th key={character.id} className='w-32 text-center text-xs'>
 								<div>
 									<StrapiImg
@@ -472,16 +482,18 @@ const GameOutlineTable = ({
 											{rewardMap[outlineItemReward.id].display}
 										</td>
 
-										{characters.map((character) => {
+										{gameRecords.map(({ character }) => {
 											const { display, unit } =
-												detailMap[outlineItemReward.id]?.[character.id] || {}
+												characterRewardDetailMap[character.id]?.[
+													outlineItemReward.id
+												] || {}
 											return (
 												<td
 													className='character-reward-map-td'
 													key={character.id}
-													onClick={handleClickRewardCharacterRatio(
-														outlineItemReward.id,
-														character.id
+													onClick={handleClickCharacterRewardRatio(
+														character.id,
+														outlineItemReward.id
 													)}
 												>
 													{display} {unit}
@@ -555,11 +567,11 @@ const GameOutlineTable = ({
 							</button>
 						</td>
 					</tr>
-					{Object.entries(summaryMap).map(([unit, summary]) => (
+					{Object.entries(unitSummaryDetailMap).map(([unit, summary]) => (
 						<tr key={unit}>
 							<td></td>
 							<td className='character-reward-summary-unit-td'>{unit}</td>
-							{characters.map((character) => (
+							{gameRecords.map(({ character }) => (
 								<td key={character.id} className='character-reward-summary-td'>
 									{summary.characterMap[character.id]?.amount !== undefined
 										? `${summary.characterMap[character.id]?.display} ${unit}`

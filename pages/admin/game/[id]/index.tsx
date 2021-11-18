@@ -13,11 +13,12 @@ import {
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 
-import { Character, City, Game, User } from 'types'
+import { City, Game, User } from 'types'
 import {
 	Game_Req,
 	GAME_STATUS,
 	GameChecklist,
+	GameRecord,
 	GameSignUpIdAndStatus,
 } from 'types/Game.type'
 
@@ -58,7 +59,6 @@ const gameToFormProps = (game: Game): FormProps => {
 		city: game.city?.id,
 		dm: game.dm?.id,
 		worldDateRange: [game.worldStartAt || null, game.worldEndAt || null],
-		characters: [],
 		computedCode: '',
 	}
 }
@@ -86,7 +86,7 @@ type PageProps = {
 	gameChecklists?: GameChecklist[]
 	cities: City[]
 	dms: User[]
-	characters: Character[]
+	gameRecords: GameRecord[]
 	isNew?: boolean
 }
 
@@ -159,7 +159,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	gameChecklists = [],
 	cities = [],
 	dms = [],
-	characters = [],
+	gameRecords = [],
 }) => {
 	const router = useRouter()
 	const {
@@ -603,7 +603,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				</p>
 				<GameOutlineAndRewardTable
 					outline={game.outline || []}
-					characters={characters}
+					gameRecords={gameRecords}
 					onChange={handleChangeOutlineTable}
 				/>
 			</div>
@@ -717,13 +717,11 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 			}
 		}
 
-		const [gameChecklists, cities, dms, characters] = await Promise.all([
+		const [gameChecklists, cities, dms, gameRecords] = await Promise.all([
 			apis.getGameChecklistsById(game.id),
 			apis.getCities(),
 			apis.getDMs(),
-			apis
-				.getGameRecordsByGameId(game.id)
-				.then((records) => records.map((record) => record.character)),
+			apis.getGameRecordsByGameId(game.id),
 		])
 
 		return {
@@ -732,7 +730,7 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				gameChecklists,
 				cities,
 				dms,
-				characters,
+				gameRecords,
 			},
 		}
 	})
