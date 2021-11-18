@@ -10,20 +10,6 @@ import StrapiImg from '../StrapiImg'
 import classNames from 'classnames'
 import { nanoid } from 'nanoid'
 
-const GameOutlineRewardSpan = React.memo(
-	({ reward }: { reward: GameOutlineReward }) => {
-		return (
-			<span>
-				{[
-					reward.isPerPlayer ? '每人' : '平分',
-					reward.amount,
-					reward.type === 'others' ? reward.othersName : reward.type,
-				].join(' ')}
-			</span>
-		)
-	}
-)
-
 type GameOutlineItemModalProps = Omit<ModalProps, 'onChange'> & {
 	outlineItem: GameOutlineItem
 	onChange: (value: GameOutlineItem) => void
@@ -359,8 +345,11 @@ const GameOutlineTable = ({
 					}
 
 					summaryMap[unit].characterMap[characterId].amount += amount
+					summaryMap[unit].amount += amount
 				}
 			}
+
+			summaryMap[unit].display = summaryMap[unit].amount.toFixed(0)
 		}
 
 		for (const rewardId in summaryMap) {
@@ -577,7 +566,9 @@ const GameOutlineTable = ({
 										: ''}
 								</td>
 							))}
-							<td></td>
+							<td className='font-bold'>
+								= {summary.display} {summary.unit}
+							</td>
 						</tr>
 					))}
 				</tfoot>
