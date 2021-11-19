@@ -3,17 +3,16 @@ import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Controller as RHFController, useForm, useWatch } from 'react-hook-form'
 import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 
-import { City, Game, User } from 'types'
+import { Character, City, Game, User } from 'types'
 import {
 	Game_Req,
 	GAME_STATUS,
 	GameChecklist,
-	GameRecord,
 	GameSignUpIdAndStatus,
 } from 'types/Game.type'
 
@@ -31,6 +30,7 @@ import {
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { SessionUser } from 'src/types/User.type'
+import AdminGamePatchToCompletedModal from 'src/widgets/AdminGamePatchToCompletedModal'
 import AdminGameSignUpModal from 'src/widgets/AdminGameSignUpModal'
 import GameOutlineAndRewardTable from 'src/widgets/GameOutlineAndRewardTable'
 
@@ -81,7 +81,7 @@ type PageProps = {
 	gameChecklists?: GameChecklist[]
 	cities: City[]
 	dms: User[]
-	gameRecords: GameRecord[]
+	characters: Character[]
 	isNew?: boolean
 }
 
@@ -91,10 +91,9 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	gameChecklists = [],
 	cities = [],
 	dms = [],
-	gameRecords = [],
+	characters = [],
 }) => {
 	const router = useRouter()
-	const modifiedGameRecords = useRef<GameRecord[]>(gameRecords)
 
 	const {
 		register,
@@ -190,34 +189,37 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		[game.id, router]
 	)
 
+	const [showPatchToCompletedModal, setShowPatchToCompletedModal] =
+		useState<boolean>(false)
+	const handleClickPatchToCompleted = useCallback(() => {
+		setShowPatchToCompletedModal(true)
+	}, [])
+	const handleOkPatchToCompletedModal = useCallback(() => {
+		//
+		apis.patchGameToCompletedById(game.id)
+	}, [game])
+
 	const handleSubmit = useCallback(
-		(value) => {
-			apis.createOrUpdateGame(formPropsToGameReq(value)).then((_game) => {
-				router.replace(`/admin/game/${_game.id}`, undefined, {
-					shallow: false,
-				})
-				if (isNew) {
-					toast.success('成功新增劇本')
-				} else {
-					toast.success('成功更新劇本')
-				}
+		async (value) => {
+			const _game = await apis.createOrUpdateGame(formPropsToGameReq(value))
+
+			router.replace(`/admin/game/${_game.id}`, undefined, {
+				shallow: false,
 			})
+			if (isNew) {
+				toast.success('成功新增劇本')
+			} else {
+				toast.success('成功更新劇本')
+			}
 		},
 		[isNew, router]
 	)
 
-	const handleChangeOutlineTableOutline = useCallback(
+	const handleChangeOutlineAndRewardTable = useCallback(
 		(value) => {
 			setValue('outline', value)
 		},
 		[setValue]
-	)
-
-	const handleChangeOutlineTableRecords = useCallback(
-		(value) => {
-			modifiedGameRecords.current = value
-		},
-		[modifiedGameRecords]
 	)
 
 	return (
@@ -306,15 +308,13 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 							</button>
 						)}
 						{game.status === GAME_STATUS.CONFIRMED && (
-							<NextLink href={`/admin/game/${game.id}/applyRewards`} passHref>
-								<a
-									className={classNames(
-										'inline-block button button-primary button-outline'
-									)}
-								>
-									完成劇本及派發獎勵
-								</a>
-							</NextLink>
+							<button
+								type='button'
+								className={classNames('button button-primary button-outline')}
+								onClick={handleClickPatchToCompleted}
+							>
+								確認報名及截止
+							</button>
 						)}
 						<button type='submit' className='button button-primary'>
 							儲存
@@ -544,9 +544,9 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 				</p>
 				<GameOutlineAndRewardTable
 					outline={game.outline || []}
-					gameRecords={gameRecords}
-					onChangeOutline={handleChangeOutlineTableOutline}
-					onChangeRecords={handleChangeOutlineTableRecords}
+					characters={characters}
+					outlineRewardCharacterMap={game.outlineRewardCharacterMap || {}}
+					onChange={handleChangeOutlineAndRewardTable}
 				/>
 			</div>
 
@@ -637,6 +637,20 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					className='mx-auto max-w-screen-laptop w-full'
 				/>
 			)}
+
+			{game.status === GAME_STATUS.CONFIRMED && (
+				<AdminGamePatchToCompletedModal
+					open={showPatchToCompletedModal}
+					outline={game.outline || []}
+					outlineRewardCharacterMap={game.outlineRewardCharacterMap || {}}
+					characters={characters}
+					onOk={handleOkPatchToCompletedModal}
+					onCancel={() => {
+						setShowPatchToCompletedModal(false)
+					}}
+					className='mx-auto max-w-screen-laptop w-full'
+				/>
+			)}
 		</>
 	)
 }
@@ -659,11 +673,11 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 			}
 		}
 
-		const [gameChecklists, cities, dms, gameRecords] = await Promise.all([
+		const [gameChecklists, cities, dms, characters] = await Promise.all([
 			apis.getGameChecklistsById(game.id),
 			apis.getCities(),
 			apis.getDMs(),
-			apis.getGameRecordsByGameId(game.id),
+			apis.getGameCharactersById(game.id),
 		])
 
 		return {
@@ -672,7 +686,7 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 				gameChecklists,
 				cities,
 				dms,
-				gameRecords,
+				characters,
 			},
 		}
 	})

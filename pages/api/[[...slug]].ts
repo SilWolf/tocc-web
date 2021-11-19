@@ -34,7 +34,9 @@ export default withSession(
 				res.status(response.status).json(response.data)
 			})
 			.catch((error) => {
-				res.status(error.response.status).json(error.response.data)
+				res
+					.status(error.response?.status || 500)
+					.json(error.response?.data || {})
 			})
 	}
 )

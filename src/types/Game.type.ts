@@ -22,11 +22,25 @@ export type GameOutlineItem = {
 
 export type GameOutlineReward = {
 	id: string
-	type: 'gp' | 'xp' | 'others'
-	othersName: string
 	amount: number
+	unit: string
 	isPerPlayer: boolean
 }
+
+export type GameOutlineRewardCharacterMap = Record<
+	string,
+	{
+		rewardId: string
+		denominator: number
+		characterMap: Record<
+			string,
+			{
+				characterId: string
+				ratio: number
+			}
+		>
+	}
+>
 
 export type Game = Entity & {
 	title: string
@@ -57,6 +71,7 @@ export type Game = Entity & {
 	city?: City
 
 	outline?: GameOutlineItem[]
+	outlineRewardCharacterMap?: GameOutlineRewardCharacterMap
 
 	publishedAt?: string
 }
@@ -75,19 +90,6 @@ export type GameReward = Entity & {
 	remark: string
 	items: string[]
 	character: Character
-}
-
-export type GameRecord = Entity & {
-	game: Game
-	player: User
-	character: Character
-	xp: number
-	gp: number
-	status: 'pending' | 'done'
-	description: string
-	remark: string
-	gameSignUp: GameSignUp
-	rewardRatioMap: Record<string, number>
 }
 
 export type GameReward_Req = Omit<GameReward, 'character'> & {

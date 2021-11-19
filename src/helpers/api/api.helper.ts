@@ -3,7 +3,6 @@ import {
 	Game,
 	Game_Req,
 	GameCheckItem,
-	GameRecord,
 	GameSignUp,
 	GameSignUp_Req,
 	GameSignUpIdAndStatus,
@@ -199,6 +198,9 @@ export const getApis = (config?: { jwt?: string }) => {
 			}
 		},
 
+		getGameCharactersById: async (id: string) =>
+			api.get(`/games/${id}/characters`),
+
 		patchGameToPublishById: async (id: string) =>
 			api.patch(`/games/${id}/publish`, {}),
 
@@ -210,8 +212,8 @@ export const getApis = (config?: { jwt?: string }) => {
 				gameSignUps,
 			}),
 
-		getGameRecordsByGameId: async (gameId: string): Promise<GameRecord[]> =>
-			api.get(`/games/${gameId}/records`),
+		patchGameToCompletedById: async (id: string) =>
+			api.patch(`/games/${id}/completed`, {}),
 	}
 }
 

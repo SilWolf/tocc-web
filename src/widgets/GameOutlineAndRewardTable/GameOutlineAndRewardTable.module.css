@@ -1,35 +1,35 @@
-.gameOutlineTable :global() {
+.gameOutlineAndRewardTable :global() {
 	width: 100%;
 }
 
-.gameOutlineTable :global(tr:nth-child(even)) {
+.gameOutlineAndRewardTable :global(tr:nth-child(even)) {
 }
 
-.gameOutlineTable :global(th),
-.gameOutlineTable :global(td) {
+.gameOutlineAndRewardTable :global(th),
+.gameOutlineAndRewardTable :global(td) {
 	padding: 0.25rem 0.5rem;
 }
 
-.gameOutlineTable :global(thead th),
-.gameOutlineTable :global(thead td),
-.gameOutlineTable :global(tbody th),
-.gameOutlineTable :global(tbody td) {
+.gameOutlineAndRewardTable :global(thead th),
+.gameOutlineAndRewardTable :global(thead td),
+.gameOutlineAndRewardTable :global(tbody th),
+.gameOutlineAndRewardTable :global(tbody td) {
 	border: 1px solid #bbb;
 }
 
-.gameOutlineTable :global(.reward-td) {
+.gameOutlineAndRewardTable :global(.reward-td) {
 	text-align: right;
 }
 
-.gameOutlineTable :global(.character-reward-map-td) {
+.gameOutlineAndRewardTable :global(.character-reward-map-td) {
 	text-align: center;
 }
 
-.gameOutlineTable :global(.character-reward-summary-unit-td) {
+.gameOutlineAndRewardTable :global(.character-reward-summary-unit-td) {
 	text-align: right;
 }
 
-.gameOutlineTable :global(.character-reward-summary-td) {
+.gameOutlineAndRewardTable :global(.character-reward-summary-td) {
 	text-align: center;
 	border: 1px solid #bbb;
 }

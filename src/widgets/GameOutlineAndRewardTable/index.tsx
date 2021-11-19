@@ -1,17 +1,52 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import React, { useCallback, useMemo, useState } from 'react'
+import {
+	Controller as RHFController,
+	useFieldArray,
+	useForm,
+} from 'react-hook-form'
+import CreatableSelect from 'react-select/creatable'
 
 import Modal, { ModalProps } from 'src/components/Modal'
+import { Character } from 'src/types'
 import {
 	GameOutlineItem,
 	GameOutlineReward,
-	GameRecord,
+	GameOutlineRewardCharacterMap,
 } from 'src/types/Game.type'
 import styles from './GameOutlineAndRewardTable.module.css'
 
 import StrapiImg from '../StrapiImg'
 import classNames from 'classnames'
 import { nanoid } from 'nanoid'
+
+const REWARD_UNITS = ['gp', 'xp']
+
+const RewardAmountDisplay = React.memo(
+	(props: {
+		amount: number
+		unit: string
+		isPerPlayer?: boolean
+		showOnZero?: boolean
+	}) => {
+		if (
+			(props.amount === 0 && !props.showOnZero) ||
+			props.amount === undefined
+		) {
+			return <></>
+		}
+
+		return (
+			<span>
+				{props.isPerPlayer === undefined
+					? ''
+					: props.isPerPlayer === true
+					? '每人 '
+					: '平分 '}
+				{props.amount.toFixed(0)} {props.unit}
+			</span>
+		)
+	}
+)
 
 type GameOutlineItemModalProps = Omit<ModalProps, 'onChange'> & {
 	outlineItem: GameOutlineItem
@@ -47,9 +82,8 @@ const GameOutlineItemModal = ({
 	const handleClickAppendRewardItem = useCallback(() => {
 		rewardFA.append({
 			id: nanoid(12),
-			type: 'gp',
-			othersName: '',
 			amount: 0,
+			unit: 'gp',
 			isPerPlayer: false,
 		})
 	}, [rewardFA])
@@ -89,7 +123,6 @@ const GameOutlineItemModal = ({
 											<th className='w-24'>派發方式</th>
 											<th className='w-24'>數量</th>
 											<th className='w-24'>類型</th>
-											<th className='font-thin text-sm'>(其他請註明)</th>
 											<th className='w-8'></th>
 										</tr>
 									</thead>
@@ -119,16 +152,16 @@ const GameOutlineItemModal = ({
 													/>
 												</td>
 												<td>
-													<select {...register(`rewards.${fieldI}.type`)}>
-														<option value='gp'>GP</option>
-														<option value='xp'>XP</option>
-														<option value='others'>其他</option>
-													</select>
-												</td>
-												<td>
-													<input
-														type='text'
-														{...register(`rewards.${fieldI}.othersName`)}
+													<RHFController
+														name={`rewards.${fieldI}.unit`}
+														control={rhfControl}
+														render={({ field: { onChange, value } }) => (
+															<CreatableSelect
+																options={REWARD_UNITS}
+																onChange={onChange}
+																value={value}
+															/>
+														)}
 													/>
 												</td>
 												<td className='text-center'>
@@ -144,7 +177,7 @@ const GameOutlineItemModal = ({
 									</tbody>
 									<tfoot>
 										<tr>
-											<td colSpan={5} className='text-green-500 pl-4 pt-4'>
+											<td colSpan={4} className='text-green-500 pl-4 pt-4'>
 												<button
 													type='button'
 													onClick={handleClickAppendRewardItem}
@@ -189,192 +222,159 @@ const GameOutlineItemModal = ({
 
 type Props = {
 	outline: GameOutlineItem[]
-	gameRecords: GameRecord[]
-	onChangeOutline: (outline: GameOutlineItem[]) => void
-	onChangeRecords: (records: GameRecord[]) => void
+	outlineRewardCharacterMap: GameOutlineRewardCharacterMap
+	characters: Character[]
+	onChange?: (
+		outline: GameOutlineItem[],
+		outlineRewardCharacterMap: GameOutlineRewardCharacterMap
+	) => void
+	isChangeable?: boolean
 }
 
-const GameOutlineTable = ({
+const GameOutlineAndRewardTable = ({
 	outline: _outline,
-	gameRecords,
-	onChangeOutline,
-	onChangeRecords,
+	outlineRewardCharacterMap: _outlineRewardCharacterMap,
+	characters,
+	onChange,
+	isChangeable = true,
 }: Props) => {
 	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
 	const rewardMap = useMemo(() => {
 		return outline.reduce<
-			Record<
-				string,
-				{ reward: GameOutlineReward; display: string; unit: string }
-			>
+			Record<string, { reward: GameOutlineReward; unit: string }>
 		>((prev, outlineItem) => {
 			for (const reward of outlineItem.rewards) {
 				prev[reward.id] = {
 					reward: reward,
-					display: [
-						reward.isPerPlayer ? '每人' : '平分',
-						reward.amount,
-						reward.type === 'others' ? reward.othersName : reward.type,
-					].join(' '),
-					unit: reward.type === 'others' ? reward.othersName : reward.type,
+					unit: reward.unit,
 				}
 			}
 			return prev
 		}, {})
 	}, [outline])
 
-	const [characterRewardRatioMap, setCharacterRewardRatioMap] = useState<
-		Record<string, Record<string, number | undefined>>
-	>(
-		gameRecords.reduce<Record<string, Record<string, number | undefined>>>(
-			(prev, { character, rewardRatioMap }) => {
-				prev[character.id] = rewardRatioMap || {}
-				return prev
-			},
-			{}
-		)
-	)
+	const [outlineRewardCharacterMap, setOutlineRewardCharacterMap] =
+		useState<GameOutlineRewardCharacterMap>(_outlineRewardCharacterMap)
 
-	const handleClickCharacterRewardRatio = useCallback(
-		(characterId, rewardId) => () => {
-			setCharacterRewardRatioMap((prev) => {
-				if (!prev[characterId]) {
-					prev[characterId] = {}
+	const handleClickRewardCharacterRatio = useCallback(
+		(rewardId, characterId) => () => {
+			setOutlineRewardCharacterMap((prev) => {
+				const reward = rewardMap[rewardId]?.reward
+				if (!reward) {
+					return { ...prev }
 				}
-				if (!prev[characterId][rewardId]) {
-					prev[characterId][rewardId] = 1
+
+				if (!prev[rewardId]) {
+					prev[rewardId] = {
+						rewardId: rewardId,
+						denominator: 0,
+						characterMap: {},
+					}
+				}
+
+				if (!prev[rewardId].characterMap[characterId]) {
+					prev[rewardId].characterMap[characterId] = {
+						characterId: characterId,
+						ratio: 0,
+					}
+				}
+
+				if (prev[rewardId].characterMap[characterId].ratio === 0) {
+					prev[rewardId].characterMap[characterId].ratio = 1
 				} else {
-					prev[characterId][rewardId] = undefined
+					prev[rewardId].characterMap[characterId].ratio = 0
+				}
+
+				if (reward.isPerPlayer) {
+					prev[rewardId].denominator = 1
+				} else {
+					prev[rewardId].denominator = Object.values(
+						prev[rewardId].characterMap
+					).reduce<number>((prev, characterReward) => {
+						prev += characterReward && characterReward.ratio !== 0 ? 1 : 0
+						return prev
+					}, 0)
 				}
 
 				return { ...prev }
 			})
 		},
-		[]
+		[rewardMap]
 	)
 
-	const [characterRewardDetailMap, unitSummaryDetailMap] = useMemo(() => {
-		const characterRewardDetailMap: Record<
+	const [rewardCharacterAmountMap, unitSummaryDetailMap] = useMemo(() => {
+		const rewardCharacterAmountMap: Record<
 			string,
-			Record<
-				string,
-				{
-					amount: number
-					display: string
-					unit: string
-				}
-			>
+			Record<string, { amount: number }>
 		> = {}
 		const unitSummaryDetailMap: Record<
 			string,
 			{
 				amount: number
-				display: string
 				unit: string
 				characterMap: Record<
 					string,
 					{
 						amount: number
-						display: string
-						unit: string
 					}
 				>
 			}
 		> = {
 			xp: {
 				amount: 0,
-				display: '',
 				unit: 'xp',
 				characterMap: {},
 			},
 			gp: {
 				amount: 0,
-				display: '',
 				unit: 'gp',
 				characterMap: {},
 			},
 		}
 
-		for (const rewardId in rewardMap) {
-			const reward = rewardMap[rewardId].reward
-			const unit = reward.type === 'others' ? reward.othersName : reward.type
+		for (const rewardId in outlineRewardCharacterMap) {
+			rewardCharacterAmountMap[rewardId] = {}
+			const reward = rewardMap[rewardId]?.reward
 
-			const characterHasThisRewardCount = Object.values(
-				characterRewardRatioMap
-			).reduce<number>((prev, curr) => {
-				prev +=
-					curr[rewardId] !== undefined && !isNaN(curr[rewardId] as number)
-						? Math.abs(curr[rewardId] as number)
-						: 0
-				return prev
-			}, 0)
-
-			if (characterHasThisRewardCount === 0) {
+			if (!reward) {
 				continue
 			}
 
-			const denominator = rewardMap[rewardId].reward.isPerPlayer
-				? 1
-				: characterHasThisRewardCount
-
-			for (const characterId in characterRewardRatioMap) {
-				if (
-					isNaN(characterRewardRatioMap[characterId][rewardId] as number) ||
-					characterRewardRatioMap[characterId][rewardId] === 0
-				) {
-					continue
-				}
-
-				if (!characterRewardDetailMap[characterId]) {
-					characterRewardDetailMap[characterId] = {}
-				}
-				const amount =
-					(reward.amount *
-						(characterRewardRatioMap[characterId][rewardId] as number)) /
-					denominator
-
-				characterRewardDetailMap[characterId][rewardId] = {
-					amount,
-					display: amount.toFixed(0),
+			const unit = reward.unit
+			if (!unitSummaryDetailMap[unit]) {
+				unitSummaryDetailMap[unit] = {
+					amount: 0,
 					unit: unit,
+					characterMap: {},
+				}
+			}
+
+			for (const characterId in outlineRewardCharacterMap[rewardId]
+				.characterMap) {
+				const rewardRealtime = outlineRewardCharacterMap[rewardId]
+				const character = rewardRealtime.characterMap[characterId]
+
+				const amount =
+					rewardRealtime.denominator > 0
+						? (reward.amount / rewardRealtime.denominator) * character.ratio
+						: 0
+
+				rewardCharacterAmountMap[rewardId][characterId] = {
+					amount: amount,
 				}
 
-				if (!unitSummaryDetailMap[unit]) {
-					unitSummaryDetailMap[unit] = {
-						amount: 0,
-						display: '',
-						unit: unit,
-						characterMap: {},
-					}
-				}
 				unitSummaryDetailMap[unit].amount += amount
-
 				if (!unitSummaryDetailMap[unit].characterMap[characterId]) {
 					unitSummaryDetailMap[unit].characterMap[characterId] = {
 						amount: 0,
-						display: '',
-						unit: unit,
 					}
 				}
 				unitSummaryDetailMap[unit].characterMap[characterId].amount += amount
 			}
 		}
 
-		for (const unit in unitSummaryDetailMap) {
-			for (const characterId in unitSummaryDetailMap[unit].characterMap) {
-				if (unitSummaryDetailMap[unit]?.characterMap[characterId]) {
-					unitSummaryDetailMap[unit].characterMap[characterId].display =
-						unitSummaryDetailMap[unit].characterMap[characterId].amount.toFixed(
-							0
-						)
-				}
-			}
-			unitSummaryDetailMap[unit].display =
-				unitSummaryDetailMap[unit].amount.toFixed()
-		}
-
-		return [characterRewardDetailMap, unitSummaryDetailMap]
-	}, [characterRewardRatioMap, rewardMap])
+		return [rewardCharacterAmountMap, unitSummaryDetailMap]
+	}, [outlineRewardCharacterMap, rewardMap])
 
 	const [activeOutlineItem, setActiveOutlineItem] = useState<
 		{ current: GameOutlineItem; index: number } | undefined
@@ -394,11 +394,10 @@ const GameOutlineTable = ({
 				newPrev[activeOutlineItem.index] = value
 
 				setOutline(newPrev)
-				onChangeOutline(newPrev)
 			}
 			setActiveOutlineItem(undefined)
 		},
-		[activeOutlineItem, onChangeOutline, outline]
+		[activeOutlineItem, outline]
 	)
 
 	const handleCancelOutlineItem = useCallback(() => {
@@ -447,27 +446,14 @@ const GameOutlineTable = ({
 		})
 	}, [outline])
 
-	useEffect(() => {
-		if (onChangeRecords) {
-			onChangeRecords(
-				gameRecords.map((gameRecord) => ({
-					...gameRecord,
-					rewardRatioMap: characterRewardRatioMap[
-						gameRecord.character.id
-					] as Record<string, number>,
-				}))
-			)
-		}
-	})
-
 	return (
 		<>
-			<table className={styles.gameOutlineTable}>
+			<table className={styles.gameOutlineAndRewardTable}>
 				<thead>
 					<tr>
 						<th>情節</th>
 						<th className='reward-td'>獎勵</th>
-						{gameRecords.map(({ character }) => (
+						{characters.map((character) => (
 							<th key={character.id} className='w-32 text-center text-xs'>
 								<div>
 									<StrapiImg
@@ -479,7 +465,7 @@ const GameOutlineTable = ({
 								<span>{character.nickname}</span>
 							</th>
 						))}
-						<th className='w-56 text-center'>操作</th>
+						<th className='w-56 text-center'>{isChangeable && '操作'}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -494,24 +480,35 @@ const GameOutlineTable = ({
 											</td>
 										)}
 										<td className='reward-td'>
-											{rewardMap[outlineItemReward.id].display}
+											<RewardAmountDisplay
+												isPerPlayer={outlineItemReward.isPerPlayer}
+												amount={outlineItemReward.amount}
+												unit={outlineItemReward.unit}
+											/>
 										</td>
 
-										{gameRecords.map(({ character }) => {
-											const { display, unit } =
-												characterRewardDetailMap[character.id]?.[
-													outlineItemReward.id
-												] || {}
+										{characters.map((character) => {
 											return (
 												<td
 													className='character-reward-map-td'
 													key={character.id}
-													onClick={handleClickCharacterRewardRatio(
-														character.id,
-														outlineItemReward.id
-													)}
+													onClick={
+														isChangeable
+															? handleClickRewardCharacterRatio(
+																	outlineItemReward.id,
+																	character.id
+															  )
+															: undefined
+													}
 												>
-													{display} {unit}
+													<RewardAmountDisplay
+														amount={
+															rewardCharacterAmountMap[outlineItemReward.id]?.[
+																character.id
+															]?.amount
+														}
+														unit={outlineItemReward.unit}
+													/>
 												</td>
 											)
 										})}
@@ -521,47 +518,49 @@ const GameOutlineTable = ({
 												rowSpan={outlineItem.rewards.length}
 												className='text-center'
 											>
-												<div className='space-x-3'>
-													<button
-														type='button'
-														onClick={handleClickEditOutlineItem(
-															outlineItem,
-															outlineItemI
-														)}
-													>
-														修改
-													</button>
-													<button
-														type='button'
-														onClick={handleClickMoveUpOutlineItem(
-															outlineItem,
-															outlineItemI
-														)}
-														disabled={outlineItemI <= 0}
-													>
-														移上
-													</button>
-													<button
-														type='button'
-														onClick={handleClickMoveDownOutlineItem(
-															outlineItem,
-															outlineItemI
-														)}
-														disabled={outlineItemI >= outline.length - 1}
-													>
-														移下
-													</button>
-													<button
-														type='button'
-														className='text-red-500'
-														onClick={handleClickRemoveOutlineItem(
-															outlineItem,
-															outlineItemI
-														)}
-													>
-														刪除
-													</button>
-												</div>
+												{isChangeable && (
+													<div className='space-x-3'>
+														<button
+															type='button'
+															onClick={handleClickEditOutlineItem(
+																outlineItem,
+																outlineItemI
+															)}
+														>
+															修改
+														</button>
+														<button
+															type='button'
+															onClick={handleClickMoveUpOutlineItem(
+																outlineItem,
+																outlineItemI
+															)}
+															disabled={outlineItemI <= 0}
+														>
+															移上
+														</button>
+														<button
+															type='button'
+															onClick={handleClickMoveDownOutlineItem(
+																outlineItem,
+																outlineItemI
+															)}
+															disabled={outlineItemI >= outline.length - 1}
+														>
+															移下
+														</button>
+														<button
+															type='button'
+															className='text-red-500'
+															onClick={handleClickRemoveOutlineItem(
+																outlineItem,
+																outlineItemI
+															)}
+														>
+															刪除
+														</button>
+													</div>
+												)}
 											</td>
 										)}
 									</tr>
@@ -573,28 +572,36 @@ const GameOutlineTable = ({
 				<tfoot>
 					<tr>
 						<td>
-							<button
-								type='button'
-								className='p-2 text-green-500'
-								onClick={handleClickAppendOutlineItem}
-							>
-								<i className='bi bi-plus-circle-fill'></i> 新增情節
-							</button>
+							{isChangeable && (
+								<button
+									type='button'
+									className='p-2 text-green-500'
+									onClick={handleClickAppendOutlineItem}
+								>
+									<i className='bi bi-plus-circle-fill'></i> 新增情節
+								</button>
+							)}
 						</td>
 					</tr>
 					{Object.entries(unitSummaryDetailMap).map(([unit, summary]) => (
 						<tr key={unit}>
 							<td></td>
 							<td className='character-reward-summary-unit-td'>{unit}</td>
-							{gameRecords.map(({ character }) => (
+							{characters.map((character) => (
 								<td key={character.id} className='character-reward-summary-td'>
-									{summary.characterMap[character.id]?.amount !== undefined
-										? `${summary.characterMap[character.id]?.display} ${unit}`
-										: ''}
+									<RewardAmountDisplay
+										amount={summary.characterMap[character.id]?.amount}
+										unit={unit}
+									/>
 								</td>
 							))}
 							<td className='font-bold'>
-								= {summary.display} {summary.unit}
+								={' '}
+								<RewardAmountDisplay
+									amount={summary.amount}
+									unit={unit}
+									showOnZero={true}
+								/>
 							</td>
 						</tr>
 					))}
@@ -613,4 +620,4 @@ const GameOutlineTable = ({
 	)
 }
 
-export default GameOutlineTable
+export default GameOutlineAndRewardTable
