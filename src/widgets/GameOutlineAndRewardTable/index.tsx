@@ -4,9 +4,10 @@ import {
 	useFieldArray,
 	useForm,
 } from 'react-hook-form'
-import CreatableSelect from 'react-select/creatable'
 
+import { Input } from 'src/components/Form'
 import Modal, { ModalProps } from 'src/components/Modal'
+import RewardTypeSelector from 'src/components/RewardTypeSelector'
 import { Character } from 'src/types'
 import {
 	GameOutlineItem,
@@ -18,8 +19,6 @@ import styles from './GameOutlineAndRewardTable.module.css'
 import StrapiImg from '../StrapiImg'
 import classNames from 'classnames'
 import { nanoid } from 'nanoid'
-
-const REWARD_UNITS = ['gp', 'xp']
 
 const RewardAmountDisplay = React.memo(
 	(props: {
@@ -74,7 +73,9 @@ const GameOutlineItemModal = ({
 
 	const handleClickRemoveRewardItem = useCallback(
 		(index) => () => {
-			rewardFA.remove(index)
+			if (confirm('確認要刪除嗎？')) {
+				rewardFA.remove(index)
+			}
 		},
 		[rewardFA]
 	)
@@ -83,7 +84,7 @@ const GameOutlineItemModal = ({
 		rewardFA.append({
 			id: nanoid(12),
 			amount: 0,
-			unit: 'gp',
+			unit: 'xp',
 			isPerPlayer: false,
 		})
 	}, [rewardFA])
@@ -109,21 +110,33 @@ const GameOutlineItemModal = ({
 				<table className='outline-rewards-table'>
 					<tbody>
 						<tr>
-							<th>情節</th>
+							<th>
+								<p className='mt-2'>情節</p>
+							</th>
 							<td>
-								<textarea rows={2} {...register('description')}></textarea>
+								<Input
+									type='text'
+									{...register('description')}
+									helperText={
+										<p>
+											<p>例1. 打敗路上的劫匪，搜刮他們的隨身物品</p>
+											<p>例2. 發現了在死胡同裡的寶藏</p>
+										</p>
+									}
+								/>
 							</td>
 						</tr>
 						<tr>
-							<th>獎勵</th>
+							<th className='pt-2'>獎勵</th>
 							<td>
 								<table className='outline-reward-item-table'>
 									<thead>
 										<tr>
-											<th className='w-24'>派發方式</th>
-											<th className='w-24'>數量</th>
-											<th className='w-24'>類型</th>
-											<th className='w-8'></th>
+											<th>派發方式</th>
+											<th>數量</th>
+											<th>類型</th>
+											<th>備註</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -149,31 +162,51 @@ const GameOutlineItemModal = ({
 														{...register(`rewards.${fieldI}.amount`, {
 															valueAsNumber: true,
 														})}
+														className='w-24'
 													/>
 												</td>
 												<td>
 													<RHFController
-														name={`rewards.${fieldI}.unit`}
 														control={rhfControl}
+														name={`rewards.${fieldI}.unit`}
 														render={({ field: { onChange, value } }) => (
-															<CreatableSelect
-																options={REWARD_UNITS}
-																onChange={onChange}
+															<RewardTypeSelector
 																value={value}
+																onChange={onChange}
 															/>
 														)}
+													/>
+												</td>
+												<td className='pl-4'>
+													<input
+														type='text'
+														{...register(`rewards.${fieldI}.remark`)}
 													/>
 												</td>
 												<td className='text-center'>
 													<button
 														type='button'
 														onClick={handleClickRemoveRewardItem(fieldI)}
+														className='ml-2'
 													>
 														<i className='bi bi-dash-circle-fill text-red-500'></i>
 													</button>
 												</td>
 											</tr>
 										))}
+										<tr>
+											<td></td>
+											<td></td>
+											<td className='text-xs text-gray-500'>
+												<p>例. 英雄值、公會名望、某某好感度</p>
+												<p>知識度、特殊貨幣</p>
+											</td>
+											<td className='pl-4 text-xs text-gray-500'>
+												<p>例1. 要ｘ回合解決遭遇才有</p>
+												<p>例2. 寶藏位於某某處</p>
+											</td>
+											<td></td>
+										</tr>
 									</tbody>
 									<tfoot>
 										<tr>
@@ -191,9 +224,21 @@ const GameOutlineItemModal = ({
 							</td>
 						</tr>
 						<tr>
-							<th>備註</th>
+							<th>
+								<p className='mt-2'>備註</p>
+							</th>
 							<td>
-								<textarea rows={2} {...register('remark')}></textarea>
+								<Input
+									type='textarea'
+									rows={2}
+									{...register('remark')}
+									helperText={
+										<>
+											<p>例1. 這個情節要先與某人交談才能進行</p>
+											<p>例2. 如果在前面讓某人退場，就無法觸發此情節</p>
+										</>
+									}
+								/>
 							</td>
 						</tr>
 						<tr>
@@ -439,7 +484,15 @@ const GameOutlineAndRewardTable = ({
 			current: {
 				id: nanoid(16),
 				description: '',
-				rewards: [],
+				rewards: [
+					{
+						id: nanoid(16),
+						isPerPlayer: true,
+						amount: 0,
+						unit: 'xp',
+						remark: '',
+					},
+				],
 				remark: '',
 			},
 			index: outline.length,

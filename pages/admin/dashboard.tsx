@@ -10,6 +10,7 @@ import {
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { Game } from 'src/types'
+import { GAME_SIGN_UP_STATUS } from 'src/types/Game.type'
 import { SessionUser } from 'src/types/User.type'
 import StrapiImg from 'src/widgets/StrapiImg'
 
@@ -256,12 +257,12 @@ export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
 					}
 
 					for (const gameSignUp of game.gameSignUps) {
-						if (gameSignUp.status === 'accepted') {
+						if (gameSignUp.status === GAME_SIGN_UP_STATUS.ACCEPTED) {
 							counting.accepted++
-						} else if (gameSignUp.status === 'rejected') {
-							counting.rejected++
-						} else if (gameSignUp.status === 'pending') {
+						} else if (gameSignUp.status === GAME_SIGN_UP_STATUS.PENDING) {
 							counting.pending++
+						} else {
+							counting.rejected++
 						}
 					}
 

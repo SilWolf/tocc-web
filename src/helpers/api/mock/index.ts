@@ -1,5 +1,7 @@
 import { City, Game, User } from 'types'
 
+import { GAME_STATUS } from 'src/types/Game.type'
+
 import citiesJson from './data/cities.json'
 import dmsJson from './data/dms.json'
 import gameJson from './data/game.json'
@@ -13,11 +15,11 @@ export const mock = (instance: AxiosInstance): void => {
 		.onGet('/games')
 		.reply<Game[]>(200, [
 			gameJson as Game,
-			{ ...(gameJson as Game), status: 'draft' },
-			{ ...(gameJson as Game), status: 'confirmed' },
-			{ ...(gameJson as Game), status: 'completed' },
-			{ ...(gameJson as Game), status: 'closed' },
-			{ ...(gameJson as Game), status: 'done' },
+			{ ...(gameJson as Game), status: GAME_STATUS.DRAFT },
+			{ ...(gameJson as Game), status: GAME_STATUS.CONFIRMED },
+			{ ...(gameJson as Game), status: GAME_STATUS.COMPLETED },
+			{ ...(gameJson as Game), status: GAME_STATUS.CLOSED },
+			{ ...(gameJson as Game), status: GAME_STATUS.DONE },
 		])
 	mock.onGet('/games?_pending=true').reply<Game[]>(200, [gameJson as Game])
 

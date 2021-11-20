@@ -51,7 +51,7 @@ type Props = (InputHTMLAttributes<HTMLInputElement> &
 	label?: string | undefined
 	labelProps?: LabelProps
 	wrapperProps?: WrapperProps
-	helperText?: string | undefined
+	helperText?: React.ReactNode
 	helperTextProps?: HelperTextProps
 	error?: ErrorProps | undefined
 	errorTextProps?: ErrorTextProps

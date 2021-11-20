@@ -43,6 +43,10 @@
 	width: 100%;
 }
 
+.gameOutlineModal :global(table.outline-reward-item-table) {
+	width: auto;
+}
+
 .gameOutlineModal :global(table.outline-rewards-table > tbody > tr > th) {
 	vertical-align: top;
 	text-align: right;

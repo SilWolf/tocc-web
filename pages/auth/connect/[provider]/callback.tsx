@@ -20,10 +20,10 @@ const AuthConnectGoogleCallbackPage: NextPage<Props> = ({ user }: Props) => {
 	const router = useRouter()
 	const { setUser } = useUser()
 
-	setUser(user)
 	useEffect(() => {
+		setUser(user)
 		router.replace('/')
-	})
+	}, [router, setUser, user])
 
 	return (
 		<>

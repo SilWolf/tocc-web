@@ -22,9 +22,10 @@ export type GameOutlineItem = {
 
 export type GameOutlineReward = {
 	id: string
+	isPerPlayer: boolean
 	amount: number
 	unit: string
-	isPerPlayer: boolean
+	remark: string
 }
 
 export type GameOutlineRewardCharacterMap = Record<
