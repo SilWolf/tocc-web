@@ -101,6 +101,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 		control,
 		formState,
 		setValue,
+		getValues,
 	} = useForm<FormProps>({
 		defaultValues: gameToFormProps(game),
 	})
@@ -129,6 +130,22 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			return code
 		}
 	}, [cities, dms, preGenerateCodeWatch, setValue])
+
+	const handleSubmit = useCallback(
+		async (value) => {
+			const _game = await apis.createOrUpdateGame(formPropsToGameReq(value))
+
+			router.replace(`/admin/game/${_game.id}`, undefined, {
+				shallow: false,
+			})
+			if (isNew) {
+				toast.success('成功新增劇本')
+			} else {
+				toast.success('成功更新劇本')
+			}
+		},
+		[isNew, router]
+	)
 
 	// const [, flowStepIndex] = useMemo<[string, number]>(() => {
 	// 	switch (game.status) {
@@ -194,30 +211,21 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	const handleClickPatchToCompleted = useCallback(() => {
 		setShowPatchToCompletedModal(true)
 	}, [])
-	const handleOkPatchToCompletedModal = useCallback(() => {
-		//
-		apis.patchGameToCompletedById(game.id)
-	}, [game])
+	const handleOkPatchToCompletedModal = useCallback(async () => {
+		await apis.createOrUpdateGame(formPropsToGameReq(getValues()))
+		await apis.patchGameToCompletedById(game.id)
+	}, [game.id, getValues])
 
-	const handleSubmit = useCallback(
-		async (value) => {
-			const _game = await apis.createOrUpdateGame(formPropsToGameReq(value))
-
-			router.replace(`/admin/game/${_game.id}`, undefined, {
-				shallow: false,
-			})
-			if (isNew) {
-				toast.success('成功新增劇本')
-			} else {
-				toast.success('成功更新劇本')
-			}
-		},
-		[isNew, router]
-	)
-
-	const handleChangeOutlineAndRewardTable = useCallback(
+	const handleChangeOutline = useCallback(
 		(value) => {
 			setValue('outline', value)
+		},
+		[setValue]
+	)
+
+	const handleChangeOutlineRewardCharacterMap = useCallback(
+		(value) => {
+			setValue('outlineRewardCharacterMap', value)
 		},
 		[setValue]
 	)
@@ -313,7 +321,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 								className={classNames('button button-primary button-outline')}
 								onClick={handleClickPatchToCompleted}
 							>
-								確認報名及截止
+								完成劇本及派發獎勵
 							</button>
 						)}
 						<button type='submit' className='button button-primary'>
@@ -546,7 +554,10 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					outline={game.outline || []}
 					characters={characters}
 					outlineRewardCharacterMap={game.outlineRewardCharacterMap || {}}
-					onChange={handleChangeOutlineAndRewardTable}
+					onChangeOutline={handleChangeOutline}
+					onChangeOutlineRewardCharacterMap={
+						handleChangeOutlineRewardCharacterMap
+					}
 				/>
 			</div>
 
@@ -641,8 +652,10 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 			{game.status === GAME_STATUS.CONFIRMED && (
 				<AdminGamePatchToCompletedModal
 					open={showPatchToCompletedModal}
-					outline={game.outline || []}
-					outlineRewardCharacterMap={game.outlineRewardCharacterMap || {}}
+					outline={getValues('outline') || []}
+					outlineRewardCharacterMap={
+						getValues('outlineRewardCharacterMap') || {}
+					}
 					characters={characters}
 					onOk={handleOkPatchToCompletedModal}
 					onCancel={() => {

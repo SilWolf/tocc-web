@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	Controller as RHFController,
 	useFieldArray,
@@ -269,8 +269,8 @@ type Props = {
 	outline: GameOutlineItem[]
 	outlineRewardCharacterMap: GameOutlineRewardCharacterMap
 	characters: Character[]
-	onChange?: (
-		outline: GameOutlineItem[],
+	onChangeOutline?: (outline: GameOutlineItem[]) => void
+	onChangeOutlineRewardCharacterMap?: (
 		outlineRewardCharacterMap: GameOutlineRewardCharacterMap
 	) => void
 	isChangeable?: boolean
@@ -280,7 +280,8 @@ const GameOutlineAndRewardTable = ({
 	outline: _outline,
 	outlineRewardCharacterMap: _outlineRewardCharacterMap,
 	characters,
-	onChange,
+	onChangeOutline,
+	onChangeOutlineRewardCharacterMap,
 	isChangeable = true,
 }: Props) => {
 	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
@@ -363,17 +364,20 @@ const GameOutlineAndRewardTable = ({
 						amount: number
 					}
 				>
+				forceShow?: boolean
 			}
 		> = {
 			xp: {
 				amount: 0,
 				unit: 'xp',
 				characterMap: {},
+				forceShow: true,
 			},
 			gp: {
 				amount: 0,
 				unit: 'gp',
 				characterMap: {},
+				forceShow: true,
 			},
 		}
 
@@ -471,10 +475,12 @@ const GameOutlineAndRewardTable = ({
 
 	const handleClickRemoveOutlineItem = useCallback(
 		(outlineItem: GameOutlineItem, index: number) => () => {
-			setOutline((prev) => {
-				prev.splice(index, 1)
-				return [...prev]
-			})
+			if (confirm('確定要刪除嗎？')) {
+				setOutline((prev) => {
+					prev.splice(index, 1)
+					return [...prev]
+				})
+			}
 		},
 		[]
 	)
@@ -499,9 +505,29 @@ const GameOutlineAndRewardTable = ({
 		})
 	}, [outline])
 
+	useEffect(() => {
+		setOutline(_outline)
+	}, [_outline])
+
+	useEffect(() => {
+		setOutlineRewardCharacterMap(_outlineRewardCharacterMap)
+	}, [_outlineRewardCharacterMap])
+
+	useEffect(() => {
+		onChangeOutline?.(outline)
+	}, [onChangeOutline, outline])
+
+	useEffect(() => {
+		onChangeOutlineRewardCharacterMap?.(outlineRewardCharacterMap)
+	}, [onChangeOutlineRewardCharacterMap, outlineRewardCharacterMap])
+
 	return (
 		<>
-			<table className={styles.gameOutlineAndRewardTable}>
+			<table
+				className={classNames(styles.gameOutlineAndRewardTable, {
+					changeable: isChangeable,
+				})}
+			>
 				<thead>
 					<tr>
 						<th>情節</th>
@@ -636,28 +662,33 @@ const GameOutlineAndRewardTable = ({
 							)}
 						</td>
 					</tr>
-					{Object.entries(unitSummaryDetailMap).map(([unit, summary]) => (
-						<tr key={unit}>
-							<td></td>
-							<td className='character-reward-summary-unit-td'>{unit}</td>
-							{characters.map((character) => (
-								<td key={character.id} className='character-reward-summary-td'>
+					{Object.entries(unitSummaryDetailMap)
+						.filter(([, summary]) => summary.amount !== 0 || summary.forceShow)
+						.map(([unit, summary]) => (
+							<tr key={unit}>
+								<td></td>
+								<td className='character-reward-summary-unit-td'>{unit}</td>
+								{characters.map((character) => (
+									<td
+										key={character.id}
+										className='character-reward-summary-td'
+									>
+										<RewardAmountDisplay
+											amount={summary.characterMap[character.id]?.amount}
+											unit={unit}
+										/>
+									</td>
+								))}
+								<td className='font-bold'>
+									={' '}
 									<RewardAmountDisplay
-										amount={summary.characterMap[character.id]?.amount}
+										amount={summary.amount}
 										unit={unit}
+										showOnZero={true}
 									/>
 								</td>
-							))}
-							<td className='font-bold'>
-								={' '}
-								<RewardAmountDisplay
-									amount={summary.amount}
-									unit={unit}
-									showOnZero={true}
-								/>
-							</td>
-						</tr>
-					))}
+							</tr>
+						))}
 				</tfoot>
 			</table>
 

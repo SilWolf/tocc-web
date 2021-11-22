@@ -25,6 +25,16 @@
 	text-align: center;
 }
 
+.gameOutlineAndRewardTable:global(.changeable)
+	:global(.character-reward-map-td) {
+	cursor: pointer;
+}
+
+.gameOutlineAndRewardTable:global(.changeable)
+	:global(.character-reward-map-td:hover) {
+	background: rgba(0, 0, 0, 0.1);
+}
+
 .gameOutlineAndRewardTable :global(.character-reward-summary-unit-td) {
 	text-align: right;
 }
