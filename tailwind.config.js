@@ -3,6 +3,9 @@ module.exports = {
 	darkMode: 'class', // or 'media' or 'class'
 	theme: {
 		screens: {
+			mobile: '640px',
+			// => @media (min-width: 640px) { ... }
+
 			tablet: '980px',
 			// => @media (min-width: 980px) { ... }
 

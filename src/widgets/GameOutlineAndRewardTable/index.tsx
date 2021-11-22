@@ -7,6 +7,7 @@ import {
 
 import { Input } from 'src/components/Form'
 import Modal, { ModalProps } from 'src/components/Modal'
+import RewardAmountDisplay from 'src/components/RewardAmountDisplay'
 import RewardTypeSelector from 'src/components/RewardTypeSelector'
 import { Character } from 'src/types'
 import {
@@ -19,33 +20,6 @@ import styles from './GameOutlineAndRewardTable.module.css'
 import StrapiImg from '../StrapiImg'
 import classNames from 'classnames'
 import { nanoid } from 'nanoid'
-
-const RewardAmountDisplay = React.memo(
-	(props: {
-		amount: number
-		unit: string
-		isPerPlayer?: boolean
-		showOnZero?: boolean
-	}) => {
-		if (
-			(props.amount === 0 && !props.showOnZero) ||
-			props.amount === undefined
-		) {
-			return <></>
-		}
-
-		return (
-			<span>
-				{props.isPerPlayer === undefined
-					? ''
-					: props.isPerPlayer === true
-					? '每人 '
-					: '平分 '}
-				{props.amount.toFixed(0)} {props.unit}
-			</span>
-		)
-	}
-)
 
 type GameOutlineItemModalProps = Omit<ModalProps, 'onChange'> & {
 	outlineItem: GameOutlineItem

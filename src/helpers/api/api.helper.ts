@@ -214,6 +214,9 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		patchGameToCompletedById: async (id: string) =>
 			api.patch(`/games/${id}/completed`, {}),
+
+		getCharacterRecordById: async (id: string) =>
+			api.get(`/character-records/${id}`),
 	}
 }
 

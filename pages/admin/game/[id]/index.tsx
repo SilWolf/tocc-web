@@ -213,8 +213,14 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	}, [])
 	const handleOkPatchToCompletedModal = useCallback(async () => {
 		await apis.createOrUpdateGame(formPropsToGameReq(getValues()))
-		await apis.patchGameToCompletedById(game.id)
-	}, [game.id, getValues])
+		await apis.patchGameToCompletedById(game.id).then(() => {
+			setShowPatchToCompletedModal(false)
+			toast.success('已派發玩家獎勵，劇本已結束。')
+			router.replace(`/admin/game/${game.id}`, undefined, {
+				shallow: false,
+			})
+		})
+	}, [game.id, getValues, router])
 
 	const handleChangeOutline = useCallback(
 		(value) => {

@@ -1,3 +1,4 @@
+import { Game } from '.'
 import { Background } from './Background.type'
 import { City } from './City.type'
 import { Cls } from './Cls.type'
@@ -23,6 +24,7 @@ export type Character = Entity & {
 	levelWithClsesString?: string
 	xp?: number
 	gp?: number
+	attribute?: Record<string, number>
 
 	// Bio
 	bioSaying?: string
@@ -113,4 +115,29 @@ export const DEFAULT_CHARACTER: Character = {
 	city: { id: '', name: '--', code: '' },
 	background: { id: '', name: '--' },
 	deity: { id: '', name: '--' },
+}
+
+export type CharacterRecord = Entity & {
+	subject: string
+	content: string
+	worldStartAt: string
+	worldEndAt: string
+	reward: Record<string, CharacterRecordRewardItem>
+	character: Character
+	player: User
+	game: Game
+}
+
+export type CharacterRecordRewardItem = {
+	amount: number
+	details: CharacterRecordRewardItemDetailItem[]
+}
+
+export type CharacterRecordRewardItemDetailItem = {
+	description: string
+	amount: number
+	metadata: {
+		outlineItemId: string
+		rewardId: string
+	}
 }
