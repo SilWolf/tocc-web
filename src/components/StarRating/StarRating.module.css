@@ -1,0 +1,17 @@
+.StarRating :global() {
+}
+
+.StarRating :global(.icon-star) {
+	background: #aaa;
+	background-clip: text;
+	color: transparent;
+}
+
+.StarRating :global(.icon-star.active) {
+	background-image: linear-gradient(135deg, #fccf31 10%, #f55555 100%);
+}
+
+.StarRating :global(.star-text) {
+	margin-top: 1rem;
+	font-size: 1rem;
+}

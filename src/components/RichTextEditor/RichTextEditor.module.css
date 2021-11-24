@@ -1,0 +1,7 @@
+.RichTextEditor :global() {
+	min-height: 250px;
+}
+
+.RichTextEditor :global(.ck-editor__editable) {
+	min-height: 250px;
+}

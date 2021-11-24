@@ -1,26 +1,57 @@
-import { Character } from './Character.type'
+import { Character, Character_Simple } from './Character.type'
 import { City } from './City.type'
 import { User } from './User.type'
 import { Entity } from './utils/Entity.type'
 
-export type GameStatus =
-	| string
-	| 'new'
-	| 'draft'
-	| 'published'
-	| 'confirmed'
-	| 'completed'
-	| 'done'
-	| 'closed'
+export enum GAME_STATUS {
+	NEW = 'new',
+	DRAFT = 'draft',
+	PUBLISHED = 'published',
+	CONFIRMED = 'confirmed',
+	COMPLETED = 'completed',
+	DONE = 'done',
+	CLOSED = 'closed',
+}
+
+export type GameOutlineItem = {
+	id: string
+	description: string
+	rewards: GameOutlineReward[]
+	remark: string
+}
+
+export type GameOutlineReward = {
+	id: string
+	isPerPlayer: boolean
+	amount: number
+	unit: string
+	remark: string
+}
+
+export type GameOutlineRewardCharacterMap = Record<
+	string,
+	{
+		rewardId: string
+		denominator: number
+		characterMap: Record<
+			string,
+			{
+				characterId: string
+				ratio: number
+			}
+		>
+	}
+>
 
 export type Game = Entity & {
 	title: string
 	code: string
 	description?: string
-	startAt?: string
-	endAt?: string
-	worldStartAt?: string
-	worldEndAt?: string
+	startAt?: string | null
+	endAt?: string | null
+	timeLengthInMin?: number
+	worldStartAt?: string | null
+	worldEndAt?: string | null
 	lvMin?: number
 	lvMax?: number
 	capacityMin?: number
@@ -29,17 +60,28 @@ export type Game = Entity & {
 	remark?: string
 	dm?: User
 	characters?: Character[]
-	status?: GameStatus
+	gameSignUps?: GameSignUp[]
+	gameSignUpCounting?: {
+		accepted: number
+		rejected: number
+		pending: number
+	}
+	status?: GAME_STATUS
 
 	journals?: string[]
 	city?: City
 
+	outline?: GameOutlineItem[]
+	outlineRewardCharacterMap?: GameOutlineRewardCharacterMap
+
 	publishedAt?: string
 }
 
-export type Game_Req = Omit<Game, 'dm' | 'characters' | 'city'> & {
+export type Game_Req = Omit<
+	Game,
+	'dm' | 'characters' | 'city' | 'gameSignUps'
+> & {
 	dm?: string
-	characters?: string[]
 	city?: string
 }
 
@@ -62,6 +104,7 @@ export const gameDefaultValue: Game = {
 	description: '',
 	startAt: '',
 	endAt: '',
+	timeLengthInMin: 0,
 	worldStartAt: '',
 	worldEndAt: '',
 	lvMin: 1,
@@ -70,15 +113,59 @@ export const gameDefaultValue: Game = {
 	capacityMax: 6,
 	tags: '',
 	remark: '',
-	status: 'new',
+	status: GAME_STATUS.NEW,
 	city: undefined,
 	dm: undefined,
 	characters: [],
+	gameSignUps: [],
 }
 
 export const gameDefaultValue_Req: Game_Req = {
 	...gameDefaultValue,
 	city: '',
 	dm: '',
-	characters: [],
+}
+
+export enum GAME_SIGN_UP_STATUS {
+	ACCEPTED = 'accepted',
+	PENDING = 'pending',
+	REJECTED_FULL = 'rejected_full',
+	REJECTED_INVALID_LEVEL = 'rejected_invalidLevel',
+	REJECTED_INVALID_CITY = 'rejected_invalidCity',
+	REJECTED_NOT_PRIORITIZE = 'rejected_notPrioritize',
+}
+
+export type GameSignUp = Entity & {
+	game: Game
+	character: Character_Simple
+	player: User
+	status: GAME_SIGN_UP_STATUS
+	remarks: string
+}
+
+export type GameSignUpIdAndStatus = Pick<GameSignUp, 'id' | 'status'>
+
+export type GameSignUp_Req = {
+	character: string
+	game: string
+	remarks: string
+}
+
+export type GameChecklist = {
+	id: string
+	name: string
+	idCard: string
+	pos: number
+	idBoard: string
+	checkItems: GameCheckItem[]
+}
+
+export type GameCheckItem = {
+	idChecklist: string
+	state: 'complete' | 'incomplete'
+	id: string
+	name: string
+	pos: number
+	due?: string
+	idMember?: string
 }

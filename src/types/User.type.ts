@@ -1,3 +1,4 @@
+import { Character } from '.'
 import { City } from './City.type'
 import { Entity } from './utils/Entity.type'
 import { Media } from './utils/Media.type'
@@ -5,6 +6,7 @@ import { Media } from './utils/Media.type'
 export type User = Entity & {
 	username: string
 	name: string
+	displayName: string
 	email?: string
 	provider?: string
 	role?: UserRole
@@ -16,8 +18,14 @@ export type User = Entity & {
 	city?: City
 }
 
+export enum USER_ROLE {
+	PLAYER = 'Player',
+	DM = 'Dungeon Master',
+	NORMAL = 'Authenticated',
+}
+
 export type UserRole = Entity & {
-	name: string
+	name: USER_ROLE
 	type: string
 	description: string
 }
@@ -31,4 +39,20 @@ export type SessionUser = {
 export const ROLE = {
 	DUNGEON_MASTER: 'Dungeon Master',
 	PLAYER: 'Player',
+}
+
+export type PlayerVerification = Entity & {
+	verificationCode: string
+	playerCode: string
+	name: string
+	displayName: string
+	characters: Character[]
+	city: City
+}
+
+export type PlayerVerificationRegister_Req = {
+	verificationCode: string
+	name: string
+	displayName: string
+	email: string
 }

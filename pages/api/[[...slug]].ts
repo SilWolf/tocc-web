@@ -28,7 +28,15 @@ export default withSession(
 			}
 		}
 
-		const result = await apis.rawRequest(config)
-		res.status(result.status).json(result.data)
+		await apis
+			.rawRequest(config)
+			.then((response) => {
+				res.status(response.status).json(response.data)
+			})
+			.catch((error) => {
+				res
+					.status(error.response?.status || 500)
+					.json(error.response?.data || {})
+			})
 	}
 )

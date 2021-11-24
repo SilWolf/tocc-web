@@ -22,7 +22,8 @@
 			"layouts/*": ["./src/layouts/*"],
 			"helpers/*": ["./src/helpers/*"],
 			"hooks/*": ["./src/hooks/*"]
-		}
+		},
+		"incremental": true
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.js"],
 	"exclude": ["node_modules"]

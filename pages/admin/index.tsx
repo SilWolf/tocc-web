@@ -1,30 +1,25 @@
 import { GetServerSideProps, NextPage } from 'next'
 
-import { ProtectAdminPage } from 'src/hooks/withSession.hook'
+import React from 'react'
 
-const AdminIndexPage: NextPage = () => {
-	return (
-		<>
-			<div className='space-y-4'>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-				<div className='bg-yellow-100 h-96'></div>
-			</div>
-		</>
-	)
+import {
+	ProtectAdminPage,
+	serverSidePropsWithSession,
+} from 'src/hooks/withSession.hook'
+
+const AdminDashboardPage: NextPage = () => {
+	return <></>
 }
 
-export const getServerSideProps: GetServerSideProps = ProtectAdminPage()
+export const getServerSideProps: GetServerSideProps = ProtectAdminPage(
+	serverSidePropsWithSession(async () => {
+		return {
+			redirect: {
+				destination: '/admin/dashboard',
+				permanent: true,
+			},
+		}
+	})
+)
 
-export default AdminIndexPage
+export default AdminDashboardPage

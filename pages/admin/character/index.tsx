@@ -63,10 +63,10 @@ const AdminCharacterPage: NextPage = () => {
 			{
 				id: 'actions',
 				Header: '動作',
-				accessor: ({ id }) => {
+				accessor: ({ id, name }) => {
 					return (
 						<div className='space-x-2'>
-							<NextLink href={`/character/${id}/profile`} passHref>
+							<NextLink href={`/character/${name}`} passHref>
 								<a target='_blank'>
 									<i className='bi bi-person-badge'></i>
 								</a>

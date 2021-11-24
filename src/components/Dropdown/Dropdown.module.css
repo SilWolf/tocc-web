@@ -1,0 +1,16 @@
+.dropdown {
+	position: relative;
+	cursor: pointer;
+}
+
+.dropdown :global(.dropdown-body) {
+	display: none;
+	position: absolute;
+	right: 0;
+	z-index: 1;
+	padding-top: 8px;
+}
+
+.dropdown:hover :global(.dropdown-body) {
+	display: block;
+}

@@ -1,8 +1,8 @@
 import { default as Router } from 'next/router'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { SessionUser } from 'types/User.type'
+import { SessionUser, User } from 'types/User.type'
 
 import apis from 'helpers/api/api.helper'
 

@@ -26,7 +26,7 @@
 	--mb-text-color: #ebb275;
 }
 
-.medievalButton :global(.mb-btn:enabled) {
+.medievalButton :global(.mb-btn:not(.mb-disabled)) {
 	cursor: pointer;
 }
 
@@ -41,11 +41,11 @@
 	pointer-events: none;
 }
 
-.medievalButton :global(.mb-btn:enabled:hover .mb-overlay) {
+.medievalButton :global(.mb-btn:not(.mb-disabled):hover .mb-overlay) {
 	opacity: 0.08;
 }
 
-.medievalButton :global(.mb-btn:enabled:active .mb-overlay) {
+.medievalButton :global(.mb-btn:not(.mb-disabled):active .mb-overlay) {
 	background: #000000;
 	opacity: 0.15;
 }
@@ -186,8 +186,7 @@
 	--mb-text-color: #fff8e3;
 }
 
-.medievalButton :global(.mb-btn:disabled),
-.medievalButton :global(.mb-btn[disabled]) {
+.medievalButton :global(.mb-btn.mb-disabled) {
 	--mb-edge-color-top: #a3a3a3;
 	--mb-edge-color-bottom: #575757;
 	--mb-edge-color-left: #9c9c9c;

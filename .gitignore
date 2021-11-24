@@ -36,3 +36,4 @@ yarn-error.log*
 
 # serverless
 .serverless_nextjs
+tsconfig.tsbuildinfo

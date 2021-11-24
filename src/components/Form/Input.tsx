@@ -51,7 +51,7 @@ type Props = (InputHTMLAttributes<HTMLInputElement> &
 	label?: string | undefined
 	labelProps?: LabelProps
 	wrapperProps?: WrapperProps
-	helperText?: string | undefined
+	helperText?: React.ReactNode
 	helperTextProps?: HelperTextProps
 	error?: ErrorProps | undefined
 	errorTextProps?: ErrorTextProps
@@ -91,6 +91,9 @@ const Input = ({
 
 		switch (error.type) {
 			case 'required':
+				if (!label) {
+					return '此欄位必須填寫'
+				}
 				return `${label} 必須填寫`
 		}
 
@@ -100,7 +103,14 @@ const Input = ({
 	let input
 
 	if (type === 'select') {
-		input = <select ref={innerRef} autoComplete='off' {...others} />
+		input = (
+			<select
+				ref={innerRef}
+				autoComplete='off'
+				{...others}
+				disabled={others.disabled || others.readOnly}
+			/>
+		)
 	} else if (type === 'textarea') {
 		input = <textarea ref={innerRef} autoComplete='off' {...others} />
 	} else if (type === 'static') {

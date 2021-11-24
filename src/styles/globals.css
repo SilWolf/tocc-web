@@ -10,8 +10,9 @@
 
 @layer base {
 	body {
-		/* background-image: url('/images/body-bg.jpg'); */
-		@apply bg-scroll;
+		background-image: url('/images/bg-2.jpg');
+		background-position: center;
+		background-repeat: repeat;
 	}
 
 	h1 {
@@ -53,15 +54,15 @@
 	[multiple],
 	textarea,
 	select {
-		@apply py-2 pl-4 w-full outline-none ring-0 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-500 dark:border-gray-800 text-sm;
+		@apply ring-0;
+		width: 100%;
 	}
 
 	.form-group .input-static {
-		@apply py-2 pl-4 w-full outline-none ring-0 text-sm;
+		@apply py-2 pl-4 w-full outline-none ring-0;
 	}
 
 	.form-group {
-		@apply text-sm text-gray-700;
 	}
 
 	.form-group-transparent [type='text'],
@@ -97,7 +98,6 @@
 	[multiple][readonly],
 	textarea[readonly],
 	select[readonly] {
-		@apply bg-gray-50;
 	}
 
 	[type='text']:focus,
@@ -115,11 +115,11 @@
 	[multiple]:focus,
 	textarea:focus,
 	select:focus {
-		@apply outline-none ring-0 border-gray-600;
+		@apply ring-0;
 	}
 
 	.form-group.has-error label {
-		@apply text-red-400;
+		color: #f00;
 	}
 
 	.form-group.has-error [type='text'],
@@ -137,23 +137,20 @@
 	.form-group.has-error [multiple],
 	.form-group.has-error textarea,
 	.form-group.has-error select {
-		@apply border-red-400;
+		border: 1px solid #f00;
 	}
 
 	button:focus {
 		outline: none;
 	}
 
-	a {
-		@apply text-gray-900 dark:text-white hover:text-gray-800 dark:hover:text-gray-50;
-	}
-
 	.button {
-		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black dark:border-gray-600 dark:bg-gray-600 dark:text-white;
+		@apply py-2 px-4 rounded-full border border-gray-600 bg-white text-black;
 	}
 
-	a.button {
-		@apply block text-center;
+	.button:disabled {
+		background: #ccc;
+		color: #999;
 	}
 
 	a.button {
@@ -161,19 +158,19 @@
 	}
 
 	.button-primary {
-		@apply bg-primary border-primary text-white dark:bg-primary dark:text-white;
+		@apply bg-primary border-primary text-white;
 	}
 
 	.button.button-outline {
-		@apply bg-transparent text-gray-600 dark:text-white;
+		@apply bg-transparent text-gray-600;
 	}
 
 	.button.button-outline.button-primary {
-		@apply text-primary dark:text-primary;
+		@apply text-primary;
 	}
 
 	.button.button-text {
-		@apply bg-transparent border-transparent text-gray-600 dark:text-white;
+		@apply bg-transparent border-transparent text-gray-600;
 	}
 
 	.button:active,
@@ -191,7 +188,7 @@
 	}
 
 	table.table-default thead tr th {
-		@apply px-6 py-3 text-white dark:text-white;
+		@apply px-6 py-3 text-white;
 	}
 
 	table.table-default tbody {
@@ -202,12 +199,16 @@
 		@apply border-b border-gray-200;
 	}
 
+	table.table-default tbody tr:nth-child(odd) {
+		@apply bg-white;
+	}
+
 	table.table-default tbody tr:nth-child(even) {
-		@apply bg-gray-50 dark:bg-gray-600;
+		@apply bg-gray-50;
 	}
 
 	table.table-default tbody tr td {
-		@apply py-3 px-6 whitespace-nowrap;
+		@apply py-2 px-2 whitespace-nowrap;
 	}
 
 	table.table-bordered {
@@ -235,7 +236,7 @@
 	}
 
 	.card {
-		@apply bg-white dark:bg-gray-800 rounded p-4 shadow;
+		@apply bg-white rounded p-4 shadow;
 	}
 }
 
@@ -246,18 +247,6 @@
 }
 
 .admin-sidebar {
-	position: relative;
-}
-
-.admin-sidebar:before {
-	content: ' ';
-	display: block;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0.6;
 	background-image: url('/images/admin-sidebar-bg.jpg');
 	background-repeat: no-repeat;
 	background-position: 50% 0;
@@ -268,16 +257,12 @@ ul li {
 	@apply ml-2 my-2;
 }
 
-* {
-	@apply ring-gray-300;
-}
-
 [data-ripplet] {
 	@apply cursor-pointer;
 }
 
 .text-subtitle {
-	@apply text-gray-600 dark:text-gray-400;
+	@apply text-gray-600;
 }
 
 .paragraph-ellipsis-3 {
@@ -286,4 +271,74 @@ ul li {
 	display: -webkit-box;
 	-webkit-line-clamp: 3; /* number of lines to show */
 	-webkit-box-orient: vertical;
+}
+
+.parchment {
+	border-width: 32px 32px;
+	border-image: url('/images/parchment-1.jpg') 50 50 fill round;
+	color: #461904;
+}
+
+.parchment.parchment-narrowed {
+	border-width: 16px 16px;
+}
+
+.parchment.framed {
+	border-width: 60px 60px;
+	border-image: url('/images/parchment-2.jpg') 80 80 fill round;
+	box-shadow: 0 10px 2px rgba(0, 0, 0, 0.8);
+	position: relative;
+}
+
+.parchment.framed .cover-image-container {
+	position: absolute;
+	top: -29px;
+	left: -26px;
+	right: -26px;
+}
+
+.parchment h1,
+.parchment h2,
+.parchment h3,
+.parchment h4,
+.parchment h5,
+.parchment h6 {
+	/* color: #d65b27; */
+}
+
+.table-character-meta {
+	width: 100%;
+}
+
+.table-character-meta tr:nth-child(odd) {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.layout-topbar {
+	background-color: #27160f;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 2px 2px;
+	color: #fff;
+}
+
+.layout-footer {
+	background-color: #27160f;
+	box-shadow: rgba(0, 0, 0, 0.35) 0 -2px 2px;
+	color: #fff;
+}
+
+.react-datepicker-popper.react-datepicker-popper {
+	z-index: 30;
+}
+
+.general-table th,
+.general-table td {
+	border-collapse: collapse;
+	border: 1px solid #000;
+	padding: 2px 4px;
+}
+
+.general-table tr.general-table-tr-empty th,
+.general-table tr.general-table-tr-empty td {
+	border-left-color: transparent;
+	border-right-color: transparent;
 }

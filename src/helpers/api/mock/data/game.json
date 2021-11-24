@@ -34,6 +34,7 @@
 		"blocked": false,
 		"_id": "60110107222e8513969913c9",
 		"username": "Dicky",
+		"displayName": "Dicky",
 		"email": "dicky@tocc.com",
 		"provider": "local",
 		"createdAt": "2021-01-27T05:58:31.362Z",

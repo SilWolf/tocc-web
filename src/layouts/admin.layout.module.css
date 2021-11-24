@@ -1,0 +1,115 @@
+.adminLayout {
+	display: flex;
+	items-align: stretch;
+	min-width: 0;
+	height: 100vh;
+	background: #fff;
+
+	--color-primary: #2a587d;
+}
+
+.adminLayout :global(.sidebar) {
+	flex: none;
+	width: 250px;
+	background-color: #000;
+
+	background-image: url('/images/admin-sidebar-bg.jpg');
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+	background-size: cover;
+
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	overflow: hidden;
+
+	transition: 0.3s width;
+}
+
+.adminLayout :global(.sidebar-logo-wrapper) {
+	flex: none;
+	padding: 16px;
+	min-height: 130px;
+}
+
+.adminLayout :global(.sidebar-body) {
+	flex: 1;
+}
+
+.adminLayout :global(.sidebar .route-link) {
+	display: block;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	align-text: left;
+	color: #000;
+	background: rgba(255, 255, 255, 0.7);
+}
+
+.adminLayout :global(.sidebar .route-link .route-link-text) {
+	margin-left: 1rem;
+	position: absolute;
+}
+
+.adminLayout :global(.sidebar-body .route-link.active) {
+	background: rgba(250, 193, 37, 1);
+}
+
+.adminLayout :global(.sidebar-footer .route-link) {
+	background: transparent;
+	color: #fff;
+}
+
+.adminLayout :global(.sidebar .route-link-icon),
+.adminLayout :global(.sidebar .route-link-text) {
+	font-size: 16px;
+}
+
+.adminLayout :global(.sidebar.collapsed) {
+	width: 48px;
+}
+
+.adminLayout :global(.sidebar.collapsed .sidebar-logo-wrapper img),
+.adminLayout :global(.sidebar.collapsed .route-link-text) {
+	display: none;
+}
+
+.adminLayout :global(.main-content) {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	min-width: 0;
+}
+
+.adminLayout :global(.main-content .main-content-topbar) {
+	flex: none;
+	background: rgba(31, 41, 55);
+	box-shadow: #000 0 1 3px 0;
+	z-index: 10;
+	color: #fff;
+	padding-left: 0.25rem;
+	padding-right: 2.5rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 50px;
+}
+
+.adminLayout :global(.main-content .main-content-topbar-left) {
+	flex: 1;
+}
+
+.adminLayout :global(.main-content .main-content-topbar-right) {
+	flex: 0;
+}
+
+.adminLayout
+	:global(.main-content .main-content-topbar .main-content-topbar-button) {
+	display: inline-block;
+	font-size: 20px;
+	min-width: 32px;
+	min-height: 32px;
+	text-align: center;
+}

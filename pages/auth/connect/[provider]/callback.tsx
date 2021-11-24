@@ -1,4 +1,7 @@
 import { GetServerSideProps, GetServerSidePropsResult, NextPage } from 'next'
+import { useRouter } from 'next/router'
+
+import { useContext, useEffect } from 'react'
 
 import apis from 'helpers/api/api.helper'
 
@@ -6,9 +9,27 @@ import {
 	NextIronRequest,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
-import { SessionUser } from 'src/types/User.type'
+import { SessionUser, User, USER_ROLE } from 'src/types/User.type'
 
-const AuthConnectGoogleCallbackPage: NextPage = () => {
+import { AppContext } from 'pages/_app'
+
+type Props = {
+	user: User
+}
+
+const AuthConnectGoogleCallbackPage: NextPage<Props> = ({ user }: Props) => {
+	const router = useRouter()
+	const { setStoredUser } = useContext(AppContext)
+
+	useEffect(() => {
+		setStoredUser(user)
+		if (user.role?.name === USER_ROLE.NORMAL) {
+			router.replace('/auth/register')
+		} else {
+			router.replace('/')
+		}
+	}, [router, setStoredUser, user])
+
 	return (
 		<>
 			<p>Loading...</p>
@@ -29,13 +50,11 @@ export const getServerSideProps: GetServerSideProps =
 
 		try {
 			const provider = params?.provider as string | undefined
-
 			if (!provider) {
 				return RESPONSE_IF_FAIL
 			}
 
 			const accessToken = query?.access_token as string | undefined
-
 			if (!accessToken) {
 				return RESPONSE_IF_FAIL
 			}
@@ -51,9 +70,8 @@ export const getServerSideProps: GetServerSideProps =
 			await _req.session.save()
 
 			return {
-				redirect: {
-					destination: '/',
-					permanent: false,
+				props: {
+					user: sessionUser.user,
 				},
 			}
 		} catch (_) {

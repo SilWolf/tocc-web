@@ -12,7 +12,7 @@ import { SessionUser } from 'src/types/User.type'
 
 export const ironSessionConfig = {
 	password: process.env.SECRET_COOKIE_PASSWORD as string,
-	cookieName: 'salesi-web/with-iron-session',
+	cookieName: 'tocc-web/with-iron-session',
 	cookieOptions: {
 		// the next line allows to use the session in non-https environments like
 		// Next.js dev mode (http://localhost:3000)
@@ -72,15 +72,6 @@ export const ProtectAuthPage = (
 			return {
 				redirect: {
 					destination: '/auth/login',
-					permanent: false,
-				},
-			}
-		}
-
-		if (sessionUser.user?.role?.name !== 'Authenticated') {
-			return {
-				redirect: {
-					destination: '/403',
 					permanent: false,
 				},
 			}

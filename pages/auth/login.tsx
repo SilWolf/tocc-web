@@ -1,15 +1,42 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 
-import Button from 'src/components/Button'
+import Alert from 'src/components/Alert'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
+import apis from 'src/helpers/api/api.helper'
+import { USER_ROLE } from 'src/types/User.type'
 
 import { AppContext } from '../_app'
 
+type LoginFormProps = {
+	identity: string
+	password: string
+}
+
 const LoginPage: NextPage = () => {
-	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
+	const router = useRouter()
+	const {
+		register,
+		handleSubmit: rhfHandleSubmit,
+		formState: { errors },
+		setError,
+	} = useForm<LoginFormProps>({
+		defaultValues: {
+			identity: '',
+			password: '',
+		},
+	})
+
+	const showGoogleConnectError = useMemo(
+		() => router.query['error'] && router.query['connect'] === 'google',
+		[router]
+	)
+
+	const { openDialog, closeDialog, setStoredUser } = useContext(AppContext)
 
 	const handleClickRegister = useCallback(
 		(event) => {
@@ -41,24 +68,62 @@ const LoginPage: NextPage = () => {
 		[openDialog, closeDialog]
 	)
 
+	const handleSubmit = useCallback(
+		(value) => {
+			apis
+				.postLogin(value.identity, value.password)
+				.then((res) => {
+					setStoredUser(res.user)
+					if (res.user.role?.name === USER_ROLE.NORMAL) {
+						router.push('/auth/register')
+					} else {
+						router.push('/')
+					}
+				})
+				.catch((err) => {
+					console.log(err.response)
+					if (err.response?.data?.data?.[0]?.messages?.[0]?.id) {
+						if (
+							err.response.data.data[0].messages[0].id ===
+							'Auth.form.error.invalid'
+						) {
+							setError('identity', {
+								message: '無法登入，帳號或密碼錯誤!',
+							})
+						}
+					}
+				})
+		},
+		[router, setError, setStoredUser]
+	)
+
 	return (
 		<div
 			className='w-full h-screen bg-cover bg-center'
 			style={{ backgroundImage: 'url("/images/login-bg.jpg")' }}
 		>
 			<div className='container max-w-screen-tablet h-full flex items-center'>
-				<div className='card w-full m-auto rounded-md shadow-lg px-8 py-6 space-y-6'>
+				<div className='parchment framed w-full m-auto space-y-6'>
 					<img
-						src={
-							isDarkMode ? '/images/tocc-logo-w.png' : '/images/tocc-logo.png'
-						}
+						src='/images/tocc-logo.png'
 						className='h-16 mb-4 mx-auto'
 						alt='tocc logo'
 					/>
 
+					{showGoogleConnectError && (
+						<div className='text-center'>
+							<Alert type='danger' className='inline-block'>
+								錯誤: 在以Google登入時發生錯誤。
+							</Alert>
+						</div>
+					)}
+
 					<div className='flex items-stretch gap-x-8'>
 						<div className='flex-1 space-y-4 self-center'>
-							<MedievalButton color='secondary'>
+							<MedievalButton
+								href='/auth/connect/google/authorize'
+								color='secondary'
+							>
 								<div className='flex items-center justify-center'>
 									<img
 										src='https://developers.google.com/identity/images/g-logo.png'
@@ -70,12 +135,25 @@ const LoginPage: NextPage = () => {
 							</MedievalButton>
 						</div>
 						<div className='flex-none'>
-							<div className='h-full w-px bg-gray-300'></div>
+							<div className='h-full w-px bg-yellow-600'></div>
 						</div>
 						<div className='flex-1 space-y-6 py-8'>
-							<form className='space-y-6'>
-								<Input label='Email' type='email' />
-								<Input label='密碼' type='password' />
+							<form
+								className='space-y-6'
+								onSubmit={rhfHandleSubmit(handleSubmit)}
+							>
+								<Input
+									label='Email'
+									type='email'
+									{...register('identity', { required: true })}
+									error={errors['identity']}
+								/>
+								<Input
+									label='密碼'
+									type='password'
+									{...register('password', { required: true })}
+									error={errors['password']}
+								/>
 
 								<div className='text-center'>
 									<MedievalButton type='submit'>登入</MedievalButton>

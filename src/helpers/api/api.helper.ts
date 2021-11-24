@@ -1,6 +1,17 @@
 import { City } from 'types/City.type'
-import { Game } from 'types/Game.type'
-import { User } from 'types/User.type'
+import {
+	Game,
+	Game_Req,
+	GameCheckItem,
+	GameSignUp,
+	GameSignUp_Req,
+	GameSignUpIdAndStatus,
+} from 'types/Game.type'
+import {
+	PlayerVerification,
+	PlayerVerificationRegister_Req,
+	User,
+} from 'types/User.type'
 
 import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
@@ -58,8 +69,11 @@ export const getApis = (config?: { jwt?: string }) => {
 		},
 
 		getMe: async (): Promise<User> => {
-			return api.get<User>('/auth/me')
+			return api.get<User>('/users/me')
 		},
+
+		getMyCharacters: async (): Promise<Character[]> =>
+			api.get<Character[]>('/characters/me'),
 
 		getGames: async (): Promise<Game[]> => api.get<Game[]>('/games'),
 		getPendingGames: async (): Promise<Game[]> =>
@@ -67,8 +81,11 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		dmGetGames: async (config: ExtendedAxiosRequestConfig): Promise<Game[]> =>
 			api.get<Game[]>('/games', {
-				cache: { maxAge: 5 * 60 * 1000 },
 				...config,
+				params: {
+					_sort: 'updatedAt:DESC',
+					...config.params,
+				},
 			}),
 
 		getGamesCount: async (): Promise<number> =>
@@ -76,6 +93,17 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		getGameById: async (id: string): Promise<Game> =>
 			api.get<Game>(`/games/${id}`),
+
+		getGameChecklistsById: async (id: string): Promise<GameCheckItem[]> =>
+			api.get<GameCheckItem[]>(`/games/${id}/checklists`),
+
+		getGameSignUpsByGameId: async (id: string): Promise<GameSignUp[]> =>
+			api.get<GameSignUp[]>(`/game-sign-ups`, {
+				params: {
+					game: id,
+					_sort: 'createdAt:ASC',
+				},
+			}),
 
 		getCities: async (): Promise<City[]> =>
 			api.get<City[]>('/cities', { cache: { maxAge: 5 * 60 * 1000 } }),
@@ -101,9 +129,16 @@ export const getApis = (config?: { jwt?: string }) => {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
-		getCharacterByName: async (name: string): Promise<Character> =>
-			api.get<Character>('/characters', {
-				params: { name },
+		getCharacterByName: async (name: string): Promise<Character | undefined> =>
+			api
+				.get<Character[]>('/characters', {
+					params: { name },
+					// cache: { maxAge: 5 * 60 * 1000 },
+				})
+				.then((characters) => characters[0]),
+
+		getCharacterById: async (id: string): Promise<Character> =>
+			api.get<Character>(`/characters/${id}`, {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
@@ -128,6 +163,9 @@ export const getApis = (config?: { jwt?: string }) => {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
+		getPlayerById: async (id: string): Promise<User> =>
+			api.get<User>(`/users/${id}`),
+
 		getPromotions: async (): Promise<Promotion> =>
 			api.get<Promotion>('/promotions', {
 				cache: { maxAge: 5 * 60 * 1000 },
@@ -144,6 +182,59 @@ export const getApis = (config?: { jwt?: string }) => {
 			api.get(`/auth/${provider}/callback`, {
 				params: { access_token: accessToken },
 			}),
+
+		postSignUp: async (
+			gameId: string,
+			payload: GameSignUp_Req
+		): Promise<GameSignUp> => api.post(`/games/${gameId}/signUp`, payload),
+
+		getMyGameSignUpsByGameId: async (gameId: string): Promise<GameSignUp> =>
+			api.get(`/users/me/games/${gameId}/game-sign-ups`),
+
+		getDMPendingGames: async (): Promise<Game[]> =>
+			api.get(`/dms/me/games?_pending=true`),
+
+		createOrUpdateGame: async (game: Game_Req): Promise<Game> => {
+			if (!game.id) {
+				return api.post(`/games`, game)
+			} else {
+				return api.put(`/games/${game.id}`, game)
+			}
+		},
+
+		getGameCharactersById: async (id: string) =>
+			api.get(`/games/${id}/characters`),
+
+		patchGameToPublishById: async (id: string) =>
+			api.patch(`/games/${id}/publish`, {}),
+
+		patchGameToConfirmedById: async (
+			id: string,
+			gameSignUps: GameSignUpIdAndStatus[]
+		) =>
+			api.patch(`/games/${id}/confirm`, {
+				gameSignUps,
+			}),
+
+		patchGameToCompletedById: async (id: string) =>
+			api.patch(`/games/${id}/completed`, {}),
+
+		getCharacterRecordById: async (id: string) =>
+			api.get(`/character-records/${id}`),
+
+		patchCharacterRecordToAcceptedById: async (id: string) =>
+			api.patch(`/character-records/${id}/accept`, {}),
+
+		getPlayerVerificationByCode: async (
+			code: string
+		): Promise<PlayerVerification> =>
+			api.get<PlayerVerification>(`/player-verifications/${code}`),
+
+		patchUserToPlayer: async (payload: PlayerVerificationRegister_Req) =>
+			api.post(
+				`/player-verifications/${payload.verificationCode}/register`,
+				payload
+			),
 	}
 }
 
