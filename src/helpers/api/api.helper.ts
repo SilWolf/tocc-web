@@ -217,6 +217,9 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		getCharacterRecordById: async (id: string) =>
 			api.get(`/character-records/${id}`),
+
+		patchCharacterRecordToAcceptedById: async (id: string) =>
+			api.patch(`/character-records/${id}/accept`, {}),
 	}
 }
 

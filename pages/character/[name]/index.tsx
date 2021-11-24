@@ -176,6 +176,23 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character, user }) => {
 								</tr>
 							</table>
 						</div>
+
+						{character.attribute && (
+							<div className='parchment parchment-narrowed space-y-4'>
+								<h3>聲望</h3>
+								<table className='table-character-meta'>
+									{Object.entries(character.attribute).map(
+										([attribute, value]) => (
+											<tr key={attribute}>
+												<td>{attribute}</td>
+												<td>{value}</td>
+											</tr>
+										)
+									)}
+								</table>
+							</div>
+						)}
+
 						<div className='parchment parchment-narrowed space-y-4'>
 							<div>
 								<h5 className='text-subtitle'>個性</h5>

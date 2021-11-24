@@ -1,8 +1,9 @@
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
-import { getApis } from 'helpers/api/api.helper'
+import apis, { getApis } from 'helpers/api/api.helper'
 
 import MedievalButton from 'src/components/MedievalButton'
 import RewardAmountDisplay from 'src/components/RewardAmountDisplay'
@@ -19,7 +20,22 @@ type PageProps = {
 }
 
 const AfterGamePage: NextPage<PageProps> = ({ characterRecord }) => {
+	const router = useRouter()
+
 	const { character, game } = characterRecord
+	const [canApprove, setCanApprove] = useState<boolean>(false)
+
+	const handleChangeAcknowledge = useCallback<
+		React.ChangeEventHandler<HTMLInputElement>
+	>((event) => {
+		setCanApprove(event.target.checked)
+	}, [])
+
+	const handleClickApproveGameRecord = useCallback(() => {
+		apis.patchCharacterRecordToAcceptedById(characterRecord.id).then(() => {
+			router.push(`/after-game/complete`)
+		})
+	}, [characterRecord, router])
 
 	const characterRecordRewardEntries = useMemo(
 		() => Object.entries(characterRecord.reward),
@@ -132,8 +148,20 @@ const AfterGamePage: NextPage<PageProps> = ({ characterRecord }) => {
 							</div>
 						</div>
 
+						<div className='mx-auto max-w-screen-mobile'>
+							<label>
+								<input type='checkbox' onChange={handleChangeAcknowledge} />{' '}
+								我已確認上述獎勵及紀錄正確無誤，且對獎勵及紀錄沒有異議。
+							</label>
+						</div>
+
 						<div className='text-center'>
-							<MedievalButton type='button' color='success'>
+							<MedievalButton
+								type='button'
+								color='success'
+								onClick={handleClickApproveGameRecord}
+								disabled={!canApprove}
+							>
 								接受獎勵
 							</MedievalButton>
 						</div>
