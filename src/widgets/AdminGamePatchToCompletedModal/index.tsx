@@ -47,7 +47,7 @@ const AdminGamePatchToCompletedModal = ({
 						outline={outline || []}
 						outlineRewardCharacterMap={outlineRewardCharacterMap || {}}
 						characters={characters}
-						isChangeable={false}
+						isReadOnly={true}
 					/>
 
 					<div className='text-center space-x-2'>

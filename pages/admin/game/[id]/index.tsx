@@ -25,6 +25,7 @@ import DateTimePicker from 'components/DateTimePicker'
 import { Input } from 'components/Form'
 import Modal from 'components/Modal'
 
+import Alert from 'src/components/Alert'
 import {
 	ProtectAdminPage,
 	serverSidePropsWithSession,
@@ -105,6 +106,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 	} = useForm<FormProps>({
 		defaultValues: gameToFormProps(game),
 	})
+
+	const isReadOnly = useMemo(() => game.status === GAME_STATUS.DONE, [game])
 
 	const preGenerateCodeWatch = useWatch({
 		control,
@@ -258,10 +261,22 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					<span>{isNew ? '新劇本' : `[${game.code}] ${game.title}`}</span>
 				</Breadcrumb>
 
+				{game.status === GAME_STATUS.DONE && (
+					<Alert className='my-4'>
+						<h5>唯讀狀態</h5>
+						<p>此劇本已結束，你不能進行修改。</p>
+					</Alert>
+				)}
+
 				<div className='flex gap-x-4 justify-between items-center sticky left-0 right-0 top-0 py-4 bg-gray-50 z-50 shadow'>
 					<div className='flex-1'>
 						<div className='form-group form-group-transparent'>
-							<Input type='hidden' {...register('computedCode')} />
+							<Input
+								type='hidden'
+								{...register('computedCode')}
+								readOnly={isReadOnly}
+								disabled={isReadOnly}
+							/>
 							<Input
 								type='text'
 								label='劇本編號'
@@ -271,6 +286,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 								placeholder={computedCode}
 								{...register('code')}
 								error={formState.errors['code']}
+								readOnly={isReadOnly}
+								disabled={isReadOnly}
 							/>
 						</div>
 
@@ -285,6 +302,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 								placeholder='未命名的劇本'
 								{...register('title', { required: true })}
 								error={formState.errors['title']}
+								readOnly={isReadOnly}
+								disabled={isReadOnly}
 							/>
 						</div>
 					</div>
@@ -330,9 +349,11 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 								完成劇本及派發獎勵
 							</button>
 						)}
-						<button type='submit' className='button button-primary'>
-							儲存
-						</button>
+						{game.status !== GAME_STATUS.DONE && (
+							<button type='submit' className='button button-primary'>
+								儲存
+							</button>
+						)}
 					</div>
 				</div>
 
@@ -346,6 +367,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('city', { required: true })}
 									error={formState.errors['city']}
+									readOnly={isReadOnly}
+									disabled={isReadOnly}
 								>
 									{cities.map((city) => (
 										<option key={city.id} value={city.id}>
@@ -359,6 +382,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 									wrapperProps={{ className: 'flex-1' }}
 									{...register('dm', { required: true })}
 									error={formState.errors['dm']}
+									readOnly={isReadOnly}
+									disabled={isReadOnly}
 								>
 									{dms.map((dm) => (
 										<option key={dm.id} value={dm.id}>
@@ -380,6 +405,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 													<DateTimePicker
 														dateFormat='yyyy年MM月dd日 hh:mm a'
 														{...field}
+														readOnly={isReadOnly}
+														disabled={isReadOnly}
 													/>
 												)}
 											/>
@@ -394,6 +421,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 											required: true,
 										})}
 										error={formState.errors['timeLengthInMin']}
+										readOnly={isReadOnly}
+										disabled={isReadOnly}
 									>
 										<option value={120}>2小時</option>
 										<option value={150}>2.5小時</option>
@@ -419,6 +448,8 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 												dateFormat='yyyy年MM月dd日'
 												onChange={onChange}
 												value={value}
+												readOnly={isReadOnly}
+												disabled={isReadOnly}
 											/>
 										)}
 									/>
@@ -430,12 +461,16 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 										type='number'
 										wrapperProps={{ className: 'w-24 inline-block' }}
 										{...register('capacityMin')}
+										readOnly={isReadOnly}
+										disabled={isReadOnly}
 									/>
 									<Input
 										label='人數上限'
 										type='number'
 										wrapperProps={{ className: 'w-24 inline-block' }}
 										{...register('capacityMax')}
+										readOnly={isReadOnly}
+										disabled={isReadOnly}
 									/>
 								</div>
 								<div className='space-x-4'>
@@ -444,12 +479,16 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 										type='number'
 										wrapperProps={{ className: 'w-24 inline-block' }}
 										{...register('lvMin')}
+										readOnly={isReadOnly}
+										disabled={isReadOnly}
 									/>
 									<Input
 										label='等級上限'
 										type='number'
 										wrapperProps={{ className: 'w-24 inline-block' }}
 										{...register('lvMax')}
+										readOnly={isReadOnly}
+										disabled={isReadOnly}
 									/>
 								</div>
 
@@ -461,7 +500,11 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 											name='description'
 											control={control}
 											render={({ field: { onChange, value } }) => (
-												<RichTextEditor onChange={onChange} value={value} />
+												<RichTextEditor
+													onChange={onChange}
+													value={value}
+													readOnly={isReadOnly}
+												/>
 											)}
 										/>
 									</div>
@@ -475,7 +518,11 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 											name='remark'
 											control={control}
 											render={({ field: { onChange, value } }) => (
-												<RichTextEditor onChange={onChange} value={value} />
+												<RichTextEditor
+													onChange={onChange}
+													value={value}
+													readOnly={isReadOnly}
+												/>
 											)}
 										/>
 									</div>
@@ -564,6 +611,7 @@ const AdminGameDetailPage: NextPage<PageProps> = ({
 					onChangeOutlineRewardCharacterMap={
 						handleChangeOutlineRewardCharacterMap
 					}
+					isReadOnly={isReadOnly}
 				/>
 			</div>
 

@@ -100,7 +100,14 @@ const Input = ({
 	let input
 
 	if (type === 'select') {
-		input = <select ref={innerRef} autoComplete='off' {...others} />
+		input = (
+			<select
+				ref={innerRef}
+				autoComplete='off'
+				{...others}
+				disabled={others.disabled || others.readOnly}
+			/>
+		)
 	} else if (type === 'textarea') {
 		input = <textarea ref={innerRef} autoComplete='off' {...others} />
 	} else if (type === 'static') {

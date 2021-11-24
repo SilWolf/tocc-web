@@ -247,7 +247,7 @@ type Props = {
 	onChangeOutlineRewardCharacterMap?: (
 		outlineRewardCharacterMap: GameOutlineRewardCharacterMap
 	) => void
-	isChangeable?: boolean
+	isReadOnly?: boolean
 }
 
 const GameOutlineAndRewardTable = ({
@@ -256,7 +256,7 @@ const GameOutlineAndRewardTable = ({
 	characters,
 	onChangeOutline,
 	onChangeOutlineRewardCharacterMap,
-	isChangeable = true,
+	isReadOnly = false,
 }: Props) => {
 	const [outline, setOutline] = useState<GameOutlineItem[]>(_outline || [])
 	const rewardMap = useMemo(() => {
@@ -499,7 +499,7 @@ const GameOutlineAndRewardTable = ({
 		<>
 			<table
 				className={classNames(styles.gameOutlineAndRewardTable, {
-					changeable: isChangeable,
+					readOnly: isReadOnly,
 				})}
 			>
 				<thead>
@@ -518,7 +518,7 @@ const GameOutlineAndRewardTable = ({
 								<span>{character.nickname}</span>
 							</th>
 						))}
-						<th className='w-56 text-center'>{isChangeable && '操作'}</th>
+						<th className='w-56 text-center'>{!isReadOnly && '操作'}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -546,7 +546,7 @@ const GameOutlineAndRewardTable = ({
 													className='character-reward-map-td'
 													key={character.id}
 													onClick={
-														isChangeable
+														!isReadOnly
 															? handleClickRewardCharacterRatio(
 																	outlineItemReward.id,
 																	character.id
@@ -571,7 +571,7 @@ const GameOutlineAndRewardTable = ({
 												rowSpan={outlineItem.rewards.length}
 												className='text-center'
 											>
-												{isChangeable && (
+												{!isReadOnly && (
 													<div className='space-x-3'>
 														<button
 															type='button'
@@ -625,7 +625,7 @@ const GameOutlineAndRewardTable = ({
 				<tfoot>
 					<tr>
 						<td>
-							{isChangeable && (
+							{!isReadOnly && (
 								<button
 									type='button'
 									className='p-2 text-green-500'
