@@ -7,7 +7,11 @@ import {
 	GameSignUp_Req,
 	GameSignUpIdAndStatus,
 } from 'types/Game.type'
-import { User } from 'types/User.type'
+import {
+	PlayerVerification,
+	PlayerVerificationRegister_Req,
+	User,
+} from 'types/User.type'
 
 import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
@@ -220,6 +224,17 @@ export const getApis = (config?: { jwt?: string }) => {
 
 		patchCharacterRecordToAcceptedById: async (id: string) =>
 			api.patch(`/character-records/${id}/accept`, {}),
+
+		getPlayerVerificationByCode: async (
+			code: string
+		): Promise<PlayerVerification> =>
+			api.get<PlayerVerification>(`/player-verifications/${code}`),
+
+		patchUserToPlayer: async (payload: PlayerVerificationRegister_Req) =>
+			api.post(
+				`/player-verifications/${payload.verificationCode}/register`,
+				payload
+			),
 	}
 }
 

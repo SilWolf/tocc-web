@@ -91,6 +91,9 @@ const Input = ({
 
 		switch (error.type) {
 			case 'required':
+				if (!label) {
+					return '此欄位必須填寫'
+				}
 				return `${label} 必須填寫`
 		}
 

@@ -10,7 +10,7 @@ import {
 	NextIronRequest,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
-import { SessionUser, User } from 'src/types/User.type'
+import { SessionUser, User, USER_ROLE } from 'src/types/User.type'
 
 type Props = {
 	user: User
@@ -22,7 +22,11 @@ const AuthConnectGoogleCallbackPage: NextPage<Props> = ({ user }: Props) => {
 
 	useEffect(() => {
 		setUser(user)
-		router.replace('/')
+		if (user.role?.name === USER_ROLE.NORMAL) {
+			router.replace('/auth/register')
+		} else {
+			router.replace('/')
+		}
 	}, [router, setUser, user])
 
 	return (

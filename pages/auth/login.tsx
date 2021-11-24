@@ -9,6 +9,7 @@ import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 import apis from 'src/helpers/api/api.helper'
 import { useUser } from 'src/hooks/auth.hook'
+import { USER_ROLE } from 'src/types/User.type'
 
 import { AppContext } from '../_app'
 
@@ -75,7 +76,11 @@ const LoginPage: NextPage = () => {
 				.postLogin(value.identity, value.password)
 				.then((res) => {
 					setUser(res.user)
-					router.push('/')
+					if (res.user.role?.name === USER_ROLE.NORMAL) {
+						router.push('/auth/register')
+					} else {
+						router.push('/')
+					}
 				})
 				.catch((err) => {
 					console.log(err.response)
