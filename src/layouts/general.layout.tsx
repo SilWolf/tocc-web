@@ -1,34 +1,25 @@
 import NextLink from 'next/link'
 
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useQuery } from 'react-query'
 
 import Dropdown from 'src/components/Dropdown'
 import apis from 'src/helpers/api/api.helper'
-import { useUser } from 'src/hooks/auth.hook'
 import { User, USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
 import StrapiImg from 'src/widgets/StrapiImg'
 import styles from './general.layout.module.css'
 
+import { AppContext } from 'pages/_app'
+
 const GeneralLayout: React.FC = ({ children }) => {
-	const { user: storedUser } = useUser()
+	const { user: storedUser } = useContext(AppContext)
 
-	const { data: user, refetch } = useQuery<User | null>(
-		['user', 'me'],
-		apis.getMe,
-		{
-			staleTime: 5 * 60 * 1000, // 5mins
-			enabled: !!storedUser,
-			initialData: storedUser,
-		}
-	)
-
-	useEffect(() => {
-		if (storedUser && refetch) {
-			refetch()
-		}
-	}, [refetch, storedUser])
+	const { data: user } = useQuery<User | null>(['user', 'me'], apis.getMe, {
+		staleTime: 5 * 60 * 1000, // 5mins
+		enabled: !!storedUser,
+		initialData: storedUser,
+	})
 
 	return (
 		<>

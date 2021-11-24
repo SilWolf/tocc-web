@@ -1,14 +1,23 @@
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 
-import { createContext, useMemo, useState } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { ToastContainer } from 'react-toastify'
 
 import AdminLayout from 'layouts/admin.layout'
 import GeneralLayout from 'layouts/general.layout'
 import Dialog, { DialogProps } from 'components/Dialog'
 
+import apis from 'src/helpers/api/api.helper'
+import { User } from 'src/types'
 import 'rpg-awesome/css/rpg-awesome.min.css'
 import 'swiper/css'
 import 'react-toastify/dist/ReactToastify.css'
@@ -27,8 +36,10 @@ type AppContextProps = {
 	isDialogOpened: boolean
 	openDialog: (options: DialogProps) => void
 	closeDialog: () => void
-	isDarkMode: boolean
-	toggleDarkMode: () => void
+	user: User | undefined
+	setUser: (_user: User | undefined) => void
+	storedUser: User | undefined
+	setStoredUser: (_user: User | undefined) => void
 }
 
 export const AppContext = createContext<AppContextProps>({
@@ -39,18 +50,53 @@ export const AppContext = createContext<AppContextProps>({
 	closeDialog: () => {
 		/* */
 	},
-	isDarkMode: false,
-	toggleDarkMode: () => {
+	user: undefined,
+	setUser: () => {
+		/* */
+	},
+	storedUser: undefined,
+	setStoredUser: () => {
 		/* */
 	},
 })
 
+const AuthController = () => {
+	const { storedUser, setUser } = useContext(AppContext)
+	const innerStoredUser = useRef<User | undefined>(undefined)
+
+	const { refetch } = useQuery<User | undefined>(
+		['user', 'me'],
+		() => (storedUser ? apis.getMe() : Promise.resolve(undefined)),
+		{
+			staleTime: 5 * 60 * 1000, // 5mins
+			initialData: storedUser,
+			onSuccess: (newUser) => {
+				setUser(newUser)
+			},
+		}
+	)
+
+	useEffect(() => {
+		if (
+			(storedUser !== undefined && innerStoredUser.current === undefined) ||
+			(storedUser === undefined && innerStoredUser.current !== undefined)
+		) {
+			refetch()
+			innerStoredUser.current = storedUser
+		}
+	}, [refetch, storedUser])
+
+	return <></>
+}
+
 const App = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter()
 
+	const [user, setUser] = useState<User | undefined>(undefined)
+	const [storedUser, setStoredUser] = useState<User | undefined>(undefined)
+
 	const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 	const [dialogOptions, setDialogOptions] = useState<DialogProps>({})
-	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
 	const appContextValue = useMemo(
 		() => ({
@@ -62,12 +108,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 			closeDialog: () => {
 				setIsDialogOpened(false)
 			},
-			isDarkMode: isDarkMode,
-			toggleDarkMode: () => {
-				setIsDarkMode((prev) => !prev)
-			},
+			user,
+			setUser,
+			storedUser,
+			setStoredUser,
 		}),
-		[isDialogOpened, isDarkMode]
+		[isDialogOpened, storedUser, user]
 	)
 
 	const Layout = useMemo(
@@ -93,6 +139,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 						</div>
 					</div>
 
+					<AuthController />
 					<ToastContainer />
 				</QueryClientProvider>
 			</AppContext.Provider>

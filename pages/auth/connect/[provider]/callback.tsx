@@ -1,16 +1,17 @@
 import { GetServerSideProps, GetServerSidePropsResult, NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 
 import apis from 'helpers/api/api.helper'
 
-import { useUser } from 'src/hooks/auth.hook'
 import {
 	NextIronRequest,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { SessionUser, User, USER_ROLE } from 'src/types/User.type'
+
+import { AppContext } from 'pages/_app'
 
 type Props = {
 	user: User
@@ -18,16 +19,16 @@ type Props = {
 
 const AuthConnectGoogleCallbackPage: NextPage<Props> = ({ user }: Props) => {
 	const router = useRouter()
-	const { setUser } = useUser()
+	const { setStoredUser } = useContext(AppContext)
 
 	useEffect(() => {
-		setUser(user)
+		setStoredUser(user)
 		if (user.role?.name === USER_ROLE.NORMAL) {
 			router.replace('/auth/register')
 		} else {
 			router.replace('/')
 		}
-	}, [router, setUser, user])
+	}, [router, setStoredUser, user])
 
 	return (
 		<>

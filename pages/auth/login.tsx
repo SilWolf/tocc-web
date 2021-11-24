@@ -8,7 +8,6 @@ import Alert from 'src/components/Alert'
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
 import apis from 'src/helpers/api/api.helper'
-import { useUser } from 'src/hooks/auth.hook'
 import { USER_ROLE } from 'src/types/User.type'
 
 import { AppContext } from '../_app'
@@ -20,7 +19,6 @@ type LoginFormProps = {
 
 const LoginPage: NextPage = () => {
 	const router = useRouter()
-	const { setUser } = useUser()
 	const {
 		register,
 		handleSubmit: rhfHandleSubmit,
@@ -38,7 +36,7 @@ const LoginPage: NextPage = () => {
 		[router]
 	)
 
-	const { openDialog, closeDialog, isDarkMode } = useContext(AppContext)
+	const { openDialog, closeDialog, setStoredUser } = useContext(AppContext)
 
 	const handleClickRegister = useCallback(
 		(event) => {
@@ -75,7 +73,7 @@ const LoginPage: NextPage = () => {
 			apis
 				.postLogin(value.identity, value.password)
 				.then((res) => {
-					setUser(res.user)
+					setStoredUser(res.user)
 					if (res.user.role?.name === USER_ROLE.NORMAL) {
 						router.push('/auth/register')
 					} else {
@@ -96,7 +94,7 @@ const LoginPage: NextPage = () => {
 					}
 				})
 		},
-		[router, setError, setUser]
+		[router, setError, setStoredUser]
 	)
 
 	return (
@@ -107,9 +105,7 @@ const LoginPage: NextPage = () => {
 			<div className='container max-w-screen-tablet h-full flex items-center'>
 				<div className='parchment framed w-full m-auto space-y-6'>
 					<img
-						src={
-							isDarkMode ? '/images/tocc-logo-w.png' : '/images/tocc-logo.png'
-						}
+						src='/images/tocc-logo.png'
 						className='h-16 mb-4 mx-auto'
 						alt='tocc logo'
 					/>

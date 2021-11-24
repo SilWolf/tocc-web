@@ -1,23 +1,24 @@
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 
-import { useUser } from 'src/hooks/auth.hook'
 import {
 	GetServerSidePropsContextWithIronSession,
 	ProtectAuthPage,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 
+import { AppContext } from 'pages/_app'
+
 const AuthLogoutPage: NextPage = () => {
-	const { clearUser } = useUser()
+	const router = useRouter()
+	const { setStoredUser } = useContext(AppContext)
 
 	useEffect(() => {
-		clearUser()
-		if (typeof window !== 'undefined') {
-			window.location.href = '/'
-		}
-	}, [clearUser])
+		setStoredUser(undefined)
+		router.replace('/')
+	}, [setStoredUser, router])
 	return <></>
 }
 
