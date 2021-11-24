@@ -334,7 +334,7 @@ export const getServerSideProps: GetServerSideProps =
 					...DEFAULT_CHARACTER,
 					..._character,
 				})),
-				_apis.getPlayerById(characterByName.id),
+				_apis.getPlayerById(characterByName.player?.id || ''),
 			])
 
 			character.player = {

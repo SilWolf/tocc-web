@@ -45,7 +45,7 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 		defaultValues: {
 			verificationCode: '',
 			name: '',
-			nickname: '',
+			displayName: '',
 			email: '',
 		},
 	})
@@ -60,7 +60,7 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 						setPv(_pv)
 						reset({
 							name: _pv.name,
-							nickname: _pv.nickname,
+							displayName: _pv.displayName,
 							email: user.email,
 							verificationCode: _pv.verificationCode,
 						})
@@ -175,8 +175,8 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 									<Input
 										type='text'
 										label='顯示名稱'
-										{...register('nickname', { required: true })}
-										error={errors['nickname']}
+										{...register('displayName', { required: true })}
+										error={errors['displayName']}
 										helperText={
 											<p>在網站中及其他場合下對其他玩家顯示的名字。</p>
 										}

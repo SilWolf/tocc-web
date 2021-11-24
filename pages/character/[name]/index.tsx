@@ -341,18 +341,12 @@ export const getServerSideProps: GetServerSideProps =
 				}
 			}
 
-			const [character, player] = await Promise.all([
+			const [character] = await Promise.all([
 				_apis.getCharacterById(characterByName.id).then((_character) => ({
 					...DEFAULT_CHARACTER,
 					..._character,
 				})),
-				_apis.getPlayerById(characterByName.id),
 			])
-
-			character.player = {
-				...character.player,
-				...player,
-			}
 
 			return {
 				props: {

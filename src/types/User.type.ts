@@ -45,7 +45,7 @@ export type PlayerVerification = Entity & {
 	verificationCode: string
 	playerCode: string
 	name: string
-	nickname: string
+	displayName: string
 	characters: Character[]
 	city: City
 }
@@ -53,6 +53,6 @@ export type PlayerVerification = Entity & {
 export type PlayerVerificationRegister_Req = {
 	verificationCode: string
 	name: string
-	nickname: string
+	displayName: string
 	email: string
 }
