@@ -111,7 +111,7 @@ const KsMonstersPage = () => {
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Attack 3 (R 4-1). Inflict 1 Bleeding (R 1).</p>,
+							content: <p>Attack 3 & Inflict 1 Bleeding (R 4-1).</p>,
 						},
 					],
 				},
@@ -134,7 +134,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2.
 									<br />
-									Attack 3 (R 1). Inflict 2 Bleedings. (R 1).
+									Attack 3 (R 1). Inflict 1 Bleedings. (R 1).
 								</p>
 							),
 						},
@@ -170,7 +170,7 @@ const KsMonstersPage = () => {
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Attack 3 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
+							content: <p>Attack 3 & Inflict 1 Bleeding (R 4-1).</p>,
 						},
 					],
 				},
@@ -240,7 +240,7 @@ const KsMonstersPage = () => {
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Attack 3 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
+							content: <p>Attack 4 & Inflict 2 Bleedings (R 4-1).</p>,
 						},
 					],
 				},
@@ -314,16 +314,617 @@ const KsMonstersPage = () => {
 						},
 						{
 							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: <p>Attack 4 (R 4-1). Inflict 2 Bleedings (R 1).</p>,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Attack 4 & Inflict 2 Bleedings (R 4-1).</p>,
+						},
+					],
+				},
+				{
+					name: 'Tank',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-tank.png',
+					hp: 20,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Attack 3 & Push 1 (R 1). Move 1.
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Move 2. Block 8 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
 						},
 						{
 							intention: SPECIAL,
-							values: ['C', 'D'],
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Each other monsters gain Invisible.</p>,
+						},
+					],
+				},
+				{
+					name: 'Tank',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-tank.png',
+					hp: 25,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Each player takes 2 piercing damage for each Bleeding they
-									owned.
+									Attack 3 & Push 1 (R 1). Move 1.
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 2. Block 8 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 2. Heal 5 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Each other monsters gain Invisible.</p>,
+						},
+					],
+				},
+				{
+					name: 'Tank',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-tank.png',
+					hp: 25,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>
+									Attack 3 & Push 1 (R 1). Move 1.
+									<br />
+									If any monster died this combat: Repeat above actions.
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Pull 2 (R 3-2). Attack 2 (R 1).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 2. Block 8 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 2. Heal 5 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Each other monsters gain Invisible.</p>,
+						},
+					],
+				},
+				{
+					name: 'Tank',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-tank.png',
+					hp: 30,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>
+									Attack 4 & Push 1 (R 1). Move 1.
+									<br />
+									If any monster died this combat: Repeat above actions.
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Pull 3 (R 4-2). Attack 3 (R 1).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Closest monster gains Invisible.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3],
+							content: (
+								<p>
+									Move 2. Block 10 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [4, 5, 6],
+							content: (
+								<p>
+									Move 2. Heal 7 (Self).
+									<br />
+									Closest monster gains Invisible.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: <p>Each other monsters gain Invisible.</p>,
+						},
+					],
+				},
+				{
+					name: 'Bomber',
+					lv: MINOR,
+					imageSrc: '/images/ks/monster-bomber.png',
+					hp: 18,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range X (X = intention value).
+									<br />
+									<p className='font-light italic leading-4 text-gray-800 mt-1'>
+										(<span className='text-red-900 font-bold'>Bomb</span> is a
+										special monster that shares spaces with other characters.
+										Use monster tokens to represent Bombs.
+										<br />
+										<span className='text-red-900 font-bold'>
+											Bomb
+										</span> has <span className='font-bold'>5 HP</span>. At the{' '}
+										<span className='font-bold'>
+											beginning of its summoner's turn
+										</span>
+										, It performs{' '}
+										<span className='font-bold'>
+											"Attack 5 (AR 0-1 Brust, all players and monsters except
+											Bombers and Bombs). Flee."
+										</span>
+										)
+									</p>
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
+									on range 1, range 4 and range 7.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Bomber',
+					lv: NORMAL,
+					imageSrc: '/images/ks/monster-bomber.png',
+					hp: 20,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range X (X = intention value).
+									<br />
+									<p className='font-light italic leading-4 text-gray-800 mt-1'>
+										(<span className='text-red-900 font-bold'>Bomb</span> is a
+										special monster that shares spaces with other characters.
+										Use monster tokens to represent Bombs.
+										<br />
+										<span className='text-red-900 font-bold'>
+											Bomb
+										</span> has <span className='font-bold'>5 HP</span>. At the{' '}
+										<span className='font-bold'>
+											beginning of its summoner's turn
+										</span>
+										, It performs{' '}
+										<span className='font-bold'>
+											"Attack 5 (AR 0-1 Brust, all players and monsters except
+											Bombers and Bombs). Flee."
+										</span>
+										)
+									</p>
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+									<br />
+									Inflict 1 Immobolize to that player.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
+									on range 1, range 4 and range 7.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Bomber',
+					lv: ADVANCED,
+					imageSrc: '/images/ks/monster-bomber.png',
+					hp: 20,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range X (X = intention value).
+									<br />
+									<p className='font-light italic leading-4 text-gray-800 mt-1'>
+										(<span className='text-red-900 font-bold'>Bomb</span> is a
+										special monster that shares spaces with other characters.
+										Use monster tokens to represent Bombs.
+										<br />
+										<span className='text-red-900 font-bold'>
+											Bomb
+										</span> has <span className='font-bold'>8 HP</span>. At the{' '}
+										<span className='font-bold'>
+											beginning of its summoner's turn
+										</span>
+										, It performs{' '}
+										<span className='font-bold'>
+											"Attack 5 (AR 0-1 Brust, all players and monsters except
+											Bombers and Bombs). Flee."
+										</span>
+										)
+									</p>
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+									<br />
+									Inflict 1 Immobolize to that player.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
+									on range 1, range 4 and range 7.
+									<br /> Those{' '}
+									<span className='text-red-900 font-bold'>Bombs</span> perform
+									Move 1.
+								</p>
+							),
+						},
+					],
+				},
+				{
+					name: 'Bomber',
+					lv: ELITE,
+					imageSrc: '/images/ks/monster-bomber.png',
+					hp: 25,
+					firstIntention: OFFENSIVE,
+					actions: [
+						{
+							intention: OFFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
+									on range X-1 and range X+1 (X = intention value).
+									<br />
+									<p className='font-light italic leading-4 text-gray-800 mt-1'>
+										(<span className='text-red-900 font-bold'>Bomb</span> is a
+										special monster that shares spaces with other characters.
+										Use monster tokens to represent Bombs.
+										<br />
+										<span className='text-red-900 font-bold'>
+											Bomb
+										</span> has <span className='font-bold'>10 HP</span>. At the{' '}
+										<span className='font-bold'>
+											beginning of its summoner's turn
+										</span>
+										, It performs{' '}
+										<span className='font-bold'>
+											"Attack 7 (AR 0-1 Brust, all players and monsters except
+											Bombers and Bombs). Flee."
+										</span>
+										)
+									</p>
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on range 0.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of closest player.
+									<br />
+									Inflict 1 Immobolize to that player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [3, 4],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of 2nd closest player.
+									<br />
+									Inflict 1 Immobolize to that player.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
+							values: [5, 6],
+							content: (
+								<p>
+									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
+									on the space of 3rd closest player.
+									<br />
+									Inflict 1 Immobolize to that player.
+								</p>
+							),
+						},
+						{
+							intention: SPECIAL,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
+									on range 1, range 4 and range 7.
+									<br /> Those{' '}
+									<span className='text-red-900 font-bold'>Bombs</span> perform
+									Move 1.
 								</p>
 							),
 						},
@@ -854,14 +1455,14 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP (R 0).</p>,
+							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP (R 0).
+									Piercing Attack 2 (R 0). Heal 2 (Self).
 									<br />
 									Attack 2 (R 1). Attack 2 (R 1).
 									<br />
@@ -872,14 +1473,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP (R 0).</p>,
+							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP (R 0).
+									Piercing Attack 2 (R 0). Heal 2 (Self).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -892,7 +1493,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Place a monster token onto closet player, then set aside
+									Place a monster token onto closest player, then set aside
 									flyer&apos;s figure. Flyer is on the same space of marker.
 									<br />
 									If flyer is pushed/pulled or marked player dies, remove the
@@ -912,14 +1513,14 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP (R 0).</p>,
+							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP (R 0).
+									Piercing Attack 2 (R 0). Heal 2 (Self).
 									<br />
 									Attack 3 (R 1). Attack 3 (R 1).
 									<br />
@@ -930,14 +1531,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP (R 0).</p>,
+							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Drain 2 HP (R 0).
+									Piercing Attack 2 (R 0). Heal 2 (Self).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -950,7 +1551,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP (R 0).
+									Piercing Attack 2 (R 0). Heal 2 (Self).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -963,7 +1564,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Place a monster token onto closet player, then set aside
+									Place a monster token onto closest player, then set aside
 									flyer&apos;s figure. Flyer is on the same space of marker.
 									<br />
 									If flyer is pushed/pulled or marked player dies, remove the
@@ -983,14 +1584,14 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP & Discard 1 Blue/any cards (R 0).</p>,
+							content: <p>Discard 1 Blue/any cards (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Drain 2 HP & Discard 1 Blue/any cards (R 0).
+									Discard 1 Blue/any cards (R 0).
 									<br />
 									Attack 3 (R 1). Attack 3 (R 1).
 									<br />
@@ -1003,7 +1604,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP & Discard 1 Blue/any cards (R 0).
+									Discard 1 Blue/any cards (R 0).
 									<br />
 									Attack 2 (Brust R 0-2).
 									<br />
@@ -1014,14 +1615,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Drain 2 HP & Discard 1 Red/any cards (R 0).</p>,
+							content: <p>Discard 1 Red/any cards (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Drain 2 HP & Discard 1 Red/any cards (R 0).
+									Discard 1 Red/any cards (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1034,7 +1635,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Drain 2 HP & Discard 1 Red/any cards (R 0).
+									Discard 1 Red/any cards (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1047,7 +1648,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Place a monster token onto closet player, then set aside
+									Place a monster token onto closest player, then set aside
 									flyer&apos;s figure. Flyer is on the same space of marker.
 									<br />
 									If flyer is pushed/pulled or marked player dies, remove the
@@ -1067,14 +1668,14 @@ const KsMonstersPage = () => {
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Drain 4 HP & Discard 2 Blue/any cards (R 0).</p>,
+							content: <p>Discard 2 Blue/any cards (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Drain 4 HP & Discard 2 Blue/any cards (R 0).
+									Discard 2 Blue/any cards (R 0).
 									<br />
 									Attack 4 (R 1). Attack 4 (R 1).
 									<br />
@@ -1087,7 +1688,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Drain 4 HP & Discard 2 Blue/any cards (R 0).
+									Discard 2 Blue/any cards (R 0).
 									<br />
 									Attack 2 (Brust R 0-2).
 									<br />
@@ -1098,14 +1699,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Drain 4 HP & Discard 2 Red/any cards (R 0).</p>,
+							content: <p>Discard 2 Red/any cards (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Drain 4 HP & Discard 2 Red/any cards (R 0).
+									Discard 2 Red/any cards (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1118,7 +1719,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Drain 4 HP & Discard 2 Red/any cards (R 0).
+									Discard 2 Red/any cards (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1131,7 +1732,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Place a monster token onto closet player, then set aside
+									Place a monster token onto closest player, then set aside
 									flyer&apos;s figure. Flyer is on the same space of marker.
 									<br />
 									<span className='text-red-700 font-bold'>
@@ -1485,7 +2086,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster activate Offense X (X =
+									Block 5. Another closest monster activate Offense X (X =
 									current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1495,7 +2096,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Defense X (X
+									Block 5. Another closest monster activate current Defense X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1505,7 +2106,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Special X (X
+									Block 5. Another closest monster activate current Special X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1524,7 +2125,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster activate Offense X (X =
+									Block 5. Another closest monster activate Offense X (X =
 									current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1534,7 +2135,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Defense X (X
+									Block 5. Another closest monster activate current Defense X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1544,7 +2145,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster prepare a Defense intention
+									Block 5. Another closest monster prepare a Defense intention
 									card. If no other monster: Flee.
 								</p>
 							),
@@ -1554,7 +2155,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Special X (X
+									Block 5. Another closest monster activate current Special X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1573,7 +2174,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another closet monster activate Offense X (X =
+									Block 5. Another closest monster activate Offense X (X =
 									current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1583,7 +2184,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster prepare a Offense intention
+									Block 5. Another closest monster prepare a Offense intention
 									card. If no other monster: Flee.
 								</p>
 							),
@@ -1593,7 +2194,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Defense X (X
+									Block 5. Another closest monster activate current Defense X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1603,7 +2204,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster prepare a Defense intention
+									Block 5. Another closest monster prepare a Defense intention
 									card. If no other monster: Flee.
 								</p>
 							),
@@ -1613,7 +2214,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B'],
 							content: (
 								<p>
-									Block 5. Another closet monster activate current Special X (X
+									Block 5. Another closest monster activate current Special X (X
 									= current intention value). If no other monster: Flee.
 								</p>
 							),
@@ -1623,7 +2224,7 @@ const KsMonstersPage = () => {
 							values: ['C', 'D'],
 							content: (
 								<p>
-									Block 5. Another closet monster prepare a Special intention
+									Block 5. Another closest monster prepare a Special intention
 									card. If no other monster: Flee.
 								</p>
 							),
@@ -1642,8 +2243,8 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and activate Offense X
-									(X = current intention value). If no other monster: Flee.
+									Block 5. Another closest monster heals 5 and activate Offense
+									X (X = current intention value). If no other monster: Flee.
 								</p>
 							),
 						},
@@ -1652,7 +2253,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and prepare a Offense
+									Block 5. Another closest monster heals 5 and prepare a Offense
 									intention card. If no other monster: Flee.
 								</p>
 							),
@@ -1662,7 +2263,7 @@ const KsMonstersPage = () => {
 							values: [0, 1, 2, 3],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and activate current
+									Block 5. Another closest monster heals 5 and activate current
 									Defense X (X = current intention value). If no other monster:
 									Flee.
 								</p>
@@ -1673,7 +2274,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and prepare a Defense
+									Block 5. Another closest monster heals 5 and prepare a Defense
 									intention card. If no other monster: Flee.
 								</p>
 							),
@@ -1683,7 +2284,7 @@ const KsMonstersPage = () => {
 							values: ['A', 'B'],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and activate current
+									Block 5. Another closest monster heals 5 and activate current
 									Special X (X = current intention value). If no other monster:
 									Flee.
 								</p>
@@ -1694,7 +2295,7 @@ const KsMonstersPage = () => {
 							values: ['C', 'D'],
 							content: (
 								<p>
-									Block 5. Another closet monster heals 5 and prepare a Special
+									Block 5. Another closest monster heals 5 and prepare a Special
 									intention card. If no other monster: Flee.
 								</p>
 							),
@@ -1721,7 +2322,7 @@ const KsMonstersPage = () => {
 
 	return (
 		<>
-			<div className='px-8 py-24' style={{ width: '210%' }}>
+			<div className='px-8 py-24' style={{ width: '250%' }}>
 				<div className='flex flex-wrap mb-16'>
 					{monsters.map((monster, i) => (
 						<div
