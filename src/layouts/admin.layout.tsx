@@ -64,13 +64,7 @@ const routes = [
 
 const AdminLayout: React.FC = ({ children }) => {
 	const { pathname } = useRouter()
-	const { user: storedUser } = useContext(AppContext)
-
-	const { data: user } = useQuery<User | null>(['user', 'me'], apis.getMe, {
-		staleTime: 5 * 60 * 1000, // 5mins
-		enabled: !!storedUser,
-		initialData: storedUser,
-	})
+	const { user } = useContext(AppContext)
 
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true)
 

@@ -61,7 +61,7 @@ export const AppContext = createContext<AppContextProps>({
 })
 
 const AuthController = () => {
-	const { storedUser, setUser } = useContext(AppContext)
+	const { storedUser, setStoredUser, setUser } = useContext(AppContext)
 	const innerStoredUser = useRef<User | undefined>(undefined)
 
 	const { refetch } = useQuery<User | undefined>(
@@ -111,10 +111,30 @@ const App = ({ Component, pageProps }: AppProps) => {
 			user,
 			setUser,
 			storedUser,
-			setStoredUser,
+			setStoredUser: (user: User | undefined) => {
+				if (typeof window !== 'undefined') {
+					if (user) {
+						localStorage.setItem('tocc-user', JSON.stringify(user))
+					} else {
+						localStorage.removeItem('tocc-user')
+					}
+					setStoredUser(user)
+				}
+			},
 		}),
 		[isDialogOpened, storedUser, user]
 	)
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const userJson = localStorage.getItem('tocc-user')
+			try {
+				if (userJson) {
+					appContextValue.setStoredUser(JSON.parse(userJson))
+				}
+			} catch (_) {}
+		}
+	}, [])
 
 	const Layout = useMemo(
 		() => (router.pathname.startsWith('/admin') ? AdminLayout : GeneralLayout),

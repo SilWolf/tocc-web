@@ -13,13 +13,7 @@ import styles from './general.layout.module.css'
 import { AppContext } from 'pages/_app'
 
 const GeneralLayout: React.FC = ({ children }) => {
-	const { user: storedUser } = useContext(AppContext)
-
-	const { data: user } = useQuery<User | null>(['user', 'me'], apis.getMe, {
-		staleTime: 5 * 60 * 1000, // 5mins
-		enabled: !!storedUser,
-		initialData: storedUser,
-	})
+	const { user } = useContext(AppContext)
 
 	return (
 		<>
