@@ -1,12 +1,9 @@
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import React, { useCallback, useContext, useState } from 'react'
 
 import Dropdown from 'src/components/Dropdown'
-import apis from 'src/helpers/api/api.helper'
-import { User } from 'src/types'
 import Footer from 'src/widgets/Footer'
 import StrapiImg from 'src/widgets/StrapiImg'
 import styles from './admin.layout.module.css'
@@ -24,41 +21,6 @@ const routes = [
 		label: '劇本',
 		path: 'game',
 		icon: <i className='ra ra-perspective-dice-four'></i>,
-	},
-	{
-		label: '玩家',
-		path: 'player',
-		icon: <i className='bi bi-person-fill'></i>,
-	},
-	{
-		label: '玩家角色',
-		path: 'character',
-		icon: <i className='ra ra-fedora'></i>,
-	},
-	{
-		label: '城市',
-		path: 'city',
-		icon: <i className='ra ra-bridge'></i>,
-	},
-	{
-		label: 'NPC',
-		path: 'npc',
-		icon: <i className='ra ra-double-team'></i>,
-	},
-	{
-		label: '組織',
-		path: 'organization',
-		icon: <i className='ra ra-castle-flag'></i>,
-	},
-	{
-		label: '知識',
-		path: 'knowledge',
-		icon: <i className='ra ra-book'></i>,
-	},
-	{
-		label: '物品',
-		path: 'item',
-		icon: <i className='ra ra-key-basic'></i>,
 	},
 ]
 
@@ -96,6 +58,14 @@ const AdminLayout: React.FC = ({ children }) => {
 						))}
 					</div>
 					<div className='sidebar-footer'>
+						<a data-ripplet className='route-link' href='#'>
+							<span className='route-link-icon'>
+								<i className='bi bi-table'></i>
+							</span>
+							<span className='route-link-text'>
+								CMS後台 <i className='bi bi-box-arrow-up-right'></i>
+							</span>
+						</a>
 						<NextLink href={`/`} passHref>
 							<a data-ripplet className='route-link'>
 								<span className='route-link-icon'>

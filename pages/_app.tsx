@@ -61,7 +61,7 @@ export const AppContext = createContext<AppContextProps>({
 })
 
 const AuthController = () => {
-	const { storedUser, setStoredUser, setUser } = useContext(AppContext)
+	const { storedUser, setUser } = useContext(AppContext)
 	const innerStoredUser = useRef<User | undefined>(undefined)
 
 	const { refetch } = useQuery<User | undefined>(
@@ -132,9 +132,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 				if (userJson) {
 					appContextValue.setStoredUser(JSON.parse(userJson))
 				}
-			} catch (_) {}
+			} catch (_) {
+				/* */
+			}
 		}
-	}, [])
+	}, [appContextValue])
 
 	const Layout = useMemo(
 		() => (router.pathname.startsWith('/admin') ? AdminLayout : GeneralLayout),
