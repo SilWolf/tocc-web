@@ -2,16 +2,17 @@ import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 
 import { Input } from 'src/components/Form'
 import MedievalButton from 'src/components/MedievalButton'
-import apis, { getApis } from 'src/helpers/api/api.helper'
+import OrDivider from 'src/components/OrDivider'
+import apis from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
-	ProtectAuthPage,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import {
@@ -19,24 +20,32 @@ import {
 	PlayerVerificationRegister_Req,
 	SessionUser,
 	User,
-	USER_ROLE,
 } from 'src/types/User.type'
 import StrapiImg from 'src/widgets/StrapiImg'
 
-type FormProps = Partial<PlayerVerificationRegister_Req>
+import { AppContext } from 'pages/_app'
 
-type Props = {
-	user: User
+type FormProps = Partial<PlayerVerificationRegister_Req> & {
+	username: string
+	password: string
+	confirmPassword: string
 }
 
-const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
-	const router = useRouter()
+type Props = {
+	user?: User
+}
 
-	const [step, setStep] = useState<number>(0)
+const AuthRegisterPage: NextPage<Props> = (props: Props) => {
+	const router = useRouter()
+	const queryClient = useQueryClient()
+	const { user, setStoredUser } = useContext(AppContext)
+
+	const [step, setStep] = useState<number>(props.user ? 1 : 0)
 	const [pv, setPv] = useState<PlayerVerification | undefined>(undefined)
 
 	const {
 		register,
+		watch,
 		handleSubmit: rhfHandleSubmit,
 		reset,
 		setError,
@@ -47,8 +56,21 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 			name: '',
 			displayName: '',
 			email: '',
+			username: '',
+			password: '',
+			confirmPassword: '',
 		},
 	})
+
+	const handleSubmitRegister = useCallback(
+		({ username, password }) => {
+			apis.postRegister(username, password).then(({ user }) => {
+				setStoredUser(user)
+				setStep(1)
+			})
+		},
+		[setStoredUser]
+	)
 
 	const handleSubmitVerification = useCallback(
 		({ verificationCode }) => {
@@ -56,12 +78,12 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 				.getPlayerVerificationByCode(verificationCode)
 				.then((_pv) => {
 					if (_pv) {
-						setStep(1)
+						setStep(2)
 						setPv(_pv)
 						reset({
 							name: _pv.name,
 							displayName: _pv.displayName,
-							email: user.email,
+							email: user?.email,
 							verificationCode: _pv.verificationCode,
 						})
 					} else {
@@ -76,31 +98,112 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 					})
 				})
 		},
-		[reset, setError, user.email]
+		[reset, setError, user]
 	)
 
-	const handleSubmitRegistration = useCallback(
+	const handleSubmitBinding = useCallback(
 		(values) => {
 			apis
 				.patchUserToPlayer(values)
 				.then(() => {
-					// router.push('/')
+					queryClient.invalidateQueries(['user', 'me'])
+					router.push('/auth/registerComplete')
 				})
 				.catch(() => {
 					toast.error('註冊失敗，請稍後再試或聯絡DM。')
 				})
 		},
-		[router]
+		[queryClient, router]
 	)
 
-	if (pv && step === 1) {
+	useEffect(() => {
+		let _newStep = step
+		if (_newStep === 0 && user) {
+			_newStep = 1
+		}
+		if (_newStep === 1) {
+			const presetVerificationCode = router.query?.code
+			if (presetVerificationCode) {
+				handleSubmitVerification({ presetVerificationCode })
+			}
+		}
+		setStep(_newStep)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	if (!user && step === 0) {
+		return (
+			<div className='container max-w-screen-mobile'>
+				<div className='parchment framed'>
+					<div className='space-y-8'>
+						<h2>註冊帳號</h2>
+						<MedievalButton
+							href='/auth/connect/google/authorize'
+							color='secondary'
+						>
+							<div className='flex items-center justify-center'>
+								<img
+									src='https://developers.google.com/identity/images/g-logo.png'
+									alt='Google'
+									className='inline-block h-5 w-5 mr-2 align-middle'
+								/>
+								<span>使用Google登錄以繼續註冊程序</span>
+							</div>
+						</MedievalButton>
+
+						<div className='mx-8'>
+							<OrDivider />
+						</div>
+
+						<form
+							className='space-y-6'
+							onSubmit={rhfHandleSubmit(handleSubmitRegister)}
+						>
+							<Input
+								type='email'
+								label='Email'
+								maxLength={255}
+								{...register('username', { required: true, maxLength: 255 })}
+								error={errors['username']}
+							/>
+							<Input
+								type='password'
+								label='密碼'
+								minLength={8}
+								maxLength={32}
+								{...register('password', {
+									required: true,
+									minLength: 8,
+									maxLength: 32,
+								})}
+								error={errors['password']}
+							/>
+							<Input
+								type='password'
+								label='再次輸入密碼'
+								{...register('confirmPassword', {
+									required: true,
+									validate: (value) =>
+										value === watch('password') || '密碼不相符',
+								})}
+								error={errors['confirmPassword']}
+							/>
+							<MedievalButton type='submit'>註冊以繼續程序</MedievalButton>
+						</form>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	if (pv && step === 2) {
 		return (
 			<>
 				<div className='container max-w-screen-mobile'>
 					<div className='parchment framed'>
 						<form
 							className='space-y-6'
-							onSubmit={rhfHandleSubmit(handleSubmitRegistration)}
+							onSubmit={rhfHandleSubmit(handleSubmitBinding)}
 						>
 							<h4>驗證玩家</h4>
 							<p>請填寫以下資料以完成註冊程序。</p>
@@ -230,30 +333,23 @@ const AuthRegisterPage: NextPage<Props> = ({ user }: Props) => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = ProtectAuthPage(
+export const getServerSideProps: GetServerSideProps =
 	serverSidePropsWithSession(
 		async (context: GetServerSidePropsContextWithIronSession) => {
 			const sessionUser = context.req.session.get<SessionUser>('sessionUser')
-			const apis = getApis({ jwt: sessionUser?.jwt })
 
-			const [user] = await Promise.all([apis.getMe()])
-
-			if (user.role?.name !== USER_ROLE.NORMAL) {
+			if (!sessionUser?.user) {
 				return {
-					redirect: {
-						destination: '/',
-						permanent: false,
-					},
+					props: {},
 				}
 			}
 
 			return {
 				props: {
-					user,
+					user: sessionUser?.user,
 				},
 			}
 		}
 	)
-)
 
 export default AuthRegisterPage

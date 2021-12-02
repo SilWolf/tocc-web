@@ -95,6 +95,11 @@ const Input = ({
 					return '此欄位必須填寫'
 				}
 				return `${label} 必須填寫`
+
+			case 'minLength':
+				return `${label} 過短`
+			case 'maxLength':
+				return `${label} 過長`
 		}
 
 		return '錯誤'

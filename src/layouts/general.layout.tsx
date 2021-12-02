@@ -1,11 +1,9 @@
 import NextLink from 'next/link'
 
-import React, { useContext, useEffect } from 'react'
-import { useQuery } from 'react-query'
+import React, { useContext } from 'react'
 
 import Dropdown from 'src/components/Dropdown'
-import apis from 'src/helpers/api/api.helper'
-import { User, USER_ROLE } from 'src/types/User.type'
+import { USER_ROLE } from 'src/types/User.type'
 import Footer from 'src/widgets/Footer'
 import StrapiImg from 'src/widgets/StrapiImg'
 import styles from './general.layout.module.css'

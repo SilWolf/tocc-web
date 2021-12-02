@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import {
 	createContext,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -77,6 +78,7 @@ const AuthController = () => {
 	)
 
 	useEffect(() => {
+		console.log('auth controller', storedUser, innerStoredUser.current)
 		if (
 			(storedUser !== undefined && innerStoredUser.current === undefined) ||
 			(storedUser === undefined && innerStoredUser.current !== undefined)
@@ -98,6 +100,20 @@ const App = ({ Component, pageProps }: AppProps) => {
 	const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 	const [dialogOptions, setDialogOptions] = useState<DialogProps>({})
 
+	const setStoredUserWithLocalStorage = useCallback(
+		(user: User | undefined) => {
+			if (typeof window !== 'undefined') {
+				if (user) {
+					localStorage.setItem('tocc-user', JSON.stringify(user))
+				} else {
+					localStorage.removeItem('tocc-user')
+				}
+				setStoredUser(user)
+			}
+		},
+		[]
+	)
+
 	const appContextValue = useMemo(
 		() => ({
 			isDialogOpened: isDialogOpened,
@@ -111,18 +127,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 			user,
 			setUser,
 			storedUser,
-			setStoredUser: (user: User | undefined) => {
-				if (typeof window !== 'undefined') {
-					if (user) {
-						localStorage.setItem('tocc-user', JSON.stringify(user))
-					} else {
-						localStorage.removeItem('tocc-user')
-					}
-					setStoredUser(user)
-				}
-			},
+			setStoredUser: setStoredUserWithLocalStorage,
 		}),
-		[isDialogOpened, storedUser, user]
+		[isDialogOpened, setStoredUserWithLocalStorage, storedUser, user]
 	)
 
 	useEffect(() => {
@@ -136,7 +143,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 				/* */
 			}
 		}
-	}, [appContextValue])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	const Layout = useMemo(
 		() => (router.pathname.startsWith('/admin') ? AdminLayout : GeneralLayout),

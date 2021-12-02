@@ -52,6 +52,23 @@ export const getApis = (config?: { jwt?: string }) => {
 	const api = getInstance(config)
 
 	return {
+		postRegister: async (
+			username: string,
+			password: string
+		): Promise<{
+			jwt: string
+			user: User
+		}> => {
+			return api.post<{
+				jwt: string
+				user: User
+			}>('/auth/local/register', {
+				username,
+				email: username,
+				password,
+			})
+		},
+
 		postLogin: async (
 			identifier: string,
 			password: string
