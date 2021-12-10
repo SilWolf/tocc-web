@@ -19,9 +19,55 @@ type PageProps = {
 }
 
 const CharacterCreatePage: NextPage<PageProps> = () => {
-	const racesQuery = useQuery<Race[]>(['races'], apis.getRaces, {
+	const racesQuery = useQuery(['races'], apis.getRaces, {
 		select: (races) => {
-			return races
+			races.sort((a, b) => a.order - b.order)
+
+			const optGroupsMap: Record<
+				string,
+				{ id: string; order: number; race: Race; children: Race[] }
+			> = races
+				.filter((race) => race.isParentRace)
+				.reduce<
+					Record<
+						string,
+						{ id: string; order: number; race: Race; children: Race[] }
+					>
+				>((prev, race) => {
+					prev[race.id] = {
+						id: race.id,
+						order: race.order,
+						race,
+						children: [],
+					}
+					return prev
+				}, {})
+
+			optGroupsMap['others'] = {
+				id: 'others',
+				order: 999999,
+				race: {
+					id: '-others',
+					name: '其他',
+					order: 999999,
+					isParentRace: true,
+				},
+				children: [],
+			}
+
+			for (const race of races) {
+				if (race.isParentRace) {
+					continue
+				}
+
+				if (!race.parentRace) {
+					optGroupsMap['others'].children.push(race)
+				} else if (optGroupsMap[race.parentRace]) {
+					optGroupsMap[race.parentRace].children.push(race)
+				}
+			}
+
+			return Object.values(optGroupsMap).sort((a, b) => a.order - b.order)
 		},
 	})
 
@@ -43,7 +89,7 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 				<div className='parchment framed'>
 					<p>這頁面將會引導您建立一個完整的TOCC角色。</p>
 					<p>
-						建立的角色將會符合 Dragon &#38; Dungeon
+						建立的角色將會符合 Dungeon &#38;Dragon
 						規範，即使不懂得規則也沒關係。
 					</p>
 				</div>
@@ -66,9 +112,21 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 						神族逝去、龍族沒落。時過境遷，在這一由凡人統治的時代裡，你的角色也將作為奇幻世界下一名智慧物種，在歷史上留下一筆偉名。
 					</p>
 
-					<p>請選擇一名種族作為角色的種族：</p>
+					<p>請選擇角色的種族：</p>
 
-					<Input type='select'></Input>
+					{racesQuery.data && (
+						<Input type='select'>
+							{racesQuery.data.map((optGroup) => (
+								<optgroup key={optGroup.id} label={optGroup.race.name}>
+									{optGroup.children.map((race) => (
+										<option key={race.id} value={race.id}>
+											{race.name}
+										</option>
+									))}
+								</optgroup>
+							))}
+						</Input>
+					)}
 				</div>
 			</div>
 		</>

@@ -110,7 +110,7 @@ export const DEFAULT_CHARACTER: Character = {
 	factTouchedCharacterCount: 0,
 
 	player: { id: '', username: '', name: '--', displayName: '--' },
-	race: { id: '', name: '--' },
+	race: { id: '', name: '--', order: 0, isParentRace: false },
 	clses: [{ id: '', name: '--' }],
 	city: { id: '', name: '--', code: '' },
 	background: { id: '', name: '--' },
