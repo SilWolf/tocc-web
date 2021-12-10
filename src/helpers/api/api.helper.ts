@@ -16,6 +16,7 @@ import {
 import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
 import { Promotion } from 'src/types/Promotion.type'
+import { Race } from 'src/types/Race.type'
 import { Media } from 'src/types/utils/Media.type'
 
 import { ExtendedAxiosRequestConfig, getInstance } from './api.service'
@@ -269,6 +270,8 @@ export const getApis = (config?: { jwt?: string }) => {
 				})
 				.then((newImages) => newImages[0])
 		},
+
+		getRaces: async (): Promise<Race[]> => api.get('/races'),
 	}
 }
 
