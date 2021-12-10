@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 
 import React from 'react'
 import { useQuery } from 'react-query'
+import Alert from 'src/components/Alert'
 
 import Breadcrumb from 'src/components/Breadcrumb'
 import { Input } from 'src/components/Form'
@@ -89,7 +90,7 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 				<div className='parchment framed'>
 					<p>這頁面將會引導您建立一個完整的TOCC角色。</p>
 					<p>
-						建立的角色將會符合 Dungeon &#38;Dragon
+						建立的角色將會符合 Dungeon &#38; Dragon
 						規範，即使不懂得規則也沒關係。
 					</p>
 				</div>
@@ -98,8 +99,8 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 					<div className='flex text-center items-center'>
 						<div className='flex-1'>1. 選擇種族</div>
 						<div className='flex-1'>2. 選擇背景</div>
-						<div className='flex-1'>3. 分配能力值點數</div>
-						<div className='flex-1'>4. 背景故事</div>
+						<div className='flex-1'>3. 分配能力值</div>
+						<div className='flex-1'>4. 技能</div>
 						<div className='flex-1'>5. 職業</div>
 					</div>
 				</div>
@@ -112,7 +113,9 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 						神族逝去、龍族沒落。時過境遷，在這一由凡人統治的時代裡，你的角色也將作為奇幻世界下一名智慧物種，在歷史上留下一筆偉名。
 					</p>
 
-					<p>請選擇角色的種族：</p>
+					<p>
+						請選擇角色的種族。不同種族之間各有其特性與優勢，仔細選擇心儀的種族吧！
+					</p>
 
 					{racesQuery.data && (
 						<Input type='select'>
@@ -127,6 +130,117 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 							))}
 						</Input>
 					)}
+				</div>
+
+				<div className='parchment space-y-4'>
+					<h3>2. 選擇背景</h3>
+					<p className='italic'>
+						生物由出生到成長，經歷的命運無窮無盡。兩個完全一樣的個體是不存在的。
+						<br />
+						隨著長大成年，隨著認識到了生存的意思，隨著學會了戰鬥，那便成為了一個人的背景。
+					</p>
+
+					<p>
+						請選擇角色的背景。背景往往與角色如何學會戰鬥、如果成為等級1的冒險者，以及與冒險的目標息息相關，也是增加角色色彩的重要一環。
+					</p>
+
+					{racesQuery.data && (
+						<Input type='select'>
+							{racesQuery.data.map((optGroup) => (
+								<optgroup key={optGroup.id} label={optGroup.race.name}>
+									{optGroup.children.map((race) => (
+										<option key={race.id} value={race.id}>
+											{race.name}
+										</option>
+									))}
+								</optgroup>
+							))}
+						</Input>
+					)}
+				</div>
+
+				<div className='parchment space-y-4'>
+					<h3>3. 分配能力值</h3>
+					<p className='italic'>
+						即便是擁有同一血脈的親族，個體間也充滿差異，這是神的巧思。
+						<br />
+						凡人總是充滿著缺憾與不足，卻又各擁有著特長，當兩個人走在一起，就能互相彌補對方的不足。
+					</p>
+
+					<p>
+						請分配角色的能力值。你在前面選擇的種族也會提供一定的能力值加成。每項能力都各有其用處，請謹慎分配。
+					</p>
+
+					<Alert type='warning'>
+						在 Dungeon &#38; Dragon
+						的戰鬥中，能力值佔了一個十分重要的地位，建議先了解戰鬥的玩法後，再決定能力值的分配。
+					</Alert>
+
+					<table>
+						<tr>
+							<td>力量</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>力量代表著肌肉力量，是戰士、野蠻人等前衛職業的核心屬性。</p>
+								<ul>
+									<li>進行近戰武器攻擊和徒手攻擊時，你的命中及傷害+X</li>
+									<li>你的助跑跳躍距離為X呎(跳遠)和Y呎(跳高)</li>
+									<li>你可負重X磅</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td>敏捷</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>
+									敏捷代表著活動能力，是盜賊、遊俠等重視隱密的職業的核心屬性。
+								</p>
+								<ul>
+									<li>進行遠程武器攻擊和以靈巧武器攻擊時，你的命中及傷害+X</li>
+									<li>戰鬥前的先攻值+X</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td>體質</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>體質代表著生命力，是能提升戰鬥存活率的泛用屬性。</p>
+								<ul>
+									<li>你的HP+X/每等級</li>
+									<li>你可承受窒息X回合</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td>智力</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>智力代表著知識量，是法師的核心屬性。</p>
+							</td>
+						</tr>
+						<tr>
+							<td>感知</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>感知代表著運用經驗的智慧。</p>
+							</td>
+						</tr>
+						<tr>
+							<td>魅力</td>
+							<td></td>
+							<td></td>
+							<td>
+								<p>魅力代表著存在感及人緣。</p>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</>

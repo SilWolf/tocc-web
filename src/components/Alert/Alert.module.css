@@ -29,8 +29,8 @@
 
 .alert:global(.alert-warning) {
 	--alert-background: rgba(247, 227, 153);
-	--alert-border-color: #deb110;
-	--alert-color: #deb110;
+	--alert-border-color: #997906;
+	--alert-color: #997906;
 }
 
 .alert:global(.alert-info) {
