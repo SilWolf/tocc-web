@@ -22,13 +22,23 @@ const routes = [
 		path: 'game',
 		icon: <i className='ra ra-perspective-dice-four'></i>,
 	},
+	{
+		label: '玩家',
+		path: 'player',
+		icon: <i className='bi bi-person-fill'></i>,
+	},
+	{
+		label: '角色',
+		path: 'character',
+		icon: <i className='ra ra-fedora'></i>,
+	},
 ]
 
 const AdminLayout: React.FC = ({ children }) => {
 	const { pathname } = useRouter()
 	const { user } = useContext(AppContext)
 
-	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(true)
+	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false)
 
 	const handleClickCollapse = useCallback(() => {
 		setIsSidebarCollapsed((prev) => !prev)

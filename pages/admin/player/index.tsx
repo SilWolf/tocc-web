@@ -89,14 +89,17 @@ const AdminPlayerPage: NextPage = () => {
 	)
 
 	const [apiParams, setApiParams] = useState<ApiGetParams>({})
-	const { data } = useQuery(
+	const { data: playerData } = useQuery(
 		['users', { params: apiParams }],
 		() => apis.dmGetPlayers({ params: apiParams }),
 		{
 			keepPreviousData: true,
 		}
 	)
-	const { data: dataTotal } = useQuery(['users', 'count'], apis.getPlayersCount)
+	const { data: playerDataTotal } = useQuery(
+		['users', 'count'],
+		apis.getPlayersCount
+	)
 
 	const handleTableChangeState = useCallback((state: DataTableState<User>) => {
 		setApiParams(convertDataTableStateToApiParams(state))
@@ -112,8 +115,8 @@ const AdminPlayerPage: NextPage = () => {
 					</NextLink>
 				</div>
 				<DataTable
-					data={data || []}
-					dataTotal={dataTotal}
+					data={playerData || []}
+					dataTotal={playerDataTotal}
 					columns={columns}
 					onChangeState={handleTableChangeState}
 				/>

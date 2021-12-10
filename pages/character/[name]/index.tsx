@@ -58,7 +58,7 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character, user }) => {
 						</div>
 					</div>
 					<div className='flex-none space-x-2 text-sm text-gray-200'>
-						{/* {user?.id && character.player?.id === user.id && (
+						{user?.id && character.player?.id === user.id && (
 							<NextLink href={`/character/${character.name}/edit`} passHref>
 								<a
 									data-ripplet
@@ -67,7 +67,7 @@ const CharacterProfilePage: NextPage<PageProps> = ({ character, user }) => {
 									<i className='bi bi-pencil-fill'></i> 修改角色
 								</a>
 							</NextLink>
-						)} */}
+						)}
 						<button
 							data-ripplet
 							className='h-8 w-8 border border-gray-200 bg-black'

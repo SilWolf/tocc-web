@@ -22,7 +22,7 @@ export type GameOutlineItem = {
 
 export type GameOutlineReward = {
 	id: string
-	isPerPlayer: boolean
+	isPerPlayer: string
 	amount: number
 	unit: string
 	remark: string

@@ -59,12 +59,13 @@ const GameOutlineItemModal = ({
 			id: nanoid(12),
 			amount: 0,
 			unit: 'xp',
-			isPerPlayer: false,
+			isPerPlayer: '0',
 		})
 	}, [rewardFA])
 
 	const handleSubmit = useCallback(
 		(value) => {
+			console.log(value)
 			onChange(value)
 		},
 		[onChange]
@@ -122,12 +123,10 @@ const GameOutlineItemModal = ({
 														{...register(`rewards.${fieldI}.id`)}
 													/>
 													<select
-														{...register(`rewards.${fieldI}.isPerPlayer`, {
-															setValueAs: (value) => value === 'true',
-														})}
+														{...register(`rewards.${fieldI}.isPerPlayer`)}
 													>
-														<option value='false'>平分</option>
-														<option value='true'>每人</option>
+														<option value='0'>平分</option>
+														<option value='1'>每人</option>
 													</select>
 												</td>
 												<td>
@@ -305,7 +304,7 @@ const GameOutlineAndRewardTable = ({
 					prev[rewardId].characterMap[characterId].ratio = 0
 				}
 
-				if (reward.isPerPlayer) {
+				if (reward.isPerPlayer === '1') {
 					prev[rewardId].denominator = 1
 				} else {
 					prev[rewardId].denominator = Object.values(
@@ -467,7 +466,7 @@ const GameOutlineAndRewardTable = ({
 				rewards: [
 					{
 						id: nanoid(16),
-						isPerPlayer: true,
+						isPerPlayer: '0',
 						amount: 0,
 						unit: 'xp',
 						remark: '',

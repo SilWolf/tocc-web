@@ -32,3 +32,9 @@
 	--alert-border-color: #deb110;
 	--alert-color: #deb110;
 }
+
+.alert:global(.alert-info) {
+	--alert-background: rgba(207, 229, 232);
+	--alert-border-color: #098c9e;
+	--alert-color: #098c9e;
+}

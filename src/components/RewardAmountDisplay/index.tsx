@@ -4,7 +4,7 @@ const RewardAmountDisplay = React.memo(
 	(props: {
 		amount: number
 		unit: string
-		isPerPlayer?: boolean
+		isPerPlayer?: string
 		showOnZero?: boolean
 	}) => {
 		if (
@@ -18,7 +18,7 @@ const RewardAmountDisplay = React.memo(
 			<span>
 				{props.isPerPlayer === undefined
 					? ''
-					: props.isPerPlayer === true
+					: props.isPerPlayer === '1'
 					? '每人 '
 					: '平分 '}
 				{props.amount.toFixed(0)} {props.unit}
