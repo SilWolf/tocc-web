@@ -63,21 +63,21 @@ export const getInstance = (config?: { jwt?: string }) => {
 		},
 		post: async <T = unknown>(
 			url: string,
-			data?: Record<string, unknown>,
+			data?: any,
 			config?: ExtendedAxiosRequestConfig
 		): Promise<T> => {
 			return _instance.post<T>(url, data, config).then((res) => res.data)
 		},
 		put: async <T = unknown>(
 			url: string,
-			data?: Record<string, unknown>,
+			data?: any,
 			config?: ExtendedAxiosRequestConfig
 		): Promise<T> => {
 			return _instance.put<T>(url, data, config).then((res) => res.data)
 		},
 		patch: async <T = unknown>(
 			url: string,
-			data?: Record<string, unknown>,
+			data?: any,
 			config?: ExtendedAxiosRequestConfig
 		): Promise<T> => {
 			return _instance.patch<T>(url, data, config).then((res) => res.data)

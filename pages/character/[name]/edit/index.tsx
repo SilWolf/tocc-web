@@ -1,30 +1,51 @@
 import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 
-import { getApis } from 'helpers/api/api.helper'
+import apis, { getApis } from 'helpers/api/api.helper'
 
 import Alert from 'src/components/Alert'
 import Breadcrumb from 'src/components/Breadcrumb'
-import ReactHTML from 'src/components/ReactHTML'
 import {
 	GetServerSidePropsContextWithIronSession,
 	serverSidePropsWithSession,
 } from 'src/hooks/withSession.hook'
 import { Character } from 'src/types'
 import { DEFAULT_CHARACTER } from 'src/types/Character.type'
-import { SessionUser, User, USER_ROLE } from 'src/types/User.type'
+import { SessionUser, USER_ROLE } from 'src/types/User.type'
+import ImageUploader from 'src/widgets/ImageUploader'
 import StrapiImg from 'src/widgets/StrapiImg'
 
 import classNames from 'classnames'
+import { nanoid } from 'nanoid'
 
 type PageProps = {
 	character: Character
-	player: User
 }
 
-const CharacterEditPage: NextPage<PageProps> = ({ character, player }) => {
+const CharacterEditPage: NextPage<PageProps> = ({ character: _character }) => {
+	const [character, setCharacter] = useState<Character>(_character)
+
+	const handleChangePortraitImage = useCallback(
+		(blob) => {
+			apis
+				.postFile(blob, `${nanoid(12)}.jpg`)
+				.then((media) =>
+					apis.patchCharacterById(character.id, {
+						portraitImage: media.id,
+					})
+				)
+				.then((newCharacter) => {
+					setCharacter((prev) => ({
+						...prev,
+						portraitImage: newCharacter.portraitImage,
+					}))
+				})
+		},
+		[character.id]
+	)
+
 	return (
 		<>
 			{character.coverImage?.url && (
@@ -61,42 +82,39 @@ const CharacterEditPage: NextPage<PageProps> = ({ character, player }) => {
 							</Breadcrumb>
 						</div>
 					</div>
-					<div className='flex-none space-x-2 text-sm text-gray-200'>
-						<NextLink href={`/character/${character.name}/edit`} passHref>
-							<a
-								data-ripplet
-								className='inline-block leading-8 h-8 px-2 border border-gray-200 bg-black'
-							>
-								<i className='bi bi-pencil-fill'></i> 修改角色
-							</a>
-						</NextLink>
-						<button
-							data-ripplet
-							className='h-8 w-8 border border-gray-200 bg-black'
-						>
-							<i className='bi bi-link-45deg'></i>
-						</button>
-					</div>
+					<div className='flex-none space-x-2 text-sm text-gray-200'></div>
 				</div>
 
-				<div className='grid grid-cols-1 tablet:grid-cols-3 laptop:grid-cols-3 tablet:gap-6 laptop:gap-6'>
-					<div className='space-y-6'>
+				<div className='flex gap-6'>
+					<div className='w-56 space-y-6'>
 						<div className='parchment'>
 							<a href='#'>角色外觀資料</a>
 						</div>
 					</div>
-					<div className={classNames('col-span-2 space-y-8')}>
+					<div className='flex-1 space-y-6'>
 						<div className='parchment space-y-6'>
 							<h2 className='mb-4'>角色自定義</h2>
 							<Alert>
 								<p>這範疇的資訊無須審查，儲存後會即時生效。</p>
 							</Alert>
-							<table>
-								<tr>
-									<td className='w-24'>角色頭像</td>
-									<td></td>
-								</tr>
-							</table>
+							<div className='flex gap-x-6'>
+								<div className='flex-1'></div>
+								<div className='w-48 space-y-6'>
+									<div>
+										<h5>頭像</h5>
+										<div>
+											<ImageUploader onSubmit={handleChangePortraitImage}>
+												<div className='aspect-w-1 aspect-h-1'>
+													<StrapiImg
+														className='w-48 h-48'
+														image={character?.portraitImage}
+													/>
+												</div>
+											</ImageUploader>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 
 						<div className='parchment space-y-6'>
@@ -126,6 +144,7 @@ export const getServerSideProps: GetServerSideProps =
 					redirect: {
 						destination: '/403',
 					},
+					props: {},
 				}
 			}
 
@@ -140,6 +159,7 @@ export const getServerSideProps: GetServerSideProps =
 			if (!characterByName) {
 				return {
 					notFound: true,
+					props: {},
 				}
 			}
 
@@ -159,6 +179,7 @@ export const getServerSideProps: GetServerSideProps =
 					redirect: {
 						destination: '/403',
 					},
+					props: {},
 				}
 			}
 
@@ -170,7 +191,6 @@ export const getServerSideProps: GetServerSideProps =
 			return {
 				props: {
 					character,
-					user: sessionUser?.user,
 				},
 			}
 		}

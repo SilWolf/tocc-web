@@ -16,6 +16,7 @@ import {
 import { DataTableState } from 'src/components/DataTable'
 import { Character } from 'src/types'
 import { Promotion } from 'src/types/Promotion.type'
+import { Media } from 'src/types/utils/Media.type'
 
 import { ExtendedAxiosRequestConfig, getInstance } from './api.service'
 
@@ -159,6 +160,9 @@ export const getApis = (config?: { jwt?: string }) => {
 				cache: { maxAge: 5 * 60 * 1000 },
 			}),
 
+		patchCharacterById: async (id: string, payload: any): Promise<Character> =>
+			api.put<Character>(`/characters/${id}`, payload),
+
 		dmGetPlayers: async ({
 			params,
 			...config
@@ -252,6 +256,19 @@ export const getApis = (config?: { jwt?: string }) => {
 				`/player-verifications/${payload.verificationCode}/register`,
 				payload
 			),
+
+		postFile: async (file: File | Blob, filename?: string): Promise<Media> => {
+			const formData = new FormData()
+			formData.append('files', file, filename || (file as File).name)
+
+			return api
+				.post<Media[]>('/upload', formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
+				})
+				.then((newImages) => newImages[0])
+		},
 	}
 }
 

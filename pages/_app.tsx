@@ -23,6 +23,7 @@ import 'rpg-awesome/css/rpg-awesome.min.css'
 import 'swiper/css'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import 'react-image-crop/dist/ReactCrop.css'
 import 'src/styles/globals.css'
 
 const queryClient = new QueryClient({

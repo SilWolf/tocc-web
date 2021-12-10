@@ -1,4 +1,5 @@
 import React, { ImgHTMLAttributes, useMemo } from 'react'
+
 import { Media } from 'src/types/utils/Media.type'
 
 type Props = ImgHTMLAttributes<HTMLImageElement> & {
@@ -34,9 +35,9 @@ const StrapiImg = ({ image, size, src, ...others }: Props): JSX.Element => {
 			_width: image.width,
 			_height: image.height,
 		}
-	}, [size])
+	}, [image, size])
 
-	return <img src={_src} width={_width} height={_height} {...others} />
+	return <img src={_src} width={_width} height={_height} alt='' {...others} />
 }
 
 export default React.memo(StrapiImg)

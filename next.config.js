@@ -8,4 +8,12 @@ module.exports = {
 			},
 		]
 	},
+	async rewrites() {
+		return [
+			{
+				source: '/api/upload',
+				destination: process.env.API_ENDPOINT + '/upload',
+			},
+		]
+	},
 }

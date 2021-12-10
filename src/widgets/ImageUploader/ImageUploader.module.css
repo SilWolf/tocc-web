@@ -1,0 +1,15 @@
+.ImageUploader:global() {
+	position: relative;
+	cursor: pointer;
+}
+
+.ImageUploader :global(.dropzone-edit-button) {
+	position: absolute;
+	font-size: 12px;
+	bottom: 4px;
+	right: 4px;
+	padding: 4px;
+	background: rgba(255, 255, 255, 0.87);
+	border: 1px solid #bbb;
+	border-radius: 4px;
+}
