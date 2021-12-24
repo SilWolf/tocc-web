@@ -1,0 +1,27 @@
+.AttributeChangerStepper :global(.ns-button-plus),
+.AttributeChangerStepper :global(.ns-button-minus) {
+	font-size: 0.8rem;
+	background: #999;
+	width: 24px;
+	height: 18px;
+}
+
+.AttributeChangerStepper :global(.ns-button) {
+	background: #00f;
+	color: #fff;
+}
+
+.AttributeChangerStepper :global(.ns-button-bonus) {
+	background: #060;
+	color: #fff;
+}
+
+.AttributeChangerStepper :global(.ns-value) {
+	font-size: 2.5rem;
+	line-height: 2.5rem;
+}
+
+.AttributeChangerStepper :global(.ns-point) {
+	font-size: 0.8rem;
+	line-height: 0.8rem;
+}

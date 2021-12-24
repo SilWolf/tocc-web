@@ -1,12 +1,13 @@
 import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useQuery } from 'react-query'
 import Alert from 'src/components/Alert'
 
 import Breadcrumb from 'src/components/Breadcrumb'
 import { Input } from 'src/components/Form'
+import AttributeChanger from 'src/widgets/AttributeChanger'
 import apis, { getApis } from 'src/helpers/api/api.helper'
 import {
 	GetServerSidePropsContextWithIronSession,
@@ -71,6 +72,10 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 			return Object.values(optGroupsMap).sort((a, b) => a.order - b.order)
 		},
 	})
+
+	const handleChangeAttribute = useCallback((result) => {
+		console.log(result)
+	}, [])
 
 	return (
 		<>
@@ -141,7 +146,38 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 					</p>
 
 					<p>
-						請選擇角色的背景。背景往往與角色如何學會戰鬥、如果成為等級1的冒險者，以及與冒險的目標息息相關，也是增加角色色彩的重要一環。
+						請選擇角色的背景。背景往往與角色如何學會戰鬥、如何成為等級1的冒險者，以及與冒險的目標息息相關，也是增加角色色彩的重要一環。
+					</p>
+
+					{racesQuery.data && (
+						<Input type='select'>
+							{racesQuery.data.map((optGroup) => (
+								<optgroup key={optGroup.id} label={optGroup.race.name}>
+									{optGroup.children.map((race) => (
+										<option key={race.id} value={race.id}>
+											{race.name}
+										</option>
+									))}
+								</optgroup>
+							))}
+						</Input>
+					)}
+				</div>
+
+				<div className='parchment space-y-4'>
+					<h3>3. 選擇起始職業</h3>
+					<p className='italic'>
+						每人都有他的導師，教導他如何在危惡的世界中生存。
+						<br />
+						最初學會的戰鬥技巧，便是一生用於保護自己的能力，亦是打開未來道路的鑰匙。
+					</p>
+
+					<p>
+						請選擇角色的起始職業。此職業是角色達到等級1時的職業，與角色的背景息息相關。
+						<br />
+						比方說士兵出身的角色，很可能是一名戰士；孤兒出身的角色，很可能是一名盜賊。
+						<br />
+						當然，人生與命運都是曲折離奇的，冒險者最擅長的便是跳脫常規。
 					</p>
 
 					{racesQuery.data && (
@@ -169,12 +205,50 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 
 					<p>
 						請分配角色的能力值。你在前面選擇的種族也會提供一定的能力值加成。每項能力都各有其用處，請謹慎分配。
+						<br />
+						不同職業都有其推薦優先分配的屬性，例如戰士、野蠻人推薦力量，盜賊推薦敏捷等等。
+						<br />
+						分配的最終目的，是為了在解決困難時，能更有效地配合職業能力，以成為一名厲害的冒險者。
 					</p>
 
 					<Alert type='warning'>
 						在 Dungeon &#38; Dragon
 						的戰鬥中，能力值佔了一個十分重要的地位，建議先了解戰鬥的玩法後，再決定能力值的分配。
 					</Alert>
+
+					<div className='flex'>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+						<div className='flex-1'>
+							<AttributeChanger onChange={handleChangeAttribute} />
+						</div>
+					</div>
+
+					<div>
+						<div className='flex'>
+							<div>ICON</div>
+							<div className='flex-1'>力量</div>
+							<div>I</div>
+						</div>
+						<div className='py-2 flex justify-center items-center'>
+							<div>12</div>
+							<div>+</div>
+							<div>0</div>
+						</div>
+					</div>
 
 					<table>
 						<tr>
