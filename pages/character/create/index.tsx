@@ -218,22 +218,22 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 
 					<div className='flex'>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='力量' onChange={handleChangeAttribute} />
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='敏捷' onChange={handleChangeAttribute} />
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='體質' onChange={handleChangeAttribute} />
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='智力' onChange={handleChangeAttribute} />
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='感知' onChange={handleChangeAttribute} />
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger onChange={handleChangeAttribute} />
+							<AttributeChanger label='魅力' onChange={handleChangeAttribute} />
 						</div>
 					</div>
 

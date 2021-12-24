@@ -1,3 +1,8 @@
+.AttributeChangerStepper :global(.ns-button:disabled),
+.AttributeChangerStepper :global(.ns-button-bonus:disabled) {
+	opacity: 0.25;
+}
+
 .AttributeChangerStepper :global(.ns-button-plus),
 .AttributeChangerStepper :global(.ns-button-minus) {
 	font-size: 0.8rem;

@@ -90,39 +90,53 @@ const AttributeChangerStepper = ({
 
 	return (
 		<div className={styles.AttributeChangerStepper}>
-			<div className='text-center space-x-0.5'>
-				<button
-					className='ns-button-plus ns-button ns-button-plus-one'
-					onClick={handleClickPlusOne}
-					disabled={!canPlusOne}
-				>
-					{value}
-				</button>
-				<button
-					className='ns-button-plus ns-button-bonus ns-button-bonus-plus-one'
-					onClick={handleClickBonusPlusOne}
-					disabled={!canBonusPlusOne}
-				>
-					{bonusValue}
-				</button>
-			</div>
-			<div className='text-center ns-value'>{value + bonusValue}</div>
-			<div className='text-center ns-point'>({point}pt)</div>
-			<div className='text-center space-x-0.5'>
-				<button
-					className='ns-button-minus ns-button ns-button-minus-one'
-					onClick={handleClickMinusOne}
-					disabled={!canMinusOne}
-				>
-					&nbsp;
-				</button>
-				<button
-					className='ns-button-minus ns-button-bonus ns-button-bonus-minus-one'
-					onClick={handleClickBonusMinusOne}
-					disabled={!canBonusMinusOne}
-				>
-					&nbsp;
-				</button>
+			<div className='flex justify-center items-center gap-x-1'>
+				<div>
+					<div>
+						<button
+							className='ns-button-plus ns-button-bonus ns-button-bonus-plus-one'
+							onClick={handleClickBonusPlusOne}
+							disabled={!canBonusPlusOne}
+						>
+							{bonusValue}
+						</button>
+					</div>
+					<div>
+						<button
+							className='ns-button-minus ns-button-bonus ns-button-bonus-minus-one'
+							onClick={handleClickBonusMinusOne}
+							disabled={!canBonusMinusOne}
+						>
+							&nbsp;
+						</button>
+					</div>
+				</div>
+
+				<div>
+					<div className='text-center ns-value'>{value + bonusValue}</div>
+					<div className='text-center ns-point'>({point}pt)</div>
+				</div>
+
+				<div>
+					<div>
+						<button
+							className='ns-button-plus ns-button ns-button-plus-one'
+							onClick={handleClickPlusOne}
+							disabled={!canPlusOne}
+						>
+							{value}
+						</button>
+					</div>
+					<div>
+						<button
+							className='ns-button-minus ns-button ns-button-minus-one'
+							onClick={handleClickMinusOne}
+							disabled={!canMinusOne}
+						>
+							&nbsp;
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
