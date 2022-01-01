@@ -5,8 +5,8 @@ import styles from './AttributeChangerStepper.module.css'
 export type AttributeChangerStepperResult = {
 	value: number
 	valueDelta: number
-	bonusValue: number
-	bonusValueDelta: number
+	raceValue: number
+	raceValueDelta: number
 	point: number
 }
 
@@ -14,27 +14,27 @@ type Props = {
 	defaultValue?: number
 	max?: number
 	min?: number
-	defaultBonusValue?: number
-	bonusMax?: number
-	bonusMin?: number
+	defaultRaceValue?: number
+	raceMax?: number
+	raceMin?: number
 	onChange?: (result: AttributeChangerStepperResult) => void
 	canPlusOne?: boolean
 	canMinusOne?: boolean
-	canBonusPlusOne?: boolean
-	canBonusMinusOne?: boolean
+	canRacePlusOne?: boolean
+	canRaceMinusOne?: boolean
 }
 
 const AttributeChangerStepper = ({
 	defaultValue = 0,
-	defaultBonusValue = 0,
+	defaultRaceValue = 0,
 	canPlusOne: _canPlusOne = true,
 	canMinusOne: _canMinusOne = true,
 	min,
 	max,
-	bonusMin,
-	bonusMax,
-	canBonusPlusOne: _canBonusPlusOne = true,
-	canBonusMinusOne: _canBonusMinusOne = true,
+	raceMin,
+	raceMax,
+	canRacePlusOne: _canRacePlusOne = true,
+	canRaceMinusOne: _canRaceMinusOne = true,
 	onChange,
 }: Props): JSX.Element => {
 	const [value, setValue] = useState(defaultValue)
@@ -53,22 +53,20 @@ const AttributeChangerStepper = ({
 		setValue((prev) => prev - 1)
 	}, [])
 
-	const [bonusValue, setBonusValue] = useState(defaultBonusValue)
+	const [raceValue, setRaceValue] = useState(defaultRaceValue)
 
-	const canBonusPlusOne = useMemo(() => {
-		return (bonusMax === undefined || bonusValue < bonusMax) && _canBonusPlusOne
-	}, [_canBonusPlusOne, bonusMin, bonusValue])
-	const canBonusMinusOne = useMemo(() => {
-		return (
-			(bonusMin === undefined || bonusValue > bonusMin) && _canBonusMinusOne
-		)
-	}, [_canBonusMinusOne, bonusMax, bonusValue])
+	const canRacePlusOne = useMemo(() => {
+		return (raceMax === undefined || raceValue < raceMax) && _canRacePlusOne
+	}, [_canRacePlusOne, raceMin, raceValue])
+	const canRaceMinusOne = useMemo(() => {
+		return (raceMin === undefined || raceValue > raceMin) && _canRaceMinusOne
+	}, [_canRaceMinusOne, raceMax, raceValue])
 
-	const handleClickBonusPlusOne = useCallback(() => {
-		setBonusValue((prev) => prev + 1)
+	const handleClickRacePlusOne = useCallback(() => {
+		setRaceValue((prev) => prev + 1)
 	}, [])
-	const handleClickBonusMinusOne = useCallback(() => {
-		setBonusValue((prev) => prev - 1)
+	const handleClickRaceMinusOne = useCallback(() => {
+		setRaceValue((prev) => prev - 1)
 	}, [])
 
 	const point = useMemo(
@@ -81,59 +79,60 @@ const AttributeChangerStepper = ({
 			onChange({
 				value,
 				valueDelta: value - defaultValue,
-				bonusValue,
-				bonusValueDelta: bonusValue - defaultBonusValue,
+				raceValue,
+				raceValueDelta: raceValue - defaultRaceValue,
 				point,
 			})
 		}
-	}, [value, bonusValue, defaultValue, defaultBonusValue, point, onChange])
+	}, [value, raceValue, defaultValue, defaultRaceValue, point, onChange])
 
 	return (
 		<div className={styles.AttributeChangerStepper}>
-			<div className='flex justify-center items-center gap-x-1'>
-				<div>
-					<div>
+			<div className='ns-value'>{value + raceValue}</div>
+			<div className='ns-controls'>
+				<div className='ns-control'>
+					<div className='ns-control-button-wrapper'>
 						<button
-							className='ns-button-plus ns-button-bonus ns-button-bonus-plus-one'
-							onClick={handleClickBonusPlusOne}
-							disabled={!canBonusPlusOne}
-						>
-							{bonusValue}
-						</button>
-					</div>
-					<div>
-						<button
-							className='ns-button-minus ns-button-bonus ns-button-bonus-minus-one'
-							onClick={handleClickBonusMinusOne}
-							disabled={!canBonusMinusOne}
-						>
-							&nbsp;
-						</button>
-					</div>
-				</div>
-
-				<div>
-					<div className='text-center ns-value'>{value + bonusValue}</div>
-					<div className='text-center ns-point'>({point}pt)</div>
-				</div>
-
-				<div>
-					<div>
-						<button
-							className='ns-button-plus ns-button ns-button-plus-one'
+							className='ns-button ns-button-point ns-button-plus'
 							onClick={handleClickPlusOne}
 							disabled={!canPlusOne}
 						>
-							{value}
+							+
 						</button>
 					</div>
-					<div>
+
+					<div className='ns-control-value'>{point}pt</div>
+
+					<div className='ns-control-button-wrapper'>
 						<button
-							className='ns-button-minus ns-button ns-button-minus-one'
+							className='ns-button ns-button-point ns-button-minus'
 							onClick={handleClickMinusOne}
 							disabled={!canMinusOne}
 						>
-							&nbsp;
+							-
+						</button>
+					</div>
+				</div>
+				<div className='ns-control'>
+					<div className='ns-control-button-wrapper'>
+						<button
+							className='ns-button ns-button-race ns-button-plus'
+							onClick={handleClickRacePlusOne}
+							disabled={!canRacePlusOne}
+						>
+							+
+						</button>
+					</div>
+
+					<div className='ns-control-value'>{raceValue}種族</div>
+
+					<div className='ns-control-button-wrapper'>
+						<button
+							className='ns-button ns-button-race ns-button-minus'
+							onClick={handleClickRaceMinusOne}
+							disabled={!canRaceMinusOne}
+						>
+							-
 						</button>
 					</div>
 				</div>

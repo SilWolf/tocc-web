@@ -1,29 +1,72 @@
-.AttributeChangerStepper :global(.ns-button:disabled),
-.AttributeChangerStepper :global(.ns-button-bonus:disabled) {
+.AttributeChangerStepper :global(.ns-value) {
+	font-size: 2.5rem;
+	line-height: 2.5rem;
+	text-align: center;
+}
+
+.AttributeChangerStepper :global(.ns-controls) {
+	font-size: 0.8rem;
+	line-height: 0.8rem;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 4px;
+}
+
+.AttributeChangerStepper :global(.ns-control) {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.AttributeChangerStepper :global(.ns-control-value) {
+	text-decoration: underline dotted;
+}
+
+.AttributeChangerStepper :global(.ns-control-button-wrapper) {
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+.AttributeChangerStepper :global(.ns-button) {
+	display: none;
+	position: absolute;
+}
+
+.AttributeChangerStepper :global(.ns-button-plus) {
+	bottom: 50%;
+}
+
+.AttributeChangerStepper :global(.ns-button-minus) {
+	top: 50%;
+}
+
+.AttributeChangerStepper :global(.ns-control:hover .ns-button) {
+	display: block;
+}
+
+.AttributeChangerStepper :global(.ns-button:disabled) {
 	opacity: 0.25;
 }
 
 .AttributeChangerStepper :global(.ns-button-plus),
 .AttributeChangerStepper :global(.ns-button-minus) {
-	font-size: 0.8rem;
+	font-size: 12px;
+	line-height: 16px;
 	background: #999;
-	width: 24px;
-	height: 18px;
+	width: 100%;
+	height: 16px;
 }
 
-.AttributeChangerStepper :global(.ns-button) {
+.AttributeChangerStepper :global(.ns-button-point) {
 	background: #00f;
 	color: #fff;
 }
 
-.AttributeChangerStepper :global(.ns-button-bonus) {
+.AttributeChangerStepper :global(.ns-button-race) {
 	background: #060;
 	color: #fff;
-}
-
-.AttributeChangerStepper :global(.ns-value) {
-	font-size: 2.5rem;
-	line-height: 2.5rem;
 }
 
 .AttributeChangerStepper :global(.ns-point) {

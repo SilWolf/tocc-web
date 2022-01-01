@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next'
 import NextLink from 'next/link'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import Alert from 'src/components/Alert'
 
@@ -15,6 +15,8 @@ import {
 } from 'src/hooks/withSession.hook'
 import { Race } from 'src/types/Race.type'
 import { SessionUser } from 'src/types/User.type'
+import { AttributeChangerStepperResult } from 'src/components/AttributeChangerStepper'
+import classNames from 'classnames'
 
 type PageProps = {
 	races: Race[]
@@ -73,9 +75,29 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 		},
 	})
 
-	const handleChangeAttribute = useCallback((result) => {
-		console.log(result)
-	}, [])
+	const [attributePointMap, setAttributePointMap] = useState<
+		Record<string, number>
+	>({})
+
+	const handleChangeAttribute = useCallback(
+		(attribute: string) => (result: AttributeChangerStepperResult) => {
+			setAttributePointMap((prev) => ({
+				...prev,
+				[attribute]: result.point,
+			}))
+		},
+		[]
+	)
+
+	const availablePoint = useMemo(
+		() =>
+			27 -
+			Object.values(attributePointMap).reduce<number>(
+				(prev, curr) => prev + curr,
+				0
+			),
+		[attributePointMap]
+	)
 
 	return (
 		<>
@@ -216,24 +238,60 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 						的戰鬥中，能力值佔了一個十分重要的地位，建議先了解戰鬥的玩法後，再決定能力值的分配。
 					</Alert>
 
-					<div className='flex'>
+					<div className='flex gap-x-4 justify-center items-center text-center'>
+						<div>
+							<div className='text-2xl'>
+								<span
+									className={classNames({ 'text-red-500': availablePoint < 0 })}
+								>
+									{availablePoint}
+								</span>
+								/27
+							</div>
+							<div className='text-xs'>可用pt</div>
+						</div>
+						<div>
+							<div className='text-2xl'>2/2</div>
+							<div className='text-xs'>可用種族加成</div>
+						</div>
+					</div>
+
+					<div className='flex gap-x-4'>
 						<div className='flex-1'>
-							<AttributeChanger label='力量' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='力量'
+								onChange={handleChangeAttribute('str')}
+							/>
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger label='敏捷' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='敏捷'
+								onChange={handleChangeAttribute('dex')}
+							/>
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger label='體質' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='體質'
+								onChange={handleChangeAttribute('con')}
+							/>
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger label='智力' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='智力'
+								onChange={handleChangeAttribute('int')}
+							/>
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger label='感知' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='感知'
+								onChange={handleChangeAttribute('wis')}
+							/>
 						</div>
 						<div className='flex-1'>
-							<AttributeChanger label='魅力' onChange={handleChangeAttribute} />
+							<AttributeChanger
+								label='魅力'
+								onChange={handleChangeAttribute('cha')}
+							/>
 						</div>
 					</div>
 

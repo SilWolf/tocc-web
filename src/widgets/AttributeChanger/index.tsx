@@ -3,7 +3,7 @@ import AttributeNumberStepper, {
 	AttributeChangerStepperResult,
 } from 'src/components/AttributeChangerStepper'
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+type Props = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
 	onChange?: (value: AttributeChangerStepperResult) => void
 	label?: string
 }
@@ -29,9 +29,9 @@ const AttributeChanger = ({
 				defaultValue={8}
 				min={8}
 				max={15}
-				defaultBonusValue={0}
-				bonusMin={0}
-				bonusMax={2}
+				defaultRaceValue={0}
+				raceMin={0}
+				raceMax={2}
 				onChange={handleChange}
 			/>
 		</div>
