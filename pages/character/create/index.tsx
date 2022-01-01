@@ -15,8 +15,7 @@ import {
 } from 'src/hooks/withSession.hook'
 import { Race } from 'src/types/Race.type'
 import { SessionUser } from 'src/types/User.type'
-import { AttributeChangerStepperResult } from 'src/components/AttributeChangerStepper'
-import classNames from 'classnames'
+import AttributesInput from 'src/widgets/AttributesInput'
 
 type PageProps = {
 	races: Race[]
@@ -78,26 +77,6 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 	const [attributePointMap, setAttributePointMap] = useState<
 		Record<string, number>
 	>({})
-
-	const handleChangeAttribute = useCallback(
-		(attribute: string) => (result: AttributeChangerStepperResult) => {
-			setAttributePointMap((prev) => ({
-				...prev,
-				[attribute]: result.point,
-			}))
-		},
-		[]
-	)
-
-	const availablePoint = useMemo(
-		() =>
-			27 -
-			Object.values(attributePointMap).reduce<number>(
-				(prev, curr) => prev + curr,
-				0
-			),
-		[attributePointMap]
-	)
 
 	return (
 		<>
@@ -238,141 +217,7 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 						的戰鬥中，能力值佔了一個十分重要的地位，建議先了解戰鬥的玩法後，再決定能力值的分配。
 					</Alert>
 
-					<div className='flex gap-x-4 justify-center items-center text-center'>
-						<div>
-							<div className='text-2xl'>
-								<span
-									className={classNames({ 'text-red-500': availablePoint < 0 })}
-								>
-									{availablePoint}
-								</span>
-								/27
-							</div>
-							<div className='text-xs'>可用pt</div>
-						</div>
-						<div>
-							<div className='text-2xl'>2/2</div>
-							<div className='text-xs'>可用種族加成</div>
-						</div>
-					</div>
-
-					<div className='flex gap-x-4'>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='力量'
-								onChange={handleChangeAttribute('str')}
-							/>
-						</div>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='敏捷'
-								onChange={handleChangeAttribute('dex')}
-							/>
-						</div>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='體質'
-								onChange={handleChangeAttribute('con')}
-							/>
-						</div>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='智力'
-								onChange={handleChangeAttribute('int')}
-							/>
-						</div>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='感知'
-								onChange={handleChangeAttribute('wis')}
-							/>
-						</div>
-						<div className='flex-1'>
-							<AttributeChanger
-								label='魅力'
-								onChange={handleChangeAttribute('cha')}
-							/>
-						</div>
-					</div>
-
-					<div>
-						<div className='flex'>
-							<div>ICON</div>
-							<div className='flex-1'>力量</div>
-							<div>I</div>
-						</div>
-						<div className='py-2 flex justify-center items-center'>
-							<div>12</div>
-							<div>+</div>
-							<div>0</div>
-						</div>
-					</div>
-
-					<table>
-						<tr>
-							<td>力量</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>力量代表著肌肉力量，是戰士、野蠻人等前衛職業的核心屬性。</p>
-								<ul>
-									<li>進行近戰武器攻擊和徒手攻擊時，你的命中及傷害+X</li>
-									<li>你的助跑跳躍距離為X呎(跳遠)和Y呎(跳高)</li>
-									<li>你可負重X磅</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<td>敏捷</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>
-									敏捷代表著活動能力，是盜賊、遊俠等重視隱密的職業的核心屬性。
-								</p>
-								<ul>
-									<li>進行遠程武器攻擊和以靈巧武器攻擊時，你的命中及傷害+X</li>
-									<li>戰鬥前的先攻值+X</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<td>體質</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>體質代表著生命力，是能提升戰鬥存活率的泛用屬性。</p>
-								<ul>
-									<li>你的HP+X/每等級</li>
-									<li>你可承受窒息X回合</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<td>智力</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>智力代表著知識量，是法師的核心屬性。</p>
-							</td>
-						</tr>
-						<tr>
-							<td>感知</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>感知代表著運用經驗的智慧。</p>
-							</td>
-						</tr>
-						<tr>
-							<td>魅力</td>
-							<td></td>
-							<td></td>
-							<td>
-								<p>魅力代表著存在感及人緣。</p>
-							</td>
-						</tr>
-					</table>
+					<AttributesInput className='space-y-4' />
 				</div>
 			</div>
 		</>
