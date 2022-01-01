@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 
 import Modal, { ModalProps } from 'src/components/Modal'
-import Tooltip from 'src/components/Tooltip'
+import Badge from 'src/components/Badge'
 import {
 	Game,
 	GAME_SIGN_UP_STATUS,
@@ -197,9 +197,9 @@ const AdminGameSignUpModal = ({
 									</div>
 									<div className='space-x-1'>
 										{warnings.map((warningKey) => (
-											<Tooltip key={warningKey} type='warning'>
+											<Badge key={warningKey} type='warning'>
 												{WARNING[warningKey]}
-											</Tooltip>
+											</Badge>
 										))}
 									</div>
 									<div>
@@ -290,9 +290,9 @@ const AdminGameSignUpModal = ({
 										</div>
 										<div className='space-x-1'>
 											{warnings.map((warningKey) => (
-												<Tooltip key={warningKey} type='warning'>
+												<Badge key={warningKey} type='warning'>
 													{WARNING[warningKey]}
-												</Tooltip>
+												</Badge>
 											))}
 										</div>
 									</div>
