@@ -105,9 +105,9 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 					<div className='flex text-center items-center'>
 						<div className='flex-1'>1. 選擇種族</div>
 						<div className='flex-1'>2. 選擇背景</div>
-						<div className='flex-1'>3. 分配能力值</div>
-						<div className='flex-1'>4. 技能</div>
-						<div className='flex-1'>5. 職業</div>
+						<div className='flex-1'>3. 選擇起始職業</div>
+						<div className='flex-1'>4. 分配能力值</div>
+						<div className='flex-1'>5. 技能</div>
 					</div>
 				</div>
 
@@ -197,7 +197,7 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 				</div>
 
 				<div className='parchment space-y-4'>
-					<h3>3. 分配能力值</h3>
+					<h3>4. 分配能力值</h3>
 					<p className='italic'>
 						即便是擁有同一血脈的親族，個體間也充滿差異，這是神的巧思。
 						<br />
@@ -218,6 +218,10 @@ const CharacterCreatePage: NextPage<PageProps> = () => {
 					</Alert>
 
 					<AttributesInput className='space-y-4' />
+				</div>
+
+				<div className='parchment space-y-4'>
+					<h3>5. 技能</h3>
 				</div>
 			</div>
 		</>

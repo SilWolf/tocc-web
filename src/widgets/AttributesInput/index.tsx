@@ -65,7 +65,7 @@ const AttributesInput = ({ ...others }: Props): JSX.Element => {
 
 			<div className='flex gap-x-4'>
 				{ATTRIBUTES.map((attribute) => (
-					<div className='flex-1'>
+					<div key={attribute.abbr} className='flex-1'>
 						<AttributeChanger
 							label={attribute.label}
 							onChange={handleChangeAttribute(attribute.abbr)}

@@ -101,11 +101,11 @@ const CharactersPage: NextPage<PageProps> = ({ myCharacters }) => {
 										<div className='text-center text-gray-400 italic py-8'>
 											空欄位
 										</div>
-										<div className='text-center'>
+										{/* <div className='text-center'>
 											<NextLink href='/character/create' passHref>
 												<a href=''>建立角色</a>
 											</NextLink>
-										</div>
+										</div> */}
 									</div>
 								</div>
 							)
