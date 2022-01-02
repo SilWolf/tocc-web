@@ -1,22 +1,22 @@
 import React, { HTMLAttributes } from 'react'
 
-import styles from './Badge.module.css'
+import styles from './Tooltip.module.css'
 
 import classNames from 'classnames'
 
-type Props = HTMLAttributes<HTMLDivElement> & {
-	type?: 'default' | 'success' | 'danger' | 'warning'
+type Props = HTMLAttributes<HTMLSpanElement> & {
+	component: React.ReactNode
 }
 
-const Badge = ({ type = 'default', className, children, ...others }: Props) => {
+const Tooltip = ({ className, children, component, ...others }: Props) => {
 	return (
-		<div
-			className={classNames(styles.badge, `badge-${type}`, className)}
-			{...others}
-		>
-			{children}
+		<div className={classNames(styles.tooltip, className)} {...others}>
+			<div className='tooltip-trigger'>{component}</div>
+			<div className='tooltip-popup'>
+				<div className='tooltip-popup-body'>{children}</div>
+			</div>
 		</div>
 	)
 }
 
-export default Badge
+export default Tooltip

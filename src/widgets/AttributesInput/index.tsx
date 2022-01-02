@@ -1,22 +1,35 @@
 import classNames from 'classnames'
-import { useCallback, useMemo, useState } from 'react'
+import memoize from 'fast-memoize'
+import { useMemo, useState } from 'react'
 import { AttributeChangerStepperResult } from 'src/components/AttributeChangerStepper'
 import AttributeChanger from '../AttributeChanger'
 
 type Props = React.HTMLAttributes<HTMLDivElement>
+
+const ATTRIBUTES = [
+	{ label: '力量', abbr: 'str' },
+	{ label: '敏捷', abbr: 'dex' },
+	{ label: '體質', abbr: 'con' },
+	{ label: '智力', abbr: 'int' },
+	{ label: '感知', abbr: 'wis' },
+	{ label: '魅力', abbr: 'cha' },
+]
 
 const AttributesInput = ({ ...others }: Props): JSX.Element => {
 	const [attributePointMap, setAttributePointMap] = useState<
 		Record<string, number>
 	>({})
 
-	const handleChangeAttribute = useCallback(
-		(attribute: string) => (result: AttributeChangerStepperResult) => {
-			setAttributePointMap((prev) => ({
-				...prev,
-				[attribute]: result.point,
-			}))
-		},
+	const handleChangeAttribute = useMemo(
+		() =>
+			memoize(
+				(attribute: string) => (result: AttributeChangerStepperResult) => {
+					setAttributePointMap((prev) => ({
+						...prev,
+						[attribute]: result.point,
+					}))
+				}
+			),
 		[]
 	)
 
@@ -51,42 +64,14 @@ const AttributesInput = ({ ...others }: Props): JSX.Element => {
 			</div>
 
 			<div className='flex gap-x-4'>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='力量'
-						onChange={handleChangeAttribute('str')}
-					/>
-				</div>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='敏捷'
-						onChange={handleChangeAttribute('dex')}
-					/>
-				</div>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='體質'
-						onChange={handleChangeAttribute('con')}
-					/>
-				</div>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='智力'
-						onChange={handleChangeAttribute('int')}
-					/>
-				</div>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='感知'
-						onChange={handleChangeAttribute('wis')}
-					/>
-				</div>
-				<div className='flex-1'>
-					<AttributeChanger
-						label='魅力'
-						onChange={handleChangeAttribute('cha')}
-					/>
-				</div>
+				{ATTRIBUTES.map((attribute) => (
+					<div className='flex-1'>
+						<AttributeChanger
+							label={attribute.label}
+							onChange={handleChangeAttribute(attribute.abbr)}
+						/>
+					</div>
+				))}
 			</div>
 		</div>
 	)
