@@ -73,6 +73,7 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-thug.png',
 					hp: 20,
+					role: 'Striker',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -120,6 +121,7 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-thug.png',
 					hp: 25,
+					role: 'Striker',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -179,6 +181,7 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-thug.png',
 					hp: 25,
+					role: 'Striker',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -204,7 +207,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2.
 									<br />
-									Attack 3 (R 1). Piercing Attack 3 (R 1).
+									Attack 5 (R 1). Piercing Attack 1 (R 1).
 								</p>
 							),
 						},
@@ -249,6 +252,7 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-thug.png',
 					hp: 30,
+					role: 'Striker',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -274,7 +278,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2.
 									<br />
-									Attack 4 (R 1). Piercing Attack 3 (R 1).
+									Attack 6 (R 1). Piercing Attack 1 (R 1).
 								</p>
 							),
 						},
@@ -324,12 +328,13 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-tank.png',
 					hp: 20,
+					role: 'Defender',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: OFFENSIVE,
@@ -338,14 +343,14 @@ const KsMonstersPage = () => {
 								<p>
 									Attack 3 & Push 1 (R 1). Move 1.
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: DEFENSIVE,
@@ -354,7 +359,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Block 8 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -370,12 +375,13 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-tank.png',
 					hp: 25,
+					role: 'Defender',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: OFFENSIVE,
@@ -384,14 +390,14 @@ const KsMonstersPage = () => {
 								<p>
 									Attack 3 & Push 1 (R 1). Move 1.
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: DEFENSIVE,
@@ -400,7 +406,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Block 8 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -411,7 +417,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Heal 5 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -427,12 +433,13 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-tank.png',
 					hp: 25,
+					role: 'Defender',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: OFFENSIVE,
@@ -443,7 +450,7 @@ const KsMonstersPage = () => {
 									<br />
 									If any monster died this combat: Repeat above actions.
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -454,14 +461,14 @@ const KsMonstersPage = () => {
 								<p>
 									Pull 2 (R 3-2). Attack 2 (R 1).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: DEFENSIVE,
@@ -470,7 +477,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Block 8 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -481,7 +488,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Heal 5 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -497,12 +504,13 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-tank.png',
 					hp: 30,
+					role: 'Defender',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: OFFENSIVE,
@@ -513,7 +521,7 @@ const KsMonstersPage = () => {
 									<br />
 									If any monster died this combat: Repeat above actions.
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -524,14 +532,14 @@ const KsMonstersPage = () => {
 								<p>
 									Pull 3 (R 4-2). Attack 3 (R 1).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Closest monster gains Invisible.</p>,
+							content: <p>Another closest monster gains Invisible.</p>,
 						},
 						{
 							intention: DEFENSIVE,
@@ -540,7 +548,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Block 10 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -551,7 +559,7 @@ const KsMonstersPage = () => {
 								<p>
 									Move 2. Heal 7 (Self).
 									<br />
-									Closest monster gains Invisible.
+									Another closest monster gains Invisible.
 								</p>
 							),
 						},
@@ -567,6 +575,7 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-bomber.png',
 					hp: 18,
+					role: 'Controller',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -574,8 +583,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -584,27 +594,10 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range X (X = intention value).
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range X (X = intention value).
 									<br />
-									<p className='font-light italic leading-4 text-gray-800 mt-1'>
-										(<span className='text-red-900 font-bold'>Bomb</span> is a
-										special monster that shares spaces with other characters.
-										Use monster tokens to represent Bombs.
-										<br />
-										<span className='text-red-900 font-bold'>
-											Bomb
-										</span> has <span className='font-bold'>5 HP</span>. At the{' '}
-										<span className='font-bold'>
-											beginning of its summoner's turn
-										</span>
-										, It performs{' '}
-										<span className='font-bold'>
-											"Attack 5 (AR 0-1 Brust, all players and monsters except
-											Bombers and Bombs). Flee."
-										</span>
-										)
-									</p>
 								</p>
 							),
 						},
@@ -613,8 +606,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -623,8 +617,9 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player.
 								</p>
 							),
 						},
@@ -633,8 +628,9 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
-									on range 1, range 4 and range 7.
+									Summon{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 1, range 4 and range 7.
 								</p>
 							),
 						},
@@ -645,6 +641,7 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-bomber.png',
 					hp: 20,
+					role: 'Controller',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -652,8 +649,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -662,27 +660,10 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range X (X = intention value).
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range X (X = intention value).
 									<br />
-									<p className='font-light italic leading-4 text-gray-800 mt-1'>
-										(<span className='text-red-900 font-bold'>Bomb</span> is a
-										special monster that shares spaces with other characters.
-										Use monster tokens to represent Bombs.
-										<br />
-										<span className='text-red-900 font-bold'>
-											Bomb
-										</span> has <span className='font-bold'>5 HP</span>. At the{' '}
-										<span className='font-bold'>
-											beginning of its summoner's turn
-										</span>
-										, It performs{' '}
-										<span className='font-bold'>
-											"Attack 5 (AR 0-1 Brust, all players and monsters except
-											Bombers and Bombs). Flee."
-										</span>
-										)
-									</p>
 								</p>
 							),
 						},
@@ -691,8 +672,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -701,8 +683,9 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player.
 								</p>
 							),
 						},
@@ -711,8 +694,9 @@ const KsMonstersPage = () => {
 							values: [5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player.
 									<br />
 									Inflict 1 Immobolize to that player.
 								</p>
@@ -723,8 +707,9 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
-									on range 1, range 4 and range 7.
+									Summon{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 1, range 4 and range 7.
 								</p>
 							),
 						},
@@ -735,6 +720,7 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-bomber.png',
 					hp: 20,
+					role: 'Controller',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -742,8 +728,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -752,27 +739,10 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range X (X = intention value).
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range X (X = intention value).
 									<br />
-									<p className='font-light italic leading-4 text-gray-800 mt-1'>
-										(<span className='text-red-900 font-bold'>Bomb</span> is a
-										special monster that shares spaces with other characters.
-										Use monster tokens to represent Bombs.
-										<br />
-										<span className='text-red-900 font-bold'>
-											Bomb
-										</span> has <span className='font-bold'>8 HP</span>. At the{' '}
-										<span className='font-bold'>
-											beginning of its summoner's turn
-										</span>
-										, It performs{' '}
-										<span className='font-bold'>
-											"Attack 5 (AR 0-1 Brust, all players and monsters except
-											Bombers and Bombs). Flee."
-										</span>
-										)
-									</p>
 								</p>
 							),
 						},
@@ -781,8 +751,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -791,8 +762,9 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player.
 								</p>
 							),
 						},
@@ -801,8 +773,9 @@ const KsMonstersPage = () => {
 							values: [5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player.
 									<br />
 									Inflict 1 Immobolize to that player.
 								</p>
@@ -813,11 +786,14 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
-									on range 1, range 4 and range 7.
+									Summon{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 1, range 4 and range 7.
 									<br /> Those{' '}
-									<span className='text-red-900 font-bold'>Bombs</span> perform
-									Move 1.
+									<span className='text-red-900 font-bold'>
+										Bomb(trap)
+									</span>{' '}
+									perform Move 1.
 								</p>
 							),
 						},
@@ -828,6 +804,7 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-bomber.png',
 					hp: 25,
+					role: 'Controller',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -835,8 +812,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -845,27 +823,10 @@ const KsMonstersPage = () => {
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
-									on range X-1 and range X+1 (X = intention value).
+									Summon{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range X-1 and range X+1 (X = intention value).
 									<br />
-									<p className='font-light italic leading-4 text-gray-800 mt-1'>
-										(<span className='text-red-900 font-bold'>Bomb</span> is a
-										special monster that shares spaces with other characters.
-										Use monster tokens to represent Bombs.
-										<br />
-										<span className='text-red-900 font-bold'>
-											Bomb
-										</span> has <span className='font-bold'>10 HP</span>. At the{' '}
-										<span className='font-bold'>
-											beginning of its summoner's turn
-										</span>
-										, It performs{' '}
-										<span className='font-bold'>
-											"Attack 7 (AR 0-1 Brust, all players and monsters except
-											Bombers and Bombs). Flee."
-										</span>
-										)
-									</p>
 								</p>
 							),
 						},
@@ -874,8 +835,9 @@ const KsMonstersPage = () => {
 							values: [0],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on range 0.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									range 0.
 								</p>
 							),
 						},
@@ -884,10 +846,10 @@ const KsMonstersPage = () => {
 							values: [1, 2],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of closest player.
-									<br />
-									Inflict 1 Immobolize to that player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of closest player. Inflict 1 Immobolize to that
+									player.
 								</p>
 							),
 						},
@@ -896,10 +858,10 @@ const KsMonstersPage = () => {
 							values: [3, 4],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of 2nd closest player.
-									<br />
-									Inflict 1 Immobolize to that player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of 2nd closest player. Inflict 1 Immobolize to that
+									player.
 								</p>
 							),
 						},
@@ -908,10 +870,10 @@ const KsMonstersPage = () => {
 							values: [5, 6],
 							content: (
 								<p>
-									Summon a <span className='text-red-900 font-bold'>Bomb</span>{' '}
-									on the space of 3rd closest player.
-									<br />
-									Inflict 1 Immobolize to that player.
+									Summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									the space of 3rd closest player. Inflict 1 Immobolize to that
+									player.
 								</p>
 							),
 						},
@@ -920,11 +882,9 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Summon <span className='text-red-900 font-bold'>Bombs</span>{' '}
-									on range 1, range 4 and range 7.
-									<br /> Those{' '}
-									<span className='text-red-900 font-bold'>Bombs</span> perform
-									Move 1.
+									For each player, summon a{' '}
+									<span className='text-red-900 font-bold'>Bomb(trap)</span> on
+									its space.
 								</p>
 							),
 						},
@@ -935,61 +895,64 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-archer.png',
 					hp: 18,
+					role: 'Sniper',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+							content: <p>Attack 1 & Inflict 1 Poison (R 1). Back 1.</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Attack 3 (R 5-3).
+									Attack 3 & Inflict 1 Poison (R 5-3).
 									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5, 6],
-							content: (
-								<p>
-									Attack 3 (R 1-3).
-									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									Attack 1 & Inflict 1 Poison (R 1).
 									<br />
 									Back 1.
 								</p>
 							),
 						},
 						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Block 5 (Self). Move 1.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5, 6],
+							content: (
+								<p>
+									Attack 3 & Inflict 1 Poison (R 1-3).
+									<br />
+									Block 5 (Self).
+									<br />
+									Move 1.
+								</p>
+							),
+						},
+						{
 							intention: SPECIAL,
 							values: ['A'],
-							content: <p>Attack 4 (R 2).</p>,
+							content: <p>Attack 4 & Inflict 1 Poison (R 2).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['B'],
-							content: <p>Attack 4 (R 3).</p>,
+							content: <p>Attack 4 & Inflict 1 Poison (R 3).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['C'],
-							content: <p>Attack 4 (R 4).</p>,
+							content: <p>Attack 4 & Inflict 1 Poison (R 4).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['D'],
-							content: <p>Attack 4 (R 5).</p>,
+							content: <p>Attack 4 & Inflict 1 Poison (R 5).</p>,
 						},
 					],
 				},
@@ -998,37 +961,22 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-archer.png',
 					hp: 20,
+					role: 'Sniper',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+							content: <p>Attack 1 & Inflict 1 Poison (R 1). Back 1.</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Attack 3 (R 5-3).
+									Attack 3 & Inflict 1 Poison (R 5-3).
 									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5],
-							content: (
-								<p>
-									Attack 3 (R 1-3).
-									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									Attack 1 & Inflict 1 Poison (R 1).
 									<br />
 									Back 1.
 								</p>
@@ -1036,28 +984,50 @@ const KsMonstersPage = () => {
 						},
 						{
 							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Block 5. Move 1.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 & Inflict 1 Poison (R 1-3).
+									<br />
+									Block 5.
+									<br />
+									Move 1.
+								</p>
+							),
+						},
+						{
+							intention: DEFENSIVE,
 							values: [6],
-							content: <p>Push 6 (R 1-3).</p>,
+							content: (
+								<p>
+									Attack 3 & Inflict 1 Poison (R 1-3). Gain Invisible (Self).
+								</p>
+							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A'],
-							content: <p>Attack 6 (R 2).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 2).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['B'],
-							content: <p>Attack 6 (R 3).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 3).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['C'],
-							content: <p>Attack 6 (R 4).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 4).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['D'],
-							content: <p>Attack 6 (R 5).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 5).</p>,
 						},
 					],
 				},
@@ -1066,71 +1036,77 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-archer.png',
 					hp: 20,
+					role: 'Sniper',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
+							content: <p>Attack 1 & Inflict 1 Poison (R 1). Back 1.</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5],
 							content: (
 								<p>
-									Attack 3 (R 5-3).
+									Attack 3 & Inflict 1 Poison (R 5-3).
 									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [6],
-							content: <p>Attack 6 (R 5-3).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [0],
-							content: <p>Push 1 & Inflict 1 Disarm to most Red card (R 1).</p>,
-						},
-						{
-							intention: DEFENSIVE,
-							values: [1, 2, 3, 4, 5],
-							content: (
-								<p>
-									Attack 3 (R 1-3).
-									<br />
-									Push 1 & Inflict 1 Disarm to most Red card (R 1).
+									Attack 1 & Inflict 1 Poison (R 1).
 									<br />
 									Back 1.
 								</p>
 							),
 						},
 						{
+							intention: OFFENSIVE,
+							values: [6],
+							content: <p>Attack 6 & Inflict 1 Poison (R 5-3).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [0],
+							content: <p>Block 6 (Self). Move 1.</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4, 5],
+							content: (
+								<p>
+									Attack 3 & Inflict 1 Poison (R 1-3). Block 5 (Self).
+									<br />
+									Block 6 (Self). <br />
+									Move 1.
+								</p>
+							),
+						},
+						{
 							intention: DEFENSIVE,
 							values: [6],
-							content: <p>Push 6 (R 1-3).</p>,
+							content: (
+								<p>
+									Attack 3 & Inflict 1 Poison (R 1-3). Gain Invisible (Self).
+								</p>
+							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A'],
-							content: <p>Attack 6 (R 2).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 2).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['B'],
-							content: <p>Attack 6 (R 3).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 3).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['C'],
-							content: <p>Attack 6 (R 4).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 4).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['D'],
-							content: <p>Attack 6 (R 5).</p>,
+							content: <p>Attack 6 & Inflict 1 Poison (R 5).</p>,
 						},
 					],
 				},
@@ -1139,44 +1115,43 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-archer.png',
 					hp: 25,
+					role: 'Sniper',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Push 1 & Inflict 2 Disarm to most Red card (R 1).</p>,
+							content: <p>Attack 1 & Inflict 2 Poison (R 1). Back 1.</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5],
 							content: (
 								<p>
-									Attack 3 (R 5-3). Piercing Attack 1 (R 5-3).
+									Attack 3 & Inflict 2 Poison (R 5-3).
 									<br />
-									Push 1 & Inflict 2 Disarm to most Red card (R 1).
+									Attack 1 & Inflict 2 Poison (R 1).
 								</p>
 							),
 						},
 						{
 							intention: OFFENSIVE,
 							values: [6],
-							content: <p>Attack 6 (R 5-3). Piercing Attack 2 (R 5-3).</p>,
+							content: <p>Attack 6 & Inflict 2 Poison (R 5-3).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Push 1 & Inflict 2 Disarm to most Red card (R 1).</p>,
+							content: <p>Block 8 (Self). Move 1.</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5],
 							content: (
 								<p>
-									Attack 3 (R 1-3). Piercing Attack 1 (R 1-3).
+									Attack 3 & Inflict 2 Poison (R 1-3).
 									<br />
-									Push 1 & Inflict 2 Disarm to most Red card (R 1).
-									<br />
-									Back 1.
+									Block 8 (Self).
 								</p>
 							),
 						},
@@ -1184,28 +1159,30 @@ const KsMonstersPage = () => {
 							intention: DEFENSIVE,
 							values: [6],
 							content: (
-								<p>Push 6 & Inflict 2 Immobolize to most Green card (R 1-3).</p>
+								<p>
+									Attack 3 & Inflict 2 Poison (R 1-3). Gain Invisible (Self).
+								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A'],
-							content: <p>Attack 10 (R 2).</p>,
+							content: <p>Attack 6 & Inflict 2 Poison (R 2).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['B'],
-							content: <p>Attack 10 (R 3).</p>,
+							content: <p>Attack 6 & Inflict 2 Poison (R 3).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['C'],
-							content: <p>Attack 10 (R 4).</p>,
+							content: <p>Attack 6 & Inflict 2 Poison (R 4).</p>,
 						},
 						{
 							intention: SPECIAL,
 							values: ['D'],
-							content: <p>Attack 10 (R 5).</p>,
+							content: <p>Attack 6 & Inflict 2 Poison (R 5).</p>,
 						},
 					],
 				},
@@ -1214,29 +1191,35 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-doctor.png',
 					hp: 18,
+					role: 'Supporter',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 1 (R 1-3).</p>,
+							content: <p>Exhaust 1 card (R 1-3).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Discard 1 (R 1-8 Brust, 2 players).</p>,
+							content: <p>Exhaust 1 card (R 1-8 Brust, 2 players).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Heal 3 & remove status cards (R 1-3, monster).</p>,
+							content: (
+								<p>
+									Heal 3 & Cleanse all & inflict 1 Protection (R 1-3, monster).
+								</p>
+							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Heal 3 & remove status cards (R 1-8 Brust, 2 monsters).
+									Heal 3 & Cleanse all & inflict 1 Protection (R 1-8 Brust, 2
+									monsters).
 									<br />
 								</p>
 							),
@@ -1246,8 +1229,8 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Each player lose 1 HP for every 2 empty slots in their play
-									areas.
+									Each player lose 1 HP for every 2 exhausted cards in their
+									zones.
 									<br />
 								</p>
 							),
@@ -1259,35 +1242,46 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-doctor.png',
 					hp: 20,
+					role: 'Supporter',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 2 (R 1-3).</p>,
+							content: <p>Exhaust 2 cards (R 1-3).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
-							content: <p>Discard 2 (R 1-8 Brust, 2 players).</p>,
+							content: <p>Exhaust 2 cards (R 1-8 Brust, 2 players).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Heal 3 & remove status cards (R 1-3, monster).</p>,
+							content: (
+								<p>
+									Heal 3 & Cleanse all & inflict 1 Protection (R 1-3, monster).
+								</p>
+							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4],
 							content: (
-								<p>Heal 3 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+								<p>
+									Heal 3 & Cleanse all & inflict 1 Protection (R 1-8 Brust, 2
+									monsters).
+								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [5, 6],
 							content: (
-								<p>Heal 3 & remove status cards (R 1-8 Brust, all monsters).</p>
+								<p>
+									Heal 3 & Cleanse all & inflict 1 Protection (R 1-8 Brust, all
+									monsters).
+								</p>
 							),
 						},
 						{
@@ -1295,8 +1289,8 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Each player lose 1 HP for every 2 empty slots in their play
-									areas.
+									Each player lose 1 HP for every 2 exhausted cards in their
+									zones.
 									<br />
 								</p>
 							),
@@ -1308,19 +1302,20 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-doctor.png',
 					hp: 20,
+					role: 'Supporter',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 2 (R 1-3).</p>,
+							content: <p>Exhaust 2 cards (R 1-3).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2],
 							content: (
 								<p>
-									Discard all cards in left columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in left columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
@@ -1329,7 +1324,7 @@ const KsMonstersPage = () => {
 							values: [3, 4],
 							content: (
 								<p>
-									Discard all cards in right columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in right columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
@@ -1338,27 +1333,37 @@ const KsMonstersPage = () => {
 							values: [5, 6],
 							content: (
 								<p>
-									Discard all cards in center columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in center columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Heal 5 & remove status cards (R 1-3, monster).</p>,
+							content: (
+								<p>
+									Heal 5 & Cleanse all & inflict 1 Protection (R 1-3, monster).
+								</p>
+							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4],
 							content: (
-								<p>Heal 5 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+								<p>
+									Heal 5 & Cleanse all & inflict 1 Protection (R 1-8 Brust, 2
+									monsters).
+								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [5, 6],
 							content: (
-								<p>Heal 5 & remove status cards (R 1-8 Brust, all monsters).</p>
+								<p>
+									Heal 5 & Cleanse all & inflict 1 Protection (R 1-8 Brust, all
+									monsters).
+								</p>
 							),
 						},
 						{
@@ -1366,8 +1371,8 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Each player lose 1 HP for every 2 empty slots in their play
-									areas.
+									Each player lose 1 HP for every 2 exhausted cards in their
+									zones.
 									<br />
 								</p>
 							),
@@ -1379,19 +1384,20 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-doctor.png',
 					hp: 25,
+					role: 'Supporter',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 3 (R 1-3).</p>,
+							content: <p>Exhaust 3 cards (R 1-3).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2],
 							content: (
 								<p>
-									Discard all cards in left columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in left columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
@@ -1400,7 +1406,7 @@ const KsMonstersPage = () => {
 							values: [3, 4],
 							content: (
 								<p>
-									Discard all cards in right columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in right columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
@@ -1409,7 +1415,7 @@ const KsMonstersPage = () => {
 							values: [5, 6],
 							content: (
 								<p>
-									Discard all cards in center columns (R 1-8 Brust, 2 players).
+									Exhaust all cards in center columns (R 1-8 Brust, 2 players).
 								</p>
 							),
 						},
@@ -1422,14 +1428,20 @@ const KsMonstersPage = () => {
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4],
 							content: (
-								<p>Heal 5 & remove status cards (R 1-8 Brust, 2 monsters).</p>
+								<p>
+									Heal 5 & Cleanse all & inflict 1 Protection (R 1-8 Brust, 2
+									monsters).
+								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [5, 6],
 							content: (
-								<p>Heal 5 & remove status cards (R 1-8 Brust, all monsters).</p>
+								<p>
+									Heal 5 & Cleanse all & inflict 1 Protection (R 1-8 Brust, all
+									monsters).
+								</p>
 							),
 						},
 						{
@@ -1437,8 +1449,8 @@ const KsMonstersPage = () => {
 							values: ['A', 'B', 'C', 'D'],
 							content: (
 								<p>
-									Each player lose 1 HP for every 2 empty slots in their play
-									areas.
+									Each player lose 1 HP for every 2 exhausted cards in their
+									zones.
 									<br />
 								</p>
 							),
@@ -1450,19 +1462,20 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-flyer.png',
 					hp: 20,
+					role: 'Lurker',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
+							content: <p>Piercing Attack 2 (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Piercing Attack 2 (R 0). Heal 2 (Self).
+									Piercing Attack 2 (R 0).
 									<br />
 									Attack 2 (R 1). Attack 2 (R 1).
 									<br />
@@ -1473,14 +1486,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
+							content: <p>Piercing Attack 2 (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Piercing Attack 2 (R 0). Heal 2 (Self).
+									Piercing Attack 2 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1508,19 +1521,20 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-flyer.png',
 					hp: 25,
+					role: 'Lurker',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
+							content: <p>Piercing Attack 3 (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Piercing Attack 2 (R 0). Heal 2 (Self).
+									Piercing Attack 3 (R 0).
 									<br />
 									Attack 3 (R 1). Attack 3 (R 1).
 									<br />
@@ -1531,14 +1545,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Piercing Attack 2 (R 0). Heal 2 (Self).</p>,
+							content: <p>Piercing Attack 3 (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Piercing Attack 2 (R 0). Heal 2 (Self).
+									Piercing Attack 3 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1551,7 +1565,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Piercing Attack 2 (R 0). Heal 2 (Self).
+									Piercing Attack 3 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1579,19 +1593,20 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-flyer.png',
 					hp: 25,
+					role: 'Lurker',
 					firstIntention: DEFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 1 Blue/any cards (R 0).</p>,
+							content: <p>Piercing Attack 3 (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Discard 1 Blue/any cards (R 0).
+									Piercing Attack 3 (R 0).
 									<br />
 									Attack 3 (R 1). Attack 3 (R 1).
 									<br />
@@ -1604,7 +1619,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Discard 1 Blue/any cards (R 0).
+									Piercing Attack 3 (R 0).
 									<br />
 									Attack 2 (Brust R 0-2).
 									<br />
@@ -1615,14 +1630,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Discard 1 Red/any cards (R 0).</p>,
+							content: <p>Piercing Attack 3 (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Discard 1 Red/any cards (R 0).
+									Piercing Attack 3 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1635,7 +1650,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Discard 1 Red/any cards (R 0).
+									Piercing Attack 3 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1663,19 +1678,20 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-flyer.png',
 					hp: 30,
+					role: 'Lurker',
 					firstIntention: SPECIAL,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: <p>Discard 2 Blue/any cards (R 0).</p>,
+							content: <p>Piercing Attack 4 (R 0).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Discard 2 Blue/any cards (R 0).
+									Piercing Attack 4 (R 0).
 									<br />
 									Attack 4 (R 1). Attack 4 (R 1).
 									<br />
@@ -1688,9 +1704,9 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Discard 2 Blue/any cards (R 0).
+									Piercing Attack 4 (R 0).
 									<br />
-									Attack 2 (Brust R 0-2).
+									Attack 3 (Brust R 0-2).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 								</p>
@@ -1699,14 +1715,14 @@ const KsMonstersPage = () => {
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: <p>Discard 2 Red/any cards (R 0).</p>,
+							content: <p>Piercing Attack 4 (R 0).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3],
 							content: (
 								<p>
-									Discard 2 Red/any cards (R 0).
+									Piercing Attack 4 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1719,7 +1735,7 @@ const KsMonstersPage = () => {
 							values: [4, 5, 6],
 							content: (
 								<p>
-									Discard 2 Red/any cards (R 0).
+									Piercing Attack 4 (R 0).
 									<br />
 									If figure exists: Jump 4 until fartest reachable player.
 									<br />
@@ -1736,7 +1752,7 @@ const KsMonstersPage = () => {
 									flyer&apos;s figure. Flyer is on the same space of marker.
 									<br />
 									<span className='text-red-700 font-bold'>
-										If marked player dies
+										ONLY If marked player dies
 									</span>
 									, remove the marker and return its figure to appropiate space.
 								</p>
@@ -1748,72 +1764,53 @@ const KsMonstersPage = () => {
 					name: 'Madman',
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-madman.png',
-					hp: (
-						<p>
-							30 + <strong className='text-blue-700'>consumed</strong> values
-						</p>
-					),
+					hp: '50',
+					role: 'Boss',
 					firstIntention: OFFENSIVE,
-					specialRule: (
-						<p>
-							When any intention card is discarded, Madman{' '}
-							<strong className='text-blue-700'>Consume</strong> it.{' '}
-							<span className='text-xs thin-light italic'>
-								(set consumed cards aside)
-							</span>
-						</p>
-					),
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: (
-								<p>
-									Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
-								</p>
-							),
+							content: <p>Inflict 1 Rage and 1 Protection (Self).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Move 1. Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
-									<br />
-									If <strong className='text-blue-700'>consumed</strong> values
-									is 15 or more: Move 2.
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									if madman does no damage to HP this turn, Inflict 1 Rage and 1
+									Protection (Self).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
-							content: (
-								<p>
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
-								</p>
-							),
+							content: <p>Inflict 1 Rage and 1 Protection (Self).</p>,
 						},
 						{
 							intention: DEFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Move 1. <br />
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
-									<br />
-									Draw and discard 2 Defensive intention cards.
+									Inflict 1 Rage and 1 Protection (Self & all monsters).
+									<br /> Block 10.
 								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Jump 2.</p>,
+							content: (
+								<p>
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									if madman does no damage to HP this turn, Inflict 1 Rage and 1
+									Protection (Self).
+								</p>
+							),
 						},
 					],
 				},
@@ -1821,76 +1818,66 @@ const KsMonstersPage = () => {
 					name: 'Madman',
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-madman.png',
-					hp: (
-						<p>
-							40 + <strong className='text-blue-700'>consumed</strong> values
-						</p>
-					),
+					hp: '60',
+					role: 'Boss',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
-							content: (
-								<p>
-									Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
-								</p>
-							),
+							content: <p>Inflict 1 Rage and 1 Protection (Self).</p>,
 						},
 						{
 							intention: OFFENSIVE,
 							values: [1, 2, 3, 4, 5, 6],
 							content: (
 								<p>
-									Move 1. Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
-									<br />
-									If <strong className='text-blue-700'>consumed</strong> values
-									is 15 or more: Move 2.
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									if madman does no damage to HP this turn, Inflict 1 Rage and 1
+									Protection (Self).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
+							content: <p>Inflict 1 Rage and 1 Protection (Self).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Block 10.
+									<br />
+									Inflict 1 Rage and 1 Protection (Self & all monsters).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [1, 2, 3],
+							values: [5, 6],
 							content: (
 								<p>
-									Move 1. <br />
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2).
 									<br />
-									Draw and discard 2 Defensive intention cards.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Move 1. <br />
-									All monsters gain Blocks equals to{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Inflict 1 Rage and 1 Protection (Self & all monsters).
 									<br />
-									Draw and discard 2 Defensive intention cards.
 								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
 							values: ['A', 'B', 'C', 'D'],
-							content: <p>Jump 2.</p>,
+							content: (
+								<p>
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									if madman does no damage to HP this turn, Inflict 1 Rage and 1
+									Protection (Self).
+								</p>
+							),
 						},
 					],
 				},
@@ -1898,90 +1885,77 @@ const KsMonstersPage = () => {
 					name: 'Madman',
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-madman.png',
-					hp: '65',
+					hp: '70',
+					role: 'Boss',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
 							values: [0],
+							content: <p>Inflict 2 Rage and 1 Protection (Self).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									if madman does no damage to HP this turn, Inflict 2 Rage and 1
+									Protection (Self).
 								</p>
 							),
 						},
 						{
 							intention: OFFENSIVE,
-							values: [1, 2, 3],
+							values: [5, 6],
 							content: (
 								<p>
-									Move 1. Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
+									Jump 3 towards fartest player.
 									<br />
-									If <strong className='text-blue-700'>consumed</strong> values
-									is 15 or more: Move 2.
-								</p>
-							),
-						},
-						{
-							intention: OFFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Move 1. Deal total X damages to players, distribute evenly. (X
-									= <strong className='text-blue-700'>consumed</strong> values).
-									<br />
-									If <strong className='text-blue-700'>consumed</strong> values
-									is 15 or more: Move 2.
+									Attack 2 (R 1-2). Attack 2 (R 4-3).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
 							values: [0],
+							content: <p>Inflict 2 Rage and 1 Protection (Self).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Block 10.
+									<br />
+									Inflict 2 Rage and 1 Protection (Self & all monsters).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [1, 2, 3],
+							values: [5, 6],
 							content: (
 								<p>
-									Move 1. <br />
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2).
 									<br />
-									Draw and discard 2 Defensive intention cards.
-								</p>
-							),
-						},
-						{
-							intention: DEFENSIVE,
-							values: [4, 5, 6],
-							content: (
-								<p>
-									Move 1. <br />
-									All monsters gain Blocks equals to{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Inflict 2 Rage and 1 Protection (Self & all monsters).
 									<br />
-									Draw and discard 2 Defensive intention cards.
 								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
-							values: ['A', 'B'],
-							content: <p>Jump 2.</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['C', 'D'],
-							content: <p>Pull 2 (R 1-3).</p>,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									if madman does no damage to HP this turn, Inflict 2 Rage and 1
+									Protection (Self).
+								</p>
+							),
 						},
 					],
 				},
@@ -1989,88 +1963,77 @@ const KsMonstersPage = () => {
 					name: 'Madman',
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-madman.png',
-					hp: (
-						<p>
-							50 + <strong className='text-blue-700'>consumed</strong> values
-						</p>
-					),
+					hp: '80',
+					role: 'Boss',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
 							intention: OFFENSIVE,
-							values: [0, 1, 2, 3],
+							values: [0],
+							content: <p>Inflict 2 Rage and 2 Protection (Self).</p>,
+						},
+						{
+							intention: OFFENSIVE,
+							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									<span className='text-red-700'>
-										If <strong className='text-blue-700'>consumed</strong>{' '}
-										values is 8 or more: Move 2 and ignore Disarm.
-										<br />
-									</span>
-									Move 1. Attack X (R 1, X ={' '}
-									<strong className='text-blue-700'>consumed</strong> values).
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									Attack 2 (R 1). Attack 2 (R 1). Move 1. <br />
+									if madman does no damage to HP this turn, Inflict 2 Rage and 2
+									Protection (Self).
 								</p>
 							),
 						},
 						{
 							intention: OFFENSIVE,
-							values: [4, 5, 6],
+							values: [5, 6],
 							content: (
 								<p>
-									Move 1. Deal total X damages to players, distribute evenly. (X
-									= <strong className='text-blue-700'>consumed</strong> values).
+									Jump 3 towards fartest player.
 									<br />
-									If <strong className='text-blue-700'>consumed</strong> values
-									is <span className='text-red-700'>8 or more</span> : Move 2.
+									Attack 2 (R 1-2). Attack 2 (R 4-3).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [0, 1, 2, 3],
+							values: [0],
+							content: <p>Inflict 2 Rage and 2 Protection (Self).</p>,
+						},
+						{
+							intention: DEFENSIVE,
+							values: [1, 2, 3, 4],
 							content: (
 								<p>
-									Move 1. <br />
-									Heal same amount of{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Block 10.
 									<br />
-									Draw and discard <span className='text-red-700'>4</span>{' '}
-									Defensive intention cards.
+									Inflict 2 Rage and 2 Protection (Self & all monsters).
 								</p>
 							),
 						},
 						{
 							intention: DEFENSIVE,
-							values: [4, 5, 6],
+							values: [5, 6],
 							content: (
 								<p>
-									Move 1. <br />
-									All monsters gain Blocks equals to{' '}
-									<strong className='text-blue-700'>consumed</strong> values.
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2).
 									<br />
-									Draw and discard <span className='text-red-700'>4</span>{' '}
-									Defensive intention cards.
+									Inflict 2 Rage and 2 Protection (Self & all monsters).
+									<br />
 								</p>
 							),
 						},
 						{
 							intention: SPECIAL,
-							values: ['A'],
-							content: <p>Jump 2</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['B'],
-							content: <p>Pull 2 (R 1-3)</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['C'],
-							content: <p>Jump 6 Until fartest reachable player</p>,
-						},
-						{
-							intention: SPECIAL,
-							values: ['D'],
-							content: <p>Pull 6 (R 7-1)</p>,
+							values: ['A', 'B', 'C', 'D'],
+							content: (
+								<p>
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									Attack 1 (Brust AR 1-2). Attack 1 (Brust AR 1-2). <br />
+									if madman does no damage to HP this turn, Inflict 2 Rage and 2
+									Protection (Self).
+								</p>
+							),
 						},
 					],
 				},
@@ -2079,6 +2042,7 @@ const KsMonstersPage = () => {
 					lv: MINOR,
 					imageSrc: '/images/ks/monster-master.png',
 					hp: '18',
+					role: 'Supporter',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -2118,6 +2082,7 @@ const KsMonstersPage = () => {
 					lv: NORMAL,
 					imageSrc: '/images/ks/monster-master.png',
 					hp: '20',
+					role: 'Supporter',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -2167,6 +2132,7 @@ const KsMonstersPage = () => {
 					lv: ADVANCED,
 					imageSrc: '/images/ks/monster-master.png',
 					hp: '20',
+					role: 'Supporter',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -2236,6 +2202,7 @@ const KsMonstersPage = () => {
 					lv: ELITE,
 					imageSrc: '/images/ks/monster-master.png',
 					hp: '25',
+					role: 'Supporter',
 					firstIntention: OFFENSIVE,
 					actions: [
 						{
@@ -2322,7 +2289,7 @@ const KsMonstersPage = () => {
 
 	return (
 		<>
-			<div className='px-8 py-24' style={{ width: '250%' }}>
+			<div className='px-8 py-24' style={{ width: '320%' }}>
 				<div className='flex flex-wrap mb-16'>
 					{monsters.map((monster, i) => (
 						<div
@@ -2352,43 +2319,19 @@ const KsMonstersPage = () => {
 											borderColor: RESOURCES[monster.lv].color,
 										}}
 									>
-										<h3>
-											<span style={{ color: RESOURCES[monster.lv].color }}>
-												{RESOURCES[monster.lv].text}
-											</span>{' '}
-											{monster.name}
-										</h3>
-										<div className='flex justify-center items-center gap-x-6'>
-											<p className='text-red-500'>
-												<i className='ra ra-health'></i> HP: {monster.hp}
+										<div className='flex gap-x-2 items-center justify-center px-2'>
+											<h3 className='flex-1 text-left'>
+												<span style={{ color: RESOURCES[monster.lv].color }}>
+													{RESOURCES[monster.lv].text}
+												</span>{' '}
+												{monster.name}
+											</h3>
+											<p className='bg-red-500 text-white px-2'>
+												<i className='ra ra-health'></i> {monster.hp}
 											</p>
-											<div>
-												<div className='inline-flex flex-nowrap items-center'>
-													<span>first intention: </span>
-													<div
-														style={{
-															backgroundColor:
-																RESOURCES[monster.firstIntention].color,
-															width: 16,
-															height: 16,
-															WebkitMaskImage: `url('${
-																RESOURCES[monster.firstIntention].iconSrc
-															}')`,
-															WebkitMaskPosition: 'center',
-															WebkitMaskSize: 'cover',
-														}}
-													></div>
-													<span
-														style={{
-															fontSize: '16px',
-															lineHeight: '16px',
-															color: RESOURCES[monster.firstIntention].color,
-														}}
-													>
-														{RESOURCES[monster.firstIntention].text}
-													</span>
-												</div>
-											</div>
+											<p className='bg-blue-500 text-white px-2'>
+												{monster.role}
+											</p>
 										</div>
 									</div>
 								</div>
@@ -2445,38 +2388,6 @@ const KsMonstersPage = () => {
 							</div>
 						</div>
 					))}
-				</div>
-
-				<div className='mt-8'>
-					<div
-						style={{
-							width: 442,
-							border: '12px solid #333',
-							borderRadius: 8,
-						}}
-						className='p-2'
-					>
-						<h3>Madman Special Rules:</h3>
-						<p>
-							When any intention card is discarded, Madman{' '}
-							<strong className='text-blue-700'>consumes</strong> it instead.
-							Set <strong className='text-blue-700'>consumed</strong> cards
-							aside.
-						</p>
-						<p>
-							When player deals damages to Madman, instead of reducing HP, it
-							may choose to return{' '}
-							<strong className='text-blue-700'>consumed</strong> card with same
-							value back to its pile, which that card is no longer being{' '}
-							<strong className='text-blue-700'>consumed</strong>.
-						</p>
-						<p>
-							<strong className='text-blue-700'>Consumed</strong> values = sum
-							of intention values of all{' '}
-							<strong className='text-blue-700'>consumed</strong> cards. Special
-							intention card value is counted as 6.
-						</p>
-					</div>
 				</div>
 			</div>
 		</>
